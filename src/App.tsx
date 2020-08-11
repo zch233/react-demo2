@@ -1,8 +1,10 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
 
 function App() {
+  axios.get('/pub/api/v1/contactConfig/list').then((data) => console.log(data));
   return (
     <div className="App">
       <header className="App-header">

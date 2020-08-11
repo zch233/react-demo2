@@ -20,7 +20,10 @@
       "git add"
     ]
   },
+  "proxy": "http://192.168.2.252:18080",
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.19.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
