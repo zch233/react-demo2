@@ -1,9 +1,13 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Link, Switch } from 'react-router-dom';
+import { Link, RouteProps, Switch } from 'react-router-dom';
 import { RouteWithSubRoutes } from '../../router';
 
-const AppLayout: React.FC = ({ routes }: any) => {
+interface Props {
+  routes: RouteProps[];
+}
+
+const AppLayout: React.FC<Props> = ({ routes }) => {
   return (
     <Layout>
       <Layout.Header>
@@ -12,6 +16,7 @@ const AppLayout: React.FC = ({ routes }: any) => {
             <li>
               <Link to="/">Home</Link>
             </li>
+
             <li>
               <Link to="/patent">patent</Link>
             </li>

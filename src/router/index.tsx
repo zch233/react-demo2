@@ -5,7 +5,8 @@ import Patent from '../pages/Patent';
 import SignLayout from '../pages/Layout/SignLayout';
 import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
-import { Route } from 'react-router-dom';
+import { Route, RouteProps } from 'react-router-dom';
+
 const routes = [
   {
     path: '/auth',
@@ -38,7 +39,13 @@ const routes = [
   },
 ];
 
-export function RouteWithSubRoutes(route: any) {
+interface TypeProps {
+  path: string;
+  component: React.FC<{}>;
+  routes?: TypeProps[];
+}
+
+export function RouteWithSubRoutes(route: TypeProps) {
   return (
     <Route
       path={route.path}

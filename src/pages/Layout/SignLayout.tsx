@@ -1,8 +1,12 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { RouteProps, Switch } from 'react-router-dom';
 import { RouteWithSubRoutes } from '../../router';
 
-const SignLayout: React.FC = ({ routes }: any) => {
+interface Props {
+  routes: RouteProps[];
+}
+
+const SignLayout: React.FC<Props> = ({ routes }) => {
   return (
     <div>
       <Switch>
