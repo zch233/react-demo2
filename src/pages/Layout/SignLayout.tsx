@@ -10,7 +10,7 @@ const SignLayout: React.FC<Props> = ({ routes }) => {
   return (
     <div>
       <Switch>
-        {routes.map((route: any, i: any) => (
+        {routes.map((route, i) => (
           <RouteWithSubRoutes key={i} {...route} />
         ))}
       </Switch>

@@ -25,7 +25,7 @@ const AppLayout: React.FC<Props> = ({ routes }) => {
       </Layout.Header>
       <Layout.Content>
         <Switch>
-          {routes.map((route: any, i: any) => (
+          {routes.map((route, i) => (
             <RouteWithSubRoutes key={i} {...route} />
           ))}
         </Switch>
