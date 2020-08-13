@@ -15,10 +15,12 @@ const routes = [
       {
         path: '/auth/sign_in',
         component: SignIn,
+        exact: true,
       },
       {
         path: '/auth/sign_up',
         component: SignUp,
+        exact: true,
       },
     ],
   },
@@ -34,23 +36,19 @@ const routes = [
       {
         path: '/patent',
         component: Patent,
+        exact: true,
       },
     ],
   },
 ];
 
-interface TypeProps {
-  path: string;
-  component: React.FC<{}>;
-  routes?: TypeProps[];
-}
-
-export function RouteWithSubRoutes(route: TypeProps) {
+export function RouteWithSubRoutes(route: RouteProps) {
   return (
     <Route
       path={route.path}
       render={(props) => (
         // pass the sub-routes down to keep nesting
+        // @ts-ignore
         <route.component {...props} routes={route.routes} />
       )}
     />
