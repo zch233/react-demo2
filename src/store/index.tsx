@@ -1,5 +1,10 @@
-import { selector } from 'recoil';
+import { atom, selector } from 'recoil';
 import axios from 'axios';
+
+export const todoListState = atom<number[]>({
+  key: 'todoListState',
+  default: [],
+});
 
 export const currentUserNameQuery = selector({
   key: 'inputValue',
