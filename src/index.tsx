@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import './index.css';
 import 'reset-css';
 import routes, { RouteWithSubRoutes } from './router/index';
+import { RecoilRoot } from 'recoil';
 
 const App = () => (
   <Router>
@@ -18,7 +19,9 @@ const App = () => (
 );
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')
 );
