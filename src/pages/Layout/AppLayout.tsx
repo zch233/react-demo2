@@ -2,23 +2,19 @@ import React from 'react';
 import { Layout } from 'antd';
 import { Link, RouteProps, Switch } from 'react-router-dom';
 import { RouteWithSubRoutes } from '../../router';
-import { useRecoilState, useRecoilStateLoadable, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
-import { currentUserNameQuery, todoListState } from '../../store';
+import { useRecoilStateLoadable } from 'recoil';
+import { currentUserNameQuery } from '../../store';
 
 interface Props {
   routes: RouteProps[];
 }
 
 const AppLayout: React.FC<Props> = ({ routes }) => {
-  // @ts-ignore
   const [userNameLoadable, setUserNameLoadable] = useRecoilStateLoadable(currentUserNameQuery);
-  const text = useRecoilState(todoListState);
-  const setText = useSetRecoilState(todoListState);
   console.log(userNameLoadable);
   return (
     <Layout>
-      {text}
-      <Layout.Header onClick={() => setText((old) => [...old, 1111])}>
+      <Layout.Header>
         <nav>
           <ul>
             <li>
