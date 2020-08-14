@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import './index.css';
 import 'reset-css';
+import 'antd/dist/antd.css';
+import './index.css';
 import routes, { RouteWithSubRoutes } from './router/index';
+import Loading from './components/Loading';
 import { RecoilRoot } from 'recoil';
 
 const App = () => (
@@ -19,9 +21,12 @@ const App = () => (
 );
 ReactDOM.render(
   <React.StrictMode>
-    <RecoilRoot>
-      <App />
-    </RecoilRoot>
+    <React.Suspense fallback={<Loading />}>
+      <Loading />
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
+    </React.Suspense>
   </React.StrictMode>,
   document.getElementById('root')
 );
