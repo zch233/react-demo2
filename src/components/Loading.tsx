@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Spin, Input } from 'antd';
+import { Spin } from 'antd';
 
 const Wrapper = styled.div`
   position: fixed;

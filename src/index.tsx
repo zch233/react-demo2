@@ -22,7 +22,6 @@ const App = () => (
 ReactDOM.render(
   <React.StrictMode>
     <React.Suspense fallback={<Loading />}>
-      <Loading />
       <RecoilRoot>
         <App />
       </RecoilRoot>

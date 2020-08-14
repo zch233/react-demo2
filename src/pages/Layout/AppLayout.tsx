@@ -1,43 +1,29 @@
 import React from 'react';
-import { Layout } from 'antd';
-import { Link, RouteProps, Switch } from 'react-router-dom';
+import { RouteProps, Switch } from 'react-router-dom';
 import { RouteWithSubRoutes } from '../../router';
-import { useRecoilStateLoadable, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { currentUserNameQuery } from '../../store';
+import Header from './components/Header';
 
 interface Props {
   routes: RouteProps[];
 }
 
 const AppLayout: React.FC<Props> = ({ routes }) => {
-  const userNameLoadable = useRecoilValue(currentUserNameQuery);
-  console.log(userNameLoadable);
+  // const userNameLoadable = useRecoilValue(currentUserNameQuery);
+  // console.log(userNameLoadable);
   return (
-    <Layout>
-      <Layout.Header>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/patent">patent</Link>
-            </li>
-            <li>
-              <Link to="/auth/sign_in">sign_in</Link>
-            </li>
-          </ul>
-        </nav>
-      </Layout.Header>
-      <Layout.Content>
+    <>
+      <Header />
+      <main>
         <Switch>
           {routes.map((route, i) => (
             <RouteWithSubRoutes key={i} {...route} />
           ))}
         </Switch>
-      </Layout.Content>
-      <Layout.Footer>Footer</Layout.Footer>
-    </Layout>
+      </main>
+      <footer>Footer</footer>
+    </>
   );
 };
 
