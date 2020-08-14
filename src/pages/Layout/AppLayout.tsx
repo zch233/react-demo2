@@ -2,16 +2,12 @@ import React from 'react';
 import { Layout } from 'antd';
 import { Link, RouteProps, Switch } from 'react-router-dom';
 import { RouteWithSubRoutes } from '../../router';
-import { useRecoilStateLoadable } from 'recoil';
-import { currentUserNameQuery } from '../../store';
 
 interface Props {
   routes: RouteProps[];
 }
 
 const AppLayout: React.FC<Props> = ({ routes }) => {
-  const [userNameLoadable, setUserNameLoadable] = useRecoilStateLoadable(currentUserNameQuery);
-  console.log(userNameLoadable);
   return (
     <Layout>
       <Layout.Header>
