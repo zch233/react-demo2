@@ -115,7 +115,7 @@ export const NavBar = styled.nav`
 `;
 export const LoginDialogWrapper = styled.div`
   padding: 1.5em 0;
-  width: 280px;
+  width: 260px;
   .input {
     margin-bottom: 1em;
   }
