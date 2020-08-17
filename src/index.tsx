@@ -5,7 +5,7 @@ import 'reset-css';
 import 'antd/dist/antd.css';
 import './index.css';
 import routes, { RouteWithSubRoutes } from './router/index';
-import Loading from './components/Loading';
+import Index from './components/Loading/index';
 import { RecoilRoot } from 'recoil';
 
 const App = () => (
@@ -20,12 +20,10 @@ const App = () => (
   </Router>
 );
 ReactDOM.render(
-  <React.StrictMode>
-    <React.Suspense fallback={<Loading />}>
-      <RecoilRoot>
-        <App />
-      </RecoilRoot>
-    </React.Suspense>
-  </React.StrictMode>,
+  <React.Suspense fallback={<Index />}>
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
+  </React.Suspense>,
   document.getElementById('root')
 );

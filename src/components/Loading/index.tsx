@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const Loading: React.FC = () => {
+const Index: React.FC = () => {
   return (
     <Wrapper>
       <Spin />
@@ -20,4 +20,4 @@ const Loading: React.FC = () => {
   );
 };
 
-export default Loading;
+export default Index;

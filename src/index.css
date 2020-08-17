@@ -1,3 +1,10 @@
+* {
+  box-sizing: border-box;
+}
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -145,4 +152,8 @@ head::after {
     1.4599343788em 1.453296517em 7px rgba(60, 255, 0, 0.9);
   animation-duration: 102s;
   animation-delay: -28s;
+}
+.pageWidthWithCenter {
+  width: 1200px;
+  margin: 0 auto;
 }
