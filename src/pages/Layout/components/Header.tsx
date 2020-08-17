@@ -1,30 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AliIcon from '../../../components/AliIcon';
-import { Button, Input, Popover, Tabs } from 'antd';
-import { LoginDialogWrapper, NavBar, SearchBar, TopBar } from './HeaderStyles';
+import { Popover } from 'antd';
+import LoginDialog from './LoginDialog';
+import { NavBar, SearchBar, TopBar } from './HeaderStyles';
+import CategoryDialog from './CategoryDialog';
 
 const Header: React.FC = () => {
-  const loginDialog = (
-    <LoginDialogWrapper>
-      <Tabs type="card" size="small">
-        <Tabs.TabPane tab="密码登录" key="passwordLogin">
-          <Input className={'input'} addonBefore="手机号" defaultValue="mysite" />
-          <Input className={'input'} addonBefore="密　码" defaultValue="mysite" />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="手机验证码登录" key="captchaLogin">
-          <Input className={'input'} addonBefore="手机号" defaultValue="mysite" />
-          <Input className={'input'} addonBefore="验证码" defaultValue="mysite" />
-        </Tabs.TabPane>
-      </Tabs>
-      <Button className={'loginButton'} block>
-        登录
-      </Button>
-      <Link className={'toSignIn'} to="/auth/sign_in">
-        新用户注册
-      </Link>
-    </LoginDialogWrapper>
-  );
   return (
     <header>
       <TopBar>
@@ -48,10 +30,13 @@ const Header: React.FC = () => {
       </SearchBar>
       <NavBar>
         <section className={'pageWidthWithCenter'}>
-          <div className={'allCategory'}>
+          <label className={'allCategory'}>
+            <Popover placement="bottomLeft" content={CategoryDialog} trigger="focus">
+              <input className={'hideInput'} type="text" />
+            </Popover>
             全部专利分类
             <AliIcon icon="downFill" />
-          </div>
+          </label>
           <ul className={'navList'}>
             <li className={'navList-item active'}>
               <Link to="/">首页</Link>
@@ -68,7 +53,7 @@ const Header: React.FC = () => {
           </ul>
           <div className={'userOrLogin'}>
             您好，
-            <Popover placement="bottomRight" content={loginDialog} trigger="click">
+            <Popover placement="bottomRight" content={LoginDialog} trigger="click">
               <span className={'loginSwitch'}>请登录</span>
             </Popover>
           </div>

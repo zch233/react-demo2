@@ -90,10 +90,24 @@ export const NavBar = styled.nav`
     padding: 0 7em 0 16px;
     font-weight: 400;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1031;
+    line-height: 2.4;
     > svg {
       margin-left: 1em;
       font-size: 0.5em;
       vertical-align: 0;
+    }
+    .hideInput {
+      position: absolute;
+      opacity: 0;
+      z-index: -1;
+      top: -14px;
+      left: 0;
+      width: 0;
+      padding: 0;
+      border: 0;
     }
   }
   .userOrLogin {
@@ -135,6 +149,36 @@ export const LoginDialogWrapper = styled.div`
     color: rgb(51, 51, 51);
     &:hover {
       color: #23527c;
+    }
+  }
+`;
+export const CategoryDialogWrapper = styled.div`
+  margin: -12px -16px;
+  background-color: #d03322;
+  font-size: 16px;
+  .mainCategory {
+    margin: 0;
+    width: 15em;
+    &-item {
+      line-height: 50px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      cursor: pointer;
+      &:hover {
+        background-color: #fff;
+        color: #d03322;
+      }
+      .icon {
+        color: #000;
+        margin-right: 0.7em;
+        font-size: 19px;
+      }
+      .right {
+        margin-left: auto;
+        width: 0.4em;
+      }
     }
   }
 `;

@@ -10,10 +10,11 @@ const Svg = styled.svg`
 `;
 type Props = {
   icon: string;
+  className?: string;
 };
-const AliIcon: React.FC<Props> = ({ icon }) => {
+const AliIcon: React.FC<Props> = ({ icon, className }) => {
   return (
-    <Svg aria-hidden="true">
+    <Svg className={className} aria-hidden="true">
       <use xlinkHref={`#icon-${icon}`}></use>
     </Svg>
   );
