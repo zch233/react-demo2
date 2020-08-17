@@ -1,7 +1,11 @@
 import React from 'react';
-
+import Banner from './Banner';
 const Home: React.FC = () => {
-  return <div>首页。。。。。。</div>;
+  return (
+    <div>
+      <Banner />
+    </div>
+  );
 };
 
 export default Home;
