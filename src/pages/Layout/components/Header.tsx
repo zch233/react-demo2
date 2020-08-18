@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import AliIcon from '../../../components/AliIcon';
 import { message, Popover } from 'antd';
 import LoginDialog from './LoginDialog';
@@ -7,6 +7,7 @@ import { NavBar, SearchBar, TopBar } from './HeaderStyles';
 import CategoryDialog from './CategoryDialog';
 
 const Header: React.FC = () => {
+  const location = useLocation();
   return (
     <>
       <header>
@@ -40,25 +41,21 @@ const Header: React.FC = () => {
             </div>
           </label>
           <ul className={'navList'}>
-            <li className={'navList-item active'}>
-              <Link className={'link'} to="/">
+            <li className={`navList-item ${location.pathname === '/' ? 'active' : ''}`}>
+              <NavLink className={'link'} to="/">
                 首页
-              </Link>
+              </NavLink>
             </li>
-            <li className={'navList-item'}>
-              <Link className={'link'} to="/patent">
+            <li className={`navList-item ${location.pathname === '/patent' ? 'active' : ''}`}>
+              <NavLink className={'link'} to="/patent">
                 专利市场
-              </Link>
+              </NavLink>
             </li>
-            <li className={'navList-item'}>
-              <span className={'link'} onClick={() => message.info('敬请期待')}>
-                秒杀活动
-              </span>
+            <li className={'navList-item'} onClick={() => message.info('敬请期待')}>
+              <span className={'link'}>秒杀活动</span>
             </li>
-            <li className={'navList-item'}>
-              <span className={'link'} onClick={() => message.info('敬请期待')}>
-                特价专利
-              </span>
+            <li className={'navList-item'} onClick={() => message.info('敬请期待')}>
+              <span className={'link'}>特价专利</span>
             </li>
           </ul>
           <div className={'userOrLogin'}>

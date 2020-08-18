@@ -21,79 +21,9 @@ const List: React.FC<Props> = ({ title, category }) => {
           <div className={'patentInfo'}>
             <cite className={'patentInfo-title'}>一种高档的显示器储存消毒柜一种高档</cite>
             <p className={'patentInfo-des'}>
-              <p>
+              <em>
                 <em>￥</em>20000
-              </p>
-              <span>未下证</span>
-            </p>
-          </div>
-        </PatentListItem>
-        <PatentListItem>
-          <div className={'imageWrapper'}>
-            <img height={'120'} width={'100%'} src={require('../../assert/patent/' + category + '.png')} alt="" />
-          </div>
-          <div className={'patentInfo'}>
-            <cite className={'patentInfo-title'}>一种高档的显示器储存消毒柜一种高档</cite>
-            <p className={'patentInfo-des'}>
-              <p>
-                <em>￥</em>20000
-              </p>
-              <span>未下证</span>
-            </p>
-          </div>
-        </PatentListItem>
-        <PatentListItem>
-          <div className={'imageWrapper'}>
-            <img height={'120'} width={'100%'} src={require('../../assert/patent/' + category + '.png')} alt="" />
-          </div>
-          <div className={'patentInfo'}>
-            <cite className={'patentInfo-title'}>一种高档的显示器储存消毒柜一种高档</cite>
-            <p className={'patentInfo-des'}>
-              <p>
-                <em>￥</em>20000
-              </p>
-              <span>未下证</span>
-            </p>
-          </div>
-        </PatentListItem>
-        <PatentListItem>
-          <div className={'imageWrapper'}>
-            <img height={'120'} width={'100%'} src={require('../../assert/patent/' + category + '.png')} alt="" />
-          </div>
-          <div className={'patentInfo'}>
-            <cite className={'patentInfo-title'}>一种高档的显示器储存消毒柜一种高档</cite>
-            <p className={'patentInfo-des'}>
-              <p>
-                <em>￥</em>20000
-              </p>
-              <span>未下证</span>
-            </p>
-          </div>
-        </PatentListItem>
-        <PatentListItem>
-          <div className={'imageWrapper'}>
-            <img height={'120'} width={'100%'} src={require('../../assert/patent/' + category + '.png')} alt="" />
-          </div>
-          <div className={'patentInfo'}>
-            <cite className={'patentInfo-title'}>一种高档的显示器储存消毒柜一种高档</cite>
-            <p className={'patentInfo-des'}>
-              <p>
-                <em>￥</em>20000
-              </p>
-              <span>未下证</span>
-            </p>
-          </div>
-        </PatentListItem>
-        <PatentListItem>
-          <div className={'imageWrapper'}>
-            <img height={'120'} width={'100%'} src={require('../../assert/patent/' + category + '.png')} alt="" />
-          </div>
-          <div className={'patentInfo'}>
-            <cite className={'patentInfo-title'}>一种高档的显示器储存消毒柜一种高档</cite>
-            <p className={'patentInfo-des'}>
-              <p>
-                <em>￥</em>20000
-              </p>
+              </em>
               <span>未下证</span>
             </p>
           </div>

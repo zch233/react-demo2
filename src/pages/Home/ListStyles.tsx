@@ -50,7 +50,7 @@ export const PatentListItem = styled.li`
       justify-content: space-between;
       align-items: flex-end;
       line-height: 1;
-      p {
+      em {
         margin: 0;
       }
       span {

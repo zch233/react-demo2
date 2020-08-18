@@ -35,7 +35,7 @@ const WebSiteDes: React.FC = () => {
       </div>
       <AdvanceList>
         {advanceList.map((advance) => (
-          <AdvanceListItem>
+          <AdvanceListItem key={advance.icon}>
             <AliIcon icon={advance.icon} />
             <p className={'advance-title'}>{advance.title}</p>
             <em className={'advance-des'}>{advance.des}</em>
