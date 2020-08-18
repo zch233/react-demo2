@@ -8,6 +8,7 @@ const Wrapper = styled.section`
   margin-top: 60px;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 40px;
   .des {
     font-size: 18px;
     h2 {
