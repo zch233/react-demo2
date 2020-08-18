@@ -33,11 +33,11 @@ const Header: React.FC = () => {
       <NavBar>
         <section className={'pageWidthWithCenter'}>
           <label className={'allCategory'}>
-            <Popover placement="bottomLeft" content={CategoryDialog} trigger="focus">
-              <input className={'hideInput'} type="text" />
-            </Popover>
             全部专利分类
             <AliIcon icon="downFill" />
+            <div className={'categoryDialog'}>
+              <CategoryDialog />
+            </div>
           </label>
           <ul className={'navList'}>
             <li className={'navList-item active'}>

@@ -66,6 +66,7 @@ export const NavBar = styled.nav`
     align-items: center;
   }
   .navList {
+    user-select: none;
     display: inline-flex;
     margin: 0;
     a {
@@ -89,14 +90,25 @@ export const NavBar = styled.nav`
     }
   }
   .allCategory {
+    user-select: none;
     background-color: #d03322;
     padding: 0 7em 0 16px;
     font-weight: 400;
     cursor: pointer;
     position: relative;
-    overflow: hidden;
     z-index: 1031;
     line-height: 2.4;
+    .categoryDialog {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
+    &:hover {
+      .categoryDialog {
+        display: block;
+      }
+    }
     > svg {
       margin-left: 1em;
       font-size: 0.5em;
@@ -156,7 +168,6 @@ export const LoginDialogWrapper = styled.div`
   }
 `;
 export const CategoryDialogWrapper = styled.div`
-  margin: -12px -16px;
   background-color: #d03322;
   font-size: 16px;
   display: flex;
