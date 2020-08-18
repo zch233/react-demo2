@@ -156,19 +156,28 @@ export const CategoryDialogWrapper = styled.div`
   margin: -12px -16px;
   background-color: #d03322;
   font-size: 16px;
+  display: flex;
   .mainCategory {
     margin: 0;
     width: 15em;
+    display: flex;
+    flex-direction: column;
+    height: 20.82vw;
+    position: relative;
     &-item {
-      line-height: 50px;
+      flex: 1;
       color: #fff;
       display: flex;
       align-items: center;
       padding: 0 15px;
       cursor: pointer;
+      transition: all 0.3s;
       &:hover {
         background-color: #fff;
         color: #d03322;
+        .detailCategory {
+          display: block;
+        }
       }
       .icon {
         color: #000;
@@ -178,6 +187,42 @@ export const CategoryDialogWrapper = styled.div`
       .right {
         margin-left: auto;
         width: 0.4em;
+      }
+    }
+  }
+  .detailCategory {
+    background-color: #fff;
+    padding: 15px 0 15px 15px;
+    overflow-y: auto;
+    height: 20.82vw;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 68.5em;
+    border: 2px solid #d03322;
+    border-left: none;
+    font-size: 14px;
+    display: none;
+    &::-webkit-scrollbar-track-piece {
+      background: #d3dce6;
+    }
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #99a9bf;
+      border-radius: 20px;
+    }
+    &-item {
+      line-height: 2.5;
+      cursor: pointer;
+      color: #333;
+      border-bottom: 1px dashed #ddd;
+      margin: 0;
+      transition: all 0.3s;
+      &:hover {
+        background-color: #d03322;
+        color: #fff;
       }
     }
   }
