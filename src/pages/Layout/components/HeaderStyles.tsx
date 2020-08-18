@@ -69,13 +69,14 @@ export const NavBar = styled.nav`
     user-select: none;
     display: inline-flex;
     margin: 0;
-    a {
+    .link {
       color: #fff;
       display: inline-block;
       width: 100%;
       height: 100%;
       padding: 0 15px;
       font-size: 15px;
+      cursor: pointer;
     }
     .navList-item {
       border-right: 1px #931900 solid;

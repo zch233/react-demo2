@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AliIcon from '../../../components/AliIcon';
-import { Popover } from 'antd';
+import { message, Popover } from 'antd';
 import LoginDialog from './LoginDialog';
 import { NavBar, SearchBar, TopBar } from './HeaderStyles';
 import CategoryDialog from './CategoryDialog';
@@ -41,16 +41,24 @@ const Header: React.FC = () => {
           </label>
           <ul className={'navList'}>
             <li className={'navList-item active'}>
-              <Link to="/">首页</Link>
+              <Link className={'link'} to="/">
+                首页
+              </Link>
             </li>
             <li className={'navList-item'}>
-              <Link to="/patent">专利市场</Link>
+              <Link className={'link'} to="/patent">
+                专利市场
+              </Link>
             </li>
             <li className={'navList-item'}>
-              <Link to="/">秒杀活动</Link>
+              <span className={'link'} onClick={() => message.info('敬请期待')}>
+                秒杀活动
+              </span>
             </li>
             <li className={'navList-item'}>
-              <Link to="/">特价专利</Link>
+              <span className={'link'} onClick={() => message.info('敬请期待')}>
+                特价专利
+              </span>
             </li>
           </ul>
           <div className={'userOrLogin'}>
