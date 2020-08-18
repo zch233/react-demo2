@@ -8,26 +8,28 @@ import CategoryDialog from './CategoryDialog';
 
 const Header: React.FC = () => {
   return (
-    <header>
-      <TopBar>
-        <div className={'pageWidthWithCenter'}>
-          <cite>第九区知识产权在线交易商城提供最真实的一手资源</cite>
-          <span>
-            <AliIcon icon="qrcode" />
-            微信公众号
-          </span>
-        </div>
-      </TopBar>
-      <SearchBar className={'pageWidthWithCenter'}>
-        <div className={'imageWrapper'}>
-          <img width="100%" src={require('../../../assert/home/logo.png')} alt="LOGO" />
-        </div>
-        <form className={'searchWrapper'} action="/patent">
-          <input className="searchInput" name="word" placeholder="专利号、名称、关键词" />
-          <input hidden name="stockStatus" value="1" />
-          <button type="submit">搜索</button>
-        </form>
-      </SearchBar>
+    <>
+      <header>
+        <TopBar>
+          <div className={'pageWidthWithCenter'}>
+            <cite>第九区知识产权在线交易商城提供最真实的一手资源</cite>
+            <span>
+              <AliIcon icon="qrcode" />
+              微信公众号
+            </span>
+          </div>
+        </TopBar>
+        <SearchBar className={'pageWidthWithCenter'}>
+          <div className={'imageWrapper'}>
+            <img width="100%" src={require('../../../assert/home/logo.png')} alt="LOGO" />
+          </div>
+          <form className={'searchWrapper'} action="/patent">
+            <input className="searchInput" name="word" placeholder="专利号、名称、关键词" />
+            <input hidden name="stockStatus" value="1" />
+            <button type="submit">搜索</button>
+          </form>
+        </SearchBar>
+      </header>
       <NavBar>
         <section className={'pageWidthWithCenter'}>
           <label className={'allCategory'}>
@@ -59,7 +61,7 @@ const Header: React.FC = () => {
           </div>
         </section>
       </NavBar>
-    </header>
+    </>
   );
 };
 export default Header;

@@ -58,6 +58,9 @@ export const NavBar = styled.nav`
   line-height: 37px;
   font-size: 16px;
   box-shadow: 0 1px 4px #282727;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   .pageWidthWithCenter {
     display: flex;
     align-items: center;
