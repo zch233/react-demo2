@@ -1,46 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-const Wrapper = styled.footer`
-  color: #aaa;
-  padding-top: 20px;
-`;
-const WebSiteHelp = styled.div`
-  display: flex;
-  margin-bottom: 10px;
-  .title {
-    font-size: 16px;
-    color: #fff;
-  }
-  .reason {
-    font-size: 14px;
-  }
-`;
-const ChooseUs = styled.div`
-  margin-right: 10%;
-`;
-const Solution = styled.div`
-  margin-right: 10%;
-  .reasonWrapper {
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-const Questions = styled.div``;
-const QrCode = styled.div`
-  margin-left: auto;
-`;
-const CopyRight = styled.div`
-  text-align: center;
-  a {
-    color: #aaa;
-    display: inline-flex;
-    align-items: center;
-    margin-right: 2em;
-  }
-  .gov {
-    margin-bottom: 0;
-  }
-`;
+import { ChooseUs, CopyRight, QrCode, Questions, Solution, WebSiteHelp, Wrapper } from './FooterStyles';
+
 const Footer: React.FC = () => {
   return (
     <Wrapper>
