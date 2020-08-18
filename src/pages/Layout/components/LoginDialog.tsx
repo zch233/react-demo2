@@ -13,7 +13,7 @@ const LoginDialog: React.FC = () => {
         </Tabs.TabPane>
         <Tabs.TabPane tab="手机验证码登录" key="captchaLogin">
           <Input className={'input'} addonBefore="手机号" defaultValue="mysite" />
-          <Input className={'input'} addonBefore="验证码" defaultValue="mysite" />
+          <Input className={'input'} addonBefore="验证码" addonAfter="获取" defaultValue="mysite" />
         </Tabs.TabPane>
       </Tabs>
       <Button className={'loginButton'} block>
