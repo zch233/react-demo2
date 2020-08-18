@@ -61,6 +61,7 @@ const PatentListItem = styled.li`
       span {
         font-size: 12px;
         color: #888;
+        font-weight: normal;
       }
     }
     &-price {

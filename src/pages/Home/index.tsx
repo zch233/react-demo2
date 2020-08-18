@@ -14,6 +14,10 @@ const Home: React.FC = () => {
       <List title={'最近上新'} category={'a'} />
       <List title={'最近上新'} category={'a'} />
       <List title={'最近上新'} category={'a'} />
+      <List title={'最近上新'} category={'a'} />
+      <List title={'最近上新'} category={'a'} />
+      <List title={'最近上新'} category={'a'} />
+      <List title={'最近上新'} category={'a'} />
       <WebSiteDes />
     </HomeWrapper>
   );
