@@ -219,13 +219,13 @@ export const CategoryDialogWrapper = styled.div`
     font-size: 14px;
     display: none;
     &::-webkit-scrollbar-track-piece {
-      background: #d3dce6;
+      background: #fff;
     }
     &::-webkit-scrollbar {
       width: 6px;
     }
     &::-webkit-scrollbar-thumb {
-      background: #99a9bf;
+      background: #ddd;
       border-radius: 20px;
     }
     &-item {
