@@ -4,7 +4,7 @@ import AliIcon from '../../components/AliIcon';
 import { Popover, Tag } from 'antd';
 
 const FilterBar: React.FC = () => {
-  const [filteredCategory, setFilteredCategory] = useState(['型芯', '型芯']);
+  const [filteredCategory, setFilteredCategory] = useState(['型芯1', '型芯']);
   const [filterControl, setFilterControl] = useState({
     visible: true,
     text: '收起筛选',
