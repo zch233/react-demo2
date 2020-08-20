@@ -39,12 +39,12 @@ const Footer: React.FC = () => {
       </WebSiteHelp>
       <CopyRight className={'pageWidthWithCenter'}>
         <p className="gov">
-          <a href="http://www.miit.gov.cn" target="_blank">
-            <img src={require('../../../assert/footer/ba.png')} />
+          <a href="http://www.miit.gov.cn" target="_blank" rel="noopener noreferrer">
+            <img src={require('../../../assert/footer/ba.png')} alt={''} />
             &nbsp;浙ICP备18033218号-1
           </a>
-          <a href="http://zjamr.zj.gov.cn" target="_blank">
-            <img src={require('../../../assert/footer/gs.gif')} />
+          <a href="http://zjamr.zj.gov.cn" target="_blank" rel="noopener noreferrer">
+            <img src={require('../../../assert/footer/gs.gif')} alt={''} />
             &nbsp;浙江工商
           </a>
         </p>

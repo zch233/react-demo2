@@ -26,7 +26,7 @@ const Header: React.FC = () => {
           </div>
           <form className={'searchWrapper'} action="/patent">
             <input className="searchInput" name="word" placeholder="专利号、名称、关键词" />
-            <input hidden name="stockStatus" value="1" />
+            <input hidden name="stockStatus" defaultValue={'1'} />
             <button type="submit">搜索</button>
           </form>
         </SearchBar>
@@ -60,7 +60,7 @@ const Header: React.FC = () => {
           </ul>
           <div className={'userOrLogin'}>
             您好，
-            <Popover placement="bottomRight" content={LoginDialog} trigger="click">
+            <Popover placement="bottomRight" content={<LoginDialog />} trigger="click">
               <span className={'loginSwitch'}>请登录</span>
             </Popover>
           </div>

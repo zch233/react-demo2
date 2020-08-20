@@ -2,79 +2,6 @@ import { Tag, Space, Tooltip, Button, Table, Divider, Popover, Checkbox } from '
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import AliIcon from '../components/AliIcon';
-import { CheckboxValueType } from 'antd/es/checkbox/Group';
-
-const initColumn = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text: any) => <span>{text}</span>,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (tags: any) => (
-      <>
-        {tags.map((tag: any) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (text: any, record: any) => (
-      <Space size="middle">
-        <span>Invite {record.name}</span>
-      </Space>
-    ),
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
 
 const Wrapper = styled.div`
   background-color: #fff;
@@ -102,6 +29,77 @@ type Options = {
   title: string;
 };
 const useTable = ({ title }: Options) => {
+  const initColumn = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text: any) => <span>{text}</span>,
+    },
+    {
+      title: 'Age',
+      dataIndex: 'age',
+      key: 'age',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
+      title: 'Tags',
+      key: 'tags',
+      dataIndex: 'tags',
+      render: (tags: any) => (
+        <>
+          {tags.map((tag: any) => {
+            let color = tag.length > 5 ? 'geekblue' : 'green';
+            if (tag === 'loser') {
+              color = 'volcano';
+            }
+            return (
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (text: any, record: any) => (
+        <Space size="middle">
+          <span>Invite {record.name}</span>
+        </Space>
+      ),
+    },
+  ];
+
+  const data = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
+      tags: ['nice', 'developer'],
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park',
+      tags: ['loser'],
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park',
+      tags: ['cool', 'teacher'],
+    },
+  ];
   const [fullScreen, setFullScreen] = useState(false);
   const [columns, setColumns] = useState(initColumn);
   const defaultCheckedList: string[] = useMemo(() => initColumn.map((column: any) => column.checked !== false && column.title).filter(Boolean), [initColumn]);
@@ -122,7 +120,7 @@ const useTable = ({ title }: Options) => {
       });
       setColumns(checkedList.map((item) => initColumn.filter((v) => v.title === item)).map((v) => v[0]));
     },
-    [initColumn]
+    [initColumn, plainOptions]
   );
   const onChange = useCallback(
     (checkedList: any[]) => {
@@ -133,7 +131,7 @@ const useTable = ({ title }: Options) => {
       });
       setColumns(checkedList.map((item) => initColumn.filter((v) => v.title === item)).map((v) => v[0]));
     },
-    [initColumn]
+    [initColumn, plainOptions]
   );
   const filterCardTitle = (
     <Checkbox

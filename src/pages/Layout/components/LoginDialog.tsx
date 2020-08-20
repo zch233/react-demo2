@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { LoginDialogWrapper } from './HeaderStyles';
 
 type Props = {
-  className: string;
+  className?: string;
 };
 const LoginDialog: React.FC<Props> = ({ className }) => {
   return (

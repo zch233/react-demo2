@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CategoryDialogWrapper } from './HeaderStyles';
 import AliIcon from '../../../components/AliIcon';
 
