@@ -3,9 +3,12 @@ import { Button, Input, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
 import { LoginDialogWrapper } from './HeaderStyles';
 
-const LoginDialog: React.FC = () => {
+type Props = {
+  className: string;
+};
+const LoginDialog: React.FC<Props> = ({ className }) => {
   return (
-    <LoginDialogWrapper>
+    <LoginDialogWrapper className={className}>
       <Tabs type="card" size="small">
         <Tabs.TabPane tab="密码登录" key="passwordLogin">
           <Input className={'input'} addonBefore="手机号" defaultValue="mysite" />
@@ -19,7 +22,7 @@ const LoginDialog: React.FC = () => {
       <Button className={'loginButton'} block>
         登录
       </Button>
-      <Link className={'toSignIn'} to="/auth/sign_in">
+      <Link className={'toSignIn'} to="/auth/sign_up">
         新用户注册
       </Link>
     </LoginDialogWrapper>

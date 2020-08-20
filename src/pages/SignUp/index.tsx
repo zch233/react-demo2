@@ -50,7 +50,7 @@ const SignUp: React.FC = () => {
       <Button className={'signUpButton'} block>
         注 册
       </Button>
-      <Link to={'/auth/sign_up'}>已有账号，去登录</Link>
+      <Link to={'/auth/sign_in'}>已有账号，去登录</Link>
     </Wrapper>
   );
 };
