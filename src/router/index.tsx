@@ -7,6 +7,7 @@ import SignLayout from '../pages/Layout/SignLayout';
 import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
 import NoMatch from '../pages/NoMatch';
+import PatentDetail from '../pages/PatentDetail';
 
 const routes = [
   {
@@ -41,6 +42,11 @@ const routes = [
       {
         path: '/patent',
         component: Patent,
+        exact: true,
+      },
+      {
+        path: '/patent/:id',
+        component: PatentDetail,
         exact: true,
       },
     ],
