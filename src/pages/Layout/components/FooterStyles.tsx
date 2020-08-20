@@ -25,7 +25,14 @@ export const Solution = styled.div`
     justify-content: space-between;
   }
 `;
-export const Questions = styled.div``;
+export const Questions = styled.div`
+  .reason {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
 export const QrCode = styled.div`
   margin-left: auto;
 `;
