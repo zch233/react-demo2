@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.article`
-  margin-right: 15px;
   margin-bottom: 15px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   .preTips {
-    margin: -12px -12px 24px;
+    margin: -12px -12px 30px;
     background-color: #fdf6ec;
     color: #e6a23c;
     box-sizing: border-box;
@@ -40,6 +39,7 @@ export const Wrapper = styled.article`
         display: flex;
         justify-content: space-between;
         padding-right: 18%;
+        font-size: 15px;
         &-item {
           display: flex;
           label {

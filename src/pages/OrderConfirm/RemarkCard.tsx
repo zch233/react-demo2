@@ -7,7 +7,7 @@ const RemarkCard: React.FC = () => {
   return (
     <Wrapper>
       <Card title="给买家留言">
-        <TextArea rows={2} />
+        <TextArea placeholder={'请输入内容'} rows={2} />
       </Card>
     </Wrapper>
   );

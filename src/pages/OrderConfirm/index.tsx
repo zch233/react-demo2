@@ -7,13 +7,14 @@ import PayCard from './PayCard';
 
 const Wrapper = styled.section`
   background-color: #f5f5f5;
-  padding: 10px 0;
+  padding: 24px 0;
 `;
 const Main = styled.section`
   display: flex;
   margin-top: 15px;
   .leftBar {
     flex: 1;
+    margin-right: 15px;
   }
   .rightBar {
     width: 30%;
