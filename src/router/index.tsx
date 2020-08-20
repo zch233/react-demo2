@@ -8,6 +8,7 @@ import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
 import NoMatch from '../pages/NoMatch';
 import PatentDetail from '../pages/PatentDetail';
+import OrderConfirm from '../pages/OrderConfirm';
 
 const routes = [
   {
@@ -47,6 +48,11 @@ const routes = [
       {
         path: '/patent/:id',
         component: PatentDetail,
+        exact: true,
+      },
+      {
+        path: '/order/confirm',
+        component: OrderConfirm,
         exact: true,
       },
     ],
