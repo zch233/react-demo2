@@ -11,6 +11,9 @@ import PatentDetail from '../pages/PatentDetail';
 import OrderConfirm from '../pages/OrderConfirm';
 import UserLayout from '../pages/Layout/UserLayout';
 import Order from '../pages/Order';
+import Vip from '../pages/Vip';
+import Settings from '../pages/Settings';
+import Preorder from '../pages/Preorder';
 
 const routes = [
   {
@@ -64,6 +67,21 @@ const routes = [
           {
             path: '/user/order',
             component: Order,
+            exact: true,
+          },
+          {
+            path: '/user/preorder',
+            component: Preorder,
+            exact: true,
+          },
+          {
+            path: '/user/vip',
+            component: Vip,
+            exact: true,
+          },
+          {
+            path: '/user/settings',
+            component: Settings,
             exact: true,
           },
         ],

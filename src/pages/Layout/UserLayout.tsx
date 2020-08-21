@@ -65,7 +65,7 @@ const UserLayout: React.FC<Props> = ({ routes }) => {
         <Aside>
           <h1>会员中心</h1>
           {links.map((link) => (
-            <NavLink className={`link ${location.pathname === link.path ? 'active' : ''}`} to={link.path}>
+            <NavLink key={link.title} className={`link ${location.pathname === link.path ? 'active' : ''}`} to={link.path}>
               {link.title}
             </NavLink>
           ))}
