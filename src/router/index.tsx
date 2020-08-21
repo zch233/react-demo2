@@ -9,6 +9,8 @@ import SignIn from '../pages/SignIn';
 import NoMatch from '../pages/NoMatch';
 import PatentDetail from '../pages/PatentDetail';
 import OrderConfirm from '../pages/OrderConfirm';
+import UserLayout from '../pages/Layout/UserLayout';
+import Order from '../pages/Order';
 
 const routes = [
   {
@@ -54,6 +56,17 @@ const routes = [
         path: '/order/confirm',
         component: OrderConfirm,
         exact: true,
+      },
+      {
+        path: '/user',
+        component: UserLayout,
+        routes: [
+          {
+            path: '/user/order',
+            component: Order,
+            exact: true,
+          },
+        ],
       },
     ],
   },
