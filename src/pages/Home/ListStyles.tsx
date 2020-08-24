@@ -79,6 +79,7 @@ export const PatentListItem = styled.li`
     &-title {
       color: #3d3d3d;
       line-height: 1.4;
+      font-weight: 600;
     }
     &-status {
       margin-bottom: 0;

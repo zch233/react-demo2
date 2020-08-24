@@ -12,7 +12,7 @@ const PatentCard: React.FC = () => {
         </p>
         <div className={'patent'}>
           <div className={'imageWrapper'}>
-            <img width={'100%'} src={require('../../assert/patent/a.png')} alt="" />
+            <img width={'100%'} src={require('../../assert/patent/A.png')} alt="" />
           </div>
           <div className={'info'}>
             <p className={'info-title'}>一种水晶安装装置</p>

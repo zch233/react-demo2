@@ -9,7 +9,7 @@ const Patent: React.FC = () => {
     <Wrapper className={'pageWidthWithCenter'}>
       <PatentInfo>
         <div className={'imageWrapper'}>
-          <img width={'100%'} src={require('../../assert/patent/a.png')} alt="" />
+          <img width={'100%'} src={require('../../assert/patent/A.png')} alt="" />
         </div>
         <div className={'info'}>
           <h1>一种水晶安装装置</h1>

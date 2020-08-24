@@ -21,7 +21,7 @@ const CategoryDialog: React.FC = () => {
       <ul className={'mainCategory'}>
         {categories.map((category) => (
           <li key={category.id} className={'mainCategory-item'} onClick={() => handleCategoryClick({ category: category.code })}>
-            <AliIcon className={'icon'} icon="categoryA" />
+            <AliIcon className={'icon'} icon={`category${category.code}`} />
             <span className={'name'}>{category.name}</span>
             <AliIcon className={'right'} icon="rightFill" />
             <div className={'detailCategory'}>

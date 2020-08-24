@@ -125,7 +125,7 @@ const OrderItem: React.FC = () => {
       <div className={'bottomBar'}>
         <div className={'productInfo'}>
           <div className={'imageWrapper'}>
-            <img width={'100%'} src={require('../../assert/patent/a.png')} alt="" />
+            <img width={'100%'} src={require('../../assert/patent/A.png')} alt="" />
           </div>
           <div className={'info'}>
             <p className={'title'}>一种方便开启以及闭合的建筑内消防栓箱</p>
