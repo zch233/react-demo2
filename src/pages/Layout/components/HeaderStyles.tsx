@@ -199,8 +199,13 @@ export const CategoryDialogWrapper = styled.div`
         margin-right: 0.7em;
         font-size: 19px;
       }
+      .name {
+        flex: 1;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
       .right {
-        margin-left: auto;
         width: 0.4em;
       }
     }

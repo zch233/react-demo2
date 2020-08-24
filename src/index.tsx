@@ -7,6 +7,8 @@ import './index.css';
 import routes, { RouteWithSubRoutes } from './router/index';
 import Index from './components/Loading/index';
 import { RecoilRoot } from 'recoil';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/es/locale/zh_CN';
 
 const App = () => (
   <Router>
@@ -22,7 +24,9 @@ const App = () => (
 ReactDOM.render(
   <React.Suspense fallback={<Index />}>
     <RecoilRoot>
-      <App />
+      <ConfigProvider locale={zhCN}>
+        <App />
+      </ConfigProvider>
     </RecoilRoot>
   </React.Suspense>,
   document.getElementById('root')

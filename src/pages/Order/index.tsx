@@ -1,15 +1,19 @@
 import React from 'react';
 import OrderItem from './OrderItem';
-import { ConfigProvider, Pagination } from 'antd';
-import zhCN from 'antd/es/locale/zh_CN';
+import { Pagination } from 'antd';
+import styled from 'styled-components';
 
+const PaginationWrapper = styled.section`
+  text-align: center;
+  margin-top: 15px;
+`;
 const Order: React.FC = () => {
   return (
     <>
       <OrderItem />
-      <ConfigProvider locale={zhCN}>
+      <PaginationWrapper>
         <Pagination size="small" total={50} showSizeChanger showQuickJumper />
-      </ConfigProvider>
+      </PaginationWrapper>
     </>
   );
 };
