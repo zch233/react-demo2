@@ -21,3 +21,31 @@ type Patent = {
   tags: string;
   type: number;
 };
+
+type Category = {
+  id: number;
+  name: string;
+  aliaName: string;
+  code: string;
+  icon: null;
+  cover: null;
+  sort: number;
+  description: null;
+  parentIds: null;
+  parentId: number;
+  children: subCategory[];
+};
+
+type SubCategory = {
+  id: number;
+  name: string;
+  aliaName: string;
+  code: string;
+  icon: null;
+  cover: null;
+  sort: number;
+  description: null;
+  parentIds: string;
+  parentId: number;
+  children: never[];
+};

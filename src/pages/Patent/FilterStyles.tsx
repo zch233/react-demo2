@@ -6,6 +6,10 @@ export const UserFilter = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-left: 15px;
+  margin-bottom: 10px;
+  .allCategory {
+    cursor: pointer;
+  }
   .filterText {
     svg {
       width: 0.7em;
@@ -32,9 +36,14 @@ export const UserFilter = styled.div`
 `;
 export const FilterSection = styled.div`
   background-color: #fff;
-  margin-bottom: 20px;
   padding: 5px 15px;
-  margin-top: 10px;
+  transition: all 0.3s;
+  overflow: hidden;
+  &.hide {
+    opacity: 0;
+    height: 0;
+    padding: 0 15px;
+  }
   .filterItem {
     padding: 10px 0;
     border-bottom: 1px dashed #ddd;
@@ -53,6 +62,7 @@ export const FilterSection = styled.div`
       color: #000;
       padding: 0.1em 0.8em;
       border-radius: 2em;
+      transition: all 0.3s;
       &:last-child {
         margin-right: 0;
       }

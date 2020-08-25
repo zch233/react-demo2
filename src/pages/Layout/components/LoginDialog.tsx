@@ -31,7 +31,7 @@ const LoginDialog: React.FC<Props> = ({ className, signInSuccess }) => {
     await api[activeTabKey](formData).finally(() => setSubmitLoading(false));
     message.success('登陆成功！');
     signInSuccess();
-  }, [activeTabKey, formData]);
+  }, [activeTabKey, formData, signInSuccess]);
   const addonAfter = useCaptcha(formData);
   return (
     <LoginDialogWrapper className={className}>

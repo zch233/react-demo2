@@ -9,7 +9,12 @@ import Index from './components/Loading/index';
 import { RecoilRoot } from 'recoil';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
-
+declare global {
+  interface ObjectConstructor {
+    typedKeys<T>(o: T): Array<keyof T>;
+  }
+}
+Object.typedKeys = Object.keys;
 const App = () => (
   <Router>
     <div>
