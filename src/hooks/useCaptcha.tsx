@@ -9,6 +9,7 @@ const useCaptcha = ({ phone }: { phone: string }) => {
     setCaptchaLoading(true);
     await api.getCaptcha({ phone }).finally(() => setCaptchaLoading(false));
     message.success('验证码发送成功，请及时查看');
+    setCaptchaVisible(true);
   }, [phone]);
   const AddonAfterCountdown = useMemo(
     () =>
