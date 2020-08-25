@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { Statistic, Button, Checkbox, Input, message } from 'antd';
 import { Link } from 'react-router-dom';
@@ -20,18 +20,6 @@ const Wrapper = styled.section`
   }
   .input {
     margin-bottom: 15px;
-    &.captcha {
-      .ant-input-group-addon:last-child {
-        padding: 0;
-      }
-      .ant-statistic {
-        padding: 0 12px;
-      }
-      button {
-        border: none;
-        height: auto;
-      }
-    }
   }
   .checkbox {
     margin-bottom: 10px;
@@ -57,57 +45,58 @@ const SignUp: React.FC = () => {
     phone: '',
     referrer: '',
   });
-  const [waitingCaptcha, setWaitingCaptcha] = useState(false);
-  const handleInputChange = (key: string, value: string) => setFormData({ ...formData, [key]: value });
-  const getCaptcha = async () => {
+  const [captchaVisible, setCaptchaVisible] = useState(false);
+  const [referrerVisible, setReferrerVisible] = useState(false);
+  const handleInputChange = useCallback((key: string, event: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, [key]: event.target.value }), [
+    formData,
+  ]);
+  const getCaptcha = useCallback(async () => {
     setCaptchaLoading(true);
     await api.getCaptcha(formData).finally(() => setCaptchaLoading(false));
-    setWaitingCaptcha(true);
-  };
-  const signIn = async () => {
+    setCaptchaVisible(true);
+  }, [formData]);
+  const signIn = useCallback(async () => {
     setSubmitLoading(true);
     await api.signUp(formData).finally(() => setSubmitLoading(false));
     message.success('注册成功!');
-  };
-  const [referrerVisible, setReferrerVisible] = useState(false);
+  }, [formData]);
+  const AddonAfterCountdown = useMemo(
+    () =>
+      captchaVisible && (
+        <Statistic.Countdown
+          onFinish={() => setCaptchaVisible(false)}
+          value={Date.now() + 1000 * 60}
+          valueStyle={{ lineHeight: 1 }}
+          suffix={'s'}
+          format={'ss'}
+        />
+      ),
+    [captchaVisible]
+  );
+  const addonAfterButton = useMemo(
+    () => (
+      <Button loading={captchaLoading} block onClick={getCaptcha}>
+        获取
+      </Button>
+    ),
+    [captchaLoading, getCaptcha]
+  );
   return (
     <Wrapper>
       <h3>新用户注册</h3>
-      <Input className={'input'} addonBefore="手机号" value={formData.phone} onChange={(e) => handleInputChange('phone', e.target.value)} />
-      <Input
-        type={'password'}
-        className={'input'}
-        addonBefore="密　码"
-        value={formData.password}
-        onChange={(e) => handleInputChange('password', e.target.value)}
-      />
+      <Input className={'input'} addonBefore="手机号" value={formData.phone} onChange={(e) => handleInputChange('phone', e)} />
+      <Input type={'password'} className={'input'} addonBefore="密　码" value={formData.password} onChange={(e) => handleInputChange('password', e)} />
       <Input
         className={'input captcha'}
         addonBefore="验证码"
         value={formData.captcha}
-        onChange={(e) => handleInputChange('captcha', e.target.value)}
-        addonAfter={
-          waitingCaptcha ? (
-            <Statistic.Countdown
-              onFinish={() => setWaitingCaptcha(false)}
-              value={Date.now() + 1000 * 60}
-              valueStyle={{ lineHeight: 1 }}
-              suffix={'s'}
-              format={'ss'}
-            />
-          ) : (
-            <Button loading={captchaLoading} block onClick={getCaptcha}>
-              获取
-            </Button>
-          )
-        }
+        onChange={(e) => handleInputChange('captcha', e)}
+        addonAfter={captchaVisible ? AddonAfterCountdown : addonAfterButton}
       />
       <Checkbox className={'checkbox'} onChange={(e) => setReferrerVisible(e.target.checked)}>
         填写推荐人
       </Checkbox>
-      {referrerVisible && (
-        <Input className={'input'} addonBefore="推荐人" onChange={(e) => handleInputChange('referrer', e.target.value)} value={formData.referrer} />
-      )}
+      {referrerVisible && <Input className={'input'} addonBefore="推荐人" onChange={(e) => handleInputChange('referrer', e)} value={formData.referrer} />}
       <Button loading={submitLoading} className={'signUpButton'} block onClick={signIn}>
         注 册
       </Button>
