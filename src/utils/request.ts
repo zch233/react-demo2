@@ -20,7 +20,7 @@ instance.interceptors.request.use(
 const errorHandle = (response: AxiosResponse) => {
   const res = response.data;
   if (res.code !== 200) {
-    message.error(res.msg);
+    message.error(res.msg || '未知错误，请刷新页面重试');
     throw res.msg;
   }
 };
