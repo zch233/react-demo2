@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   padding: 20px 0;
 `;
 const Patent: React.FC = () => {
-  let location = useLocation();
+  const location = useLocation();
   console.log(queryString.parse(location.search));
   return (
     <Wrapper>

@@ -7,9 +7,10 @@ import useCaptcha from '../../../hooks/useCaptcha';
 
 type Props = {
   className?: string;
+  signInSuccess: () => void;
 };
 type ActiveTabKey = 'signInWithPassword' | 'signInWithCaptcha';
-const LoginDialog: React.FC<Props> = ({ className }) => {
+const LoginDialog: React.FC<Props> = ({ className, signInSuccess }) => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState<ActiveTabKey>('signInWithPassword');
   const [formData, setFormData] = useState({
@@ -29,6 +30,7 @@ const LoginDialog: React.FC<Props> = ({ className }) => {
     setSubmitLoading(true);
     await api[activeTabKey](formData).finally(() => setSubmitLoading(false));
     message.success('登陆成功！');
+    signInSuccess();
   }, [activeTabKey, formData]);
   const addonAfter = useCaptcha(formData);
   return (

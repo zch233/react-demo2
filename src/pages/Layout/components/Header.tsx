@@ -60,7 +60,7 @@ const Header: React.FC = () => {
           </ul>
           <div className={'userOrLogin'}>
             您好，
-            <Popover placement="bottomRight" content={<LoginDialog />} trigger="click">
+            <Popover placement="bottomRight" content={<LoginDialog signInSuccess={() => {}} />} trigger="click">
               <span className={'loginSwitch'}>请登录</span>
             </Popover>
           </div>

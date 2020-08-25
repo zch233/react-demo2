@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import LoginDialog from '../Layout/components/LoginDialog';
+import { useHistory, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
 const Wrapper = styled.section`
   background-color: #fff;
@@ -21,10 +23,17 @@ const Wrapper = styled.section`
   }
 `;
 const SignIn: React.FC = () => {
+  const history = useHistory();
+  const location = useLocation();
+  console.log(queryString.parse(location.search));
+  const signInSuccess = () => {
+    const redirectURL = queryString.parse(location.search).redirect;
+    history.push((redirectURL as string | undefined) || '/');
+  };
   return (
     <Wrapper>
       <h3>登录</h3>
-      <LoginDialog className={'loginWrapper'} />
+      <LoginDialog signInSuccess={signInSuccess} className={'loginWrapper'} />
     </Wrapper>
   );
 };
