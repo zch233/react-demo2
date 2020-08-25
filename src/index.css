@@ -180,3 +180,11 @@ head::after {
   border: none;
   height: auto;
 }
+.myTable .ant-table-thead th {
+  font-weight: bold;
+}
+.myTable .ant-table-tbody,
+.myTable .ant-table-thead {
+  font-size: 12px;
+  color: #333;
+}

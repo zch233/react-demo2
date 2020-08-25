@@ -1,7 +1,11 @@
-import { Tag, Space, Tooltip, Button, Table, Divider, Popover, Checkbox } from 'antd';
+import { Tooltip, Button, Table, Divider, Popover, Checkbox } from 'antd';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import AliIcon from '../components/AliIcon';
+import * as api from '../pages/Patent/api';
+import { ColumnsType } from 'antd/es/table';
+import { ColumnTitle } from 'antd/es/table/interface';
+import { CheckboxOptionType, CheckboxValueType } from 'antd/lib/checkbox/Group';
 
 const Wrapper = styled.div`
   background-color: #fff;
@@ -29,80 +33,51 @@ type Options = {
   title: string;
 };
 const useTable = ({ title }: Options) => {
-  const initColumn = [
+  const initColumn: ColumnsType<Patent> = [
     {
-      title: 'Name',
+      title: '专利号',
+      dataIndex: 'number',
+    },
+    {
+      title: '专利名称',
       dataIndex: 'name',
-      key: 'name',
-      render: (text: any) => <span>{text}</span>,
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Tags',
-      key: 'tags',
+      title: '领域',
       dataIndex: 'tags',
-      render: (tags: any) => (
-        <>
-          {tags.map((tag: any) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
     },
     {
-      title: 'Action',
-      key: 'action',
-      render: (text: any, record: any) => (
-        <Space size="middle">
-          <span>Invite {record.name}</span>
-        </Space>
-      ),
+      title: '法律状态',
+      dataIndex: 'legalStatus',
+    },
+    {
+      title: '专利类型',
+      dataIndex: 'type',
+    },
+    {
+      title: '发明人',
+      dataIndex: 'inventorExplain',
+    },
+    {
+      title: '零售价格',
+      dataIndex: 'price',
+      render: (price) => <span>￥{price}</span>,
+    },
+    {
+      title: 'VIP价格',
+      dataIndex: 'vipPrice',
+    },
+    {
+      title: '操作',
+      dataIndex: 'options',
     },
   ];
-
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
+  const [tableData, setTableData] = useState<Patent[]>([]);
   const [fullScreen, setFullScreen] = useState(false);
   const [columns, setColumns] = useState(initColumn);
-  const defaultCheckedList: string[] = useMemo(() => initColumn.map((column: any) => column.checked !== false && column.title).filter(Boolean), [initColumn]);
+  const defaultCheckedList: ColumnTitle<Patent>[] = useMemo(() => initColumn.map((column: any) => column.checked !== false && column.title).filter(Boolean), [
+    initColumn,
+  ]);
   const plainOptions = useMemo(() => initColumn.map((column) => column.title), [initColumn]);
   const [filterData, setFilterData] = useState({
     checkAll: defaultCheckedList.length === initColumn.length,
@@ -133,22 +108,42 @@ const useTable = ({ title }: Options) => {
     },
     [initColumn, plainOptions]
   );
-  const filterCardTitle = (
-    <Checkbox
-      indeterminate={filterData.indeterminate}
-      onChange={(e) => (e.target.checked ? onCheckAllChange(true) : onCheckAllChange(false))}
-      checked={filterData.checkAll}
-    >
-      列展示
-    </Checkbox>
+  const filterCardTitle = useMemo(
+    () => (
+      <Checkbox
+        indeterminate={filterData.indeterminate}
+        onChange={(e) => (e.target.checked ? onCheckAllChange(true) : onCheckAllChange(false))}
+        checked={filterData.checkAll}
+      >
+        列展示
+      </Checkbox>
+    ),
+    [filterData, onCheckAllChange]
   );
-  const filterCardContent = <Checkbox.Group style={{ maxWidth: 400 }} options={plainOptions} value={filterData.checkedList} onChange={onChange} />;
+  const filterCardContent = useMemo(
+    () => (
+      <Checkbox.Group
+        style={{ maxWidth: 400 }}
+        options={plainOptions as CheckboxOptionType[]}
+        value={filterData.checkedList as CheckboxValueType[]}
+        onChange={onChange}
+      />
+    ),
+    [plainOptions, filterData, onChange]
+  );
   useEffect(() => {
     const fn = () => setFullScreen(!!(document.fullscreenElement && document.fullscreenElement === document.body));
     document.addEventListener('fullscreenchange', fn);
     return () => {
       document.removeEventListener('fullscreenchange', fn);
     };
+  }, []);
+  const getPatents = async () => {
+    const { data } = await api.getPatents({});
+    setTableData(data.list);
+  };
+  useEffect(() => {
+    getPatents();
   }, []);
   const table = (
     <Wrapper>
@@ -189,7 +184,14 @@ const useTable = ({ title }: Options) => {
           )}
         </div>
       </TableOptions>
-      <Table columns={columns} dataSource={data} size={'small'} pagination={{ position: ['bottomCenter'] }} />
+      <Table<Patent>
+        className={'myTable'}
+        rowKey={'number'}
+        columns={columns}
+        dataSource={tableData}
+        size={'small'}
+        pagination={{ position: ['bottomCenter'] }}
+      />
     </Wrapper>
   );
   return { table };
