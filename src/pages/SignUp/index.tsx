@@ -1,8 +1,9 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { Statistic, Button, Checkbox, Input, message } from 'antd';
+import { Button, Checkbox, Input, message } from 'antd';
 import { Link } from 'react-router-dom';
 import * as api from './api';
+import useCaptcha from '../../hooks/useCaptcha';
 
 const Wrapper = styled.section`
   background-color: #fff;
@@ -38,49 +39,27 @@ const Wrapper = styled.section`
 `;
 const SignUp: React.FC = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [captchaLoading, setCaptchaLoading] = useState(false);
   const [formData, setFormData] = useState({
     captcha: '',
     password: '',
     phone: '',
     referrer: '',
   });
-  const [captchaVisible, setCaptchaVisible] = useState(false);
   const [referrerVisible, setReferrerVisible] = useState(false);
-  const handleInputChange = useCallback((key: string, event: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, [key]: event.target.value }), [
-    formData,
-  ]);
-  const getCaptcha = useCallback(async () => {
-    setCaptchaLoading(true);
-    await api.getCaptcha(formData).finally(() => setCaptchaLoading(false));
-    setCaptchaVisible(true);
-  }, [formData]);
+  const handleInputChange = useCallback(
+    (key: string, event: React.ChangeEvent<HTMLInputElement>) =>
+      setFormData({
+        ...formData,
+        [key]: event.target.value,
+      }),
+    [formData]
+  );
   const signIn = useCallback(async () => {
     setSubmitLoading(true);
     await api.signUp(formData).finally(() => setSubmitLoading(false));
     message.success('注册成功!');
   }, [formData]);
-  const AddonAfterCountdown = useMemo(
-    () =>
-      captchaVisible && (
-        <Statistic.Countdown
-          onFinish={() => setCaptchaVisible(false)}
-          value={Date.now() + 1000 * 60}
-          valueStyle={{ lineHeight: 1 }}
-          suffix={'s'}
-          format={'ss'}
-        />
-      ),
-    [captchaVisible]
-  );
-  const addonAfterButton = useMemo(
-    () => (
-      <Button loading={captchaLoading} block onClick={getCaptcha}>
-        获取
-      </Button>
-    ),
-    [captchaLoading, getCaptcha]
-  );
+  const addonAfter = useCaptcha(formData);
   return (
     <Wrapper>
       <h3>新用户注册</h3>
@@ -91,7 +70,7 @@ const SignUp: React.FC = () => {
         addonBefore="验证码"
         value={formData.captcha}
         onChange={(e) => handleInputChange('captcha', e)}
-        addonAfter={captchaVisible ? AddonAfterCountdown : addonAfterButton}
+        addonAfter={addonAfter}
       />
       <Checkbox className={'checkbox'} onChange={(e) => setReferrerVisible(e.target.checked)}>
         填写推荐人
