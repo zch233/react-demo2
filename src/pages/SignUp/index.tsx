@@ -25,7 +25,7 @@ const Wrapper = styled.section`
         padding: 0;
       }
       .ant-statistic {
-        padding: 0 11px;
+        padding: 0 12px;
       }
       button {
         border: none;
@@ -61,16 +61,12 @@ const SignUp: React.FC = () => {
   const handleInputChange = (key: string, value: string) => setFormData({ ...formData, [key]: value });
   const getCaptcha = async () => {
     setCaptchaLoading(true);
-    await api.getCaptcha(formData).finally(() => {
-      setCaptchaLoading(false);
-    });
+    await api.getCaptcha(formData).finally(() => setCaptchaLoading(false));
     setWaitingCaptcha(true);
   };
   const signIn = async () => {
     setSubmitLoading(true);
-    await api.signUp(formData).finally(() => {
-      setSubmitLoading(false);
-    });
+    await api.signUp(formData).finally(() => setSubmitLoading(false));
     message.success('注册成功!');
   };
   const [referrerVisible, setReferrerVisible] = useState(false);
