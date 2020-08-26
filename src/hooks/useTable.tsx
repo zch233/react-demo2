@@ -89,20 +89,26 @@ type FetchData = {
 const useTable = ({ title }: Options) => {
   const history = useHistory();
   const location = useLocation();
-  const getFullDate = (date: Date) => `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-  const isToday = (date: string) => getFullDate(new Date()) === getFullDate(new Date(date));
-  const isYesterday = (date: string) => getFullDate(new Date(Date.now() - 3600 * 1000 * 24)) === getFullDate(new Date(date));
+  const highlightKeyword = useCallback((text: string) => {
+    const { word } = queryString.parse(window.location.search) as { word?: string };
+    const __html = word ? text.replace(new RegExp(word, 'g'), `<em class="searchKeyword">${word}</em>`) : text;
+    return <span dangerouslySetInnerHTML={{ __html }} />;
+  }, []);
+  const getFullDate = useCallback((date: Date) => `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`, []);
+  const isToday = useCallback((date: string) => getFullDate(new Date()) === getFullDate(new Date(date)), [getFullDate]);
+  const isYesterday = useCallback((date: string) => getFullDate(new Date(Date.now() - 3600 * 1000 * 24)) === getFullDate(new Date(date)), [getFullDate]);
   const initColumn: ColumnsType<Patent> = [
     {
       title: '专利号',
       dataIndex: 'number',
+      render: (number) => <span>{highlightKeyword(number)}</span>,
     },
     {
       title: '专利名称',
       dataIndex: 'name',
       render: (name, patent) => (
         <Link className={'patentLink'} to={`/patent/${patent.number}`}>
-          {name}
+          {highlightKeyword(name)}
           {(isToday(patent.createTime) || isYesterday(patent.createTime)) && (
             <span className={`tags ${isToday(patent.createTime) ? 'today' : isYesterday(patent.createTime) ? 'yesterday' : ''}`}>
               {isToday(patent.createTime) ? '今' : isYesterday(patent.createTime) ? '昨' : ''}
@@ -114,6 +120,7 @@ const useTable = ({ title }: Options) => {
     {
       title: '领域',
       dataIndex: 'tags',
+      render: (tags) => <span>{highlightKeyword(tags)}</span>,
     },
     {
       title: '法律状态',

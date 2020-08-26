@@ -28,13 +28,13 @@ export const SearchBar = styled.section`
     align-items: center;
     .searchInput {
       width: 22em;
-      border: 1px #285b70 solid;
       background: rgba(92, 99, 117, 0.62);
       border-radius: 10px 0 0 10px;
       line-height: 50px;
       padding: 0 10px;
       border: none;
       outline: none;
+      color: #fff;
       :focus {
         //background: rgba(155, 162, 181, 0.62);
       }

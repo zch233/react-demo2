@@ -1,13 +1,28 @@
-import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { NavLink, useLocation, useHistory } from 'react-router-dom';
 import AliIcon from '../../../components/AliIcon';
 import { message, Popover } from 'antd';
 import LoginDialog from './LoginDialog';
 import { NavBar, SearchBar, TopBar } from './HeaderStyles';
 import CategoryDialog from './CategoryDialog';
+import queryString from 'query-string';
 
 const Header: React.FC = () => {
   const location = useLocation();
+  const history = useHistory();
+  const [keyword, setKeyword] = useState('');
+  const searchPatentWithKeyword = useCallback(
+    (event) => {
+      history.push(`/patent?word=${keyword}`);
+      event.preventDefault();
+      return false;
+    },
+    [keyword, history]
+  );
+  useEffect(() => {
+    const { word } = queryString.parse(window.location.search) as { word?: string };
+    word && setKeyword(word);
+  }, []);
   return (
     <>
       <header>
@@ -24,10 +39,9 @@ const Header: React.FC = () => {
           <div className={'imageWrapper'}>
             <img width="100%" src={require('../../../assert/home/logo.png')} alt="LOGO" />
           </div>
-          <form className={'searchWrapper'} action="/patent">
-            <input className="searchInput" name="word" placeholder="专利号、名称、关键词" />
-            <input hidden name="stockStatus" defaultValue={'1'} />
-            <button type="submit">搜索</button>
+          <form className={'searchWrapper'} onSubmit={searchPatentWithKeyword}>
+            <input className="searchInput" name="word" value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="专利号、名称、关键词" />
+            <button type={'submit'}>搜索</button>
           </form>
         </SearchBar>
       </header>
