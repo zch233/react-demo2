@@ -9,12 +9,12 @@ export const PATENT_TYPE = {
   },
 };
 
-export const PATENT_STATUS = {
+export const PATENT_CERT_STATUS = {
   WEIZHI: 0,
   YIZHENG: 1,
   WEIZHENG: 2,
   label: {
-    '0': '其他',
+    '0': '未知',
     '1': '已下证',
     '2': '未下证',
   },

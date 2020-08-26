@@ -3,7 +3,7 @@ import { CategoryDetailWrapper, FilterSection, UserFilter, Wrapper } from './Fil
 import AliIcon from '../../components/AliIcon';
 import { Popover, Tag } from 'antd';
 import categories, { flatCategories } from '../../utils/categories';
-import { PATENT_STATUS, PATENT_TYPE } from '../../utils/dict';
+import { PATENT_CERT_STATUS, PATENT_TYPE } from '../../utils/dict';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
@@ -15,16 +15,16 @@ type categoryFiltered = {
   code?: string;
   label?: string;
 };
-type statusFiltered = {
+type certStatusFiltered = {
   code?: '0' | '1' | '2';
   label?: string;
 };
 type FilteredCategory = {
   type: typeFiltered;
   category: categoryFiltered;
-  status: statusFiltered;
+  certStatus: certStatusFiltered;
 };
-const initFilteredCategory = { type: {}, category: {}, status: {} };
+const initFilteredCategory = { type: {}, category: {}, certStatus: {} };
 const FilterBar: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
@@ -49,7 +49,7 @@ const FilterBar: React.FC = () => {
     setFilterControl(control);
   }, [filterControl]);
   const handleFilterClick = useCallback(
-    (key: keyof FilteredCategory, data: typeFiltered | categoryFiltered | statusFiltered) => {
+    (key: keyof FilteredCategory, data: typeFiltered | categoryFiltered | certStatusFiltered) => {
       const newFilteredCategory = { ...filteredCategory, [key]: data };
       setFilteredCategory(newFilteredCategory);
       history.push(
@@ -81,15 +81,15 @@ const FilterBar: React.FC = () => {
     history.push('/patent');
   }, [history]);
   useEffect(() => {
-    const { type, category, status } = queryString.parse(location.search) as {
+    const { type, category, certStatus } = queryString.parse(location.search) as {
       type?: '1' | '2' | '3';
-      status?: '0' | '1' | '2';
+      certStatus?: '0' | '1' | '2';
       category?: string;
     };
     setFilteredCategory({
       type: type ? { code: type, label: PATENT_TYPE.label[type] } : {},
       category: category ? { code: category, label: flatCategories[category] } : {},
-      status: status ? { code: status, label: PATENT_STATUS.label[status] } : {},
+      certStatus: certStatus ? { code: certStatus, label: PATENT_CERT_STATUS.label[certStatus] } : {},
     });
   }, []);
   return (
@@ -160,17 +160,17 @@ const FilterBar: React.FC = () => {
         </div>
         <div className={'filterItem'}>
           <label className={'filterItem-label'}>法律状态：</label>
-          <span className={`filterItem-category ${filteredCategory.status.code ? '' : 'active'}`} onClick={() => handleFilterClick('status', {})}>
+          <span className={`filterItem-category ${filteredCategory.certStatus.code ? '' : 'active'}`} onClick={() => handleFilterClick('certStatus', {})}>
             全部
           </span>
-          {Object.typedKeys(PATENT_STATUS.label).map((key) => {
-            const label = PATENT_STATUS.label[key];
+          {Object.typedKeys(PATENT_CERT_STATUS.label).map((key) => {
+            const label = PATENT_CERT_STATUS.label[key];
             const code = key;
             return (
               <span
-                onClick={() => handleFilterClick('status', { code, label })}
+                onClick={() => handleFilterClick('certStatus', { code, label })}
                 key={code}
-                className={`filterItem-category ${filteredCategory.status.code === code ? 'active' : ''}`}
+                className={`filterItem-category ${filteredCategory.certStatus.code === code ? 'active' : ''}`}
               >
                 {label}
               </span>
