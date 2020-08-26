@@ -56,22 +56,26 @@ const Patent: React.FC = () => {
       <ShopInfo>
         <div className={'topBar'}>
           <label>
-            <AliIcon icon={'shop'}></AliIcon>
+            <AliIcon icon={'shop'} />
           </label>
           <p>自营</p>
         </div>
         <div className={'bottomBar'}>
           <p>
-            <AliIcon icon={'shopCard'}></AliIcon>实名认证
+            <AliIcon icon={'shopCard'} />
+            实名认证
           </p>
           <p>
-            <AliIcon icon={'shopOne'}></AliIcon>一手认证
+            <AliIcon icon={'shopOne'} />
+            一手认证
           </p>
           <p>
-            <AliIcon icon={'shopAgent'}></AliIcon>独家代理认证
+            <AliIcon icon={'shopAgent'} />
+            独家代理认证
           </p>
           <p>
-            <AliIcon icon={'shopSend'}></AliIcon>平台寄卖
+            <AliIcon icon={'shopSend'} />
+            平台寄卖
           </p>
         </div>
       </ShopInfo>
