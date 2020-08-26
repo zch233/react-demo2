@@ -150,6 +150,7 @@ const useTable = ({ title }: Options) => {
       ),
     },
   ];
+  const [pageKey, setPageKey] = useState(0);
   const [tableData, setTableData] = useState<Patent[]>([]);
   const [fullScreen, setFullScreen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -165,7 +166,9 @@ const useTable = ({ title }: Options) => {
     indeterminate: false,
     checkedList: defaultCheckedList,
   });
-  const handleRefresh = () => {};
+  const handleRefresh = useCallback(() => {
+    setPageKey(pageKey + 1);
+  }, [pageKey]);
   const onCheckAllChange = useCallback(
     (hasCheckAll: boolean) => {
       const checkedList = hasCheckAll ? plainOptions : [];
@@ -228,7 +231,7 @@ const useTable = ({ title }: Options) => {
   }, []);
   useEffect(() => {
     getPatents(queryString.parse(location.search));
-  }, [location, getPatents]);
+  }, [location, getPatents, pageKey]);
   const table = (
     <Wrapper>
       <TableOptions>
