@@ -51,7 +51,7 @@ const routes = [
         exact: true,
       },
       {
-        path: '/patent/:id',
+        path: '/patent/:number',
         component: PatentDetail,
         exact: true,
       },

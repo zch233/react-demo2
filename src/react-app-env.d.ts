@@ -49,3 +49,10 @@ type SubCategory = {
   parentId: number;
   children: never[];
 };
+
+type Shop = {
+  shopContact: string;
+  shopAvatar: string;
+  shopName: string;
+  shopDesc: string;
+};
