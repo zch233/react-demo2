@@ -197,3 +197,6 @@ head::after {
   background-color: #c9302c;
   border-color: #ac2925;
 }
+.searchKeyword {
+  color: #dd4b39;
+}
