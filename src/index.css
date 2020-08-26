@@ -188,3 +188,12 @@ head::after {
   font-size: 12px;
   color: #333;
 }
+.ant-btn-primary.dangerButton {
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+
+.ant-btn-primary.dangerButton:hover {
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
