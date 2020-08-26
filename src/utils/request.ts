@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import { message } from 'antd';
-
 const instance = axios.create({
   baseURL: process.env.REACT_APP_BASE_API,
   timeout: 30000,
@@ -20,6 +19,9 @@ instance.interceptors.request.use(
 const errorHandle = (response: AxiosResponse) => {
   const res = response.data;
   if (res.code !== 200) {
+    if (res.code === 401) {
+      window.location.href = `/auth/sign_in?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+    }
     message.error(res.msg || '未知错误，请刷新页面重试');
     throw res.msg;
   }

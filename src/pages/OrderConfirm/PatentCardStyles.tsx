@@ -38,7 +38,7 @@ export const Wrapper = styled.article`
       &-detail {
         display: flex;
         justify-content: space-between;
-        padding-right: 18%;
+        padding-right: 8%;
         font-size: 15px;
         &-item {
           display: flex;

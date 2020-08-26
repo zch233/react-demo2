@@ -19,3 +19,18 @@ export const PATENT_CERT_STATUS = {
     '2': '未下证',
   },
 };
+
+export const PATENT_STOCK_STATUS = {
+  DIS_SELL: 0,
+  CAN_SELL: 1,
+  PRE_SELL: 2,
+  DEL_SELL: 3,
+  WAIT_SELL: 4,
+  label: {
+    '0': '已售',
+    '1': '可售',
+    '2': '预售',
+    '3': '已下架',
+    '4': '预留中',
+  },
+};

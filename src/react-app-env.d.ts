@@ -10,16 +10,16 @@ type Patent = {
   createTime: string;
   id: string;
   inventorExplain: string;
-  legalStatus: string;
+  legalStatus: 0 | 1 | 2;
   name: string;
   number: string;
   paymentDeadline: string;
   price: number;
   reserveExpireTime: string;
   reserveMemberId: string;
-  stockStatus: number;
+  stockStatus: 0 | 1 | 2 | 3 | 4;
   tags: string;
-  type: number;
+  type: 1 | 2 | 3;
 };
 
 type Category = {
@@ -55,4 +55,15 @@ type Shop = {
   shopAvatar: string;
   shopName: string;
   shopDesc: string;
+};
+
+type Order = {
+  totalAmount: number;
+  address: string;
+  discounts: {
+    id: null;
+    isCumulate: null;
+    price: number;
+    type: number;
+  }[];
 };
