@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CategoryDetailWrapper, FilterSection, UserFilter, Wrapper } from './FilterStyles';
 import AliIcon from '../../components/AliIcon';
 import { Popover, Tag } from 'antd';
 import categories from '../../utils/categories';
 import { PATENT_STATUS, PATENT_TYPE } from '../../utils/dict';
+import { useHistory, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
 console.log(categories);
 type Filtered = {
@@ -17,13 +19,15 @@ type FilteredCategory = {
 };
 const initFilteredCategory = { type: {}, category: {}, status: {} };
 const FilterBar: React.FC = () => {
+  const history = useHistory();
+  const location = useLocation();
   const [filteredCategory, setFilteredCategory] = useState<FilteredCategory>(initFilteredCategory);
   const [filterControl, setFilterControl] = useState({
     visible: true,
     text: '收起筛选',
     icon: 'top',
   });
-  const handleFilterControl = () => {
+  const handleFilterControl = useCallback(() => {
     const control = filterControl.visible
       ? {
           visible: false,
@@ -36,28 +40,56 @@ const FilterBar: React.FC = () => {
           icon: 'top',
         };
     setFilterControl(control);
-  };
-  const categoryDetail = (subCategories: SubCategory[]) => (
-    <CategoryDetailWrapper>
-      {subCategories.map((subCategory) => {
-        const { code, name } = subCategory;
-        return (
-          <p key={code} className={'item'} onClick={() => handleFilterClick('category', { code, label: name })}>
-            {name}
-          </p>
-        );
-      })}
-    </CategoryDetailWrapper>
+  }, [filterControl]);
+  const handleFilterClick = useCallback(
+    (key: keyof FilteredCategory, data: Filtered) => {
+      const newFilteredCategory = { ...filteredCategory, [key]: data };
+      setFilteredCategory(newFilteredCategory);
+      history.push(
+        `/patent?${Object.typedKeys(newFilteredCategory)
+          .map((key) => newFilteredCategory[key].code && `${key}=${newFilteredCategory[key].code}`)
+          .filter(Boolean)
+          .join('&')}`
+      );
+    },
+    [filteredCategory, history]
   );
-  const handleFilterClick = (key: keyof FilteredCategory, data: Filtered) => {
-    setFilteredCategory({ ...filteredCategory, [key]: data });
-  };
+  const categoryDetail = useCallback(
+    (subCategories: SubCategory[]) => (
+      <CategoryDetailWrapper>
+        {subCategories.map((subCategory) => {
+          const { code, name } = subCategory;
+          return (
+            <p key={code} className={'item'} onClick={() => handleFilterClick('category', { code, label: name })}>
+              {name}
+            </p>
+          );
+        })}
+      </CategoryDetailWrapper>
+    ),
+    [handleFilterClick]
+  );
+  const handleAllCategoryClick = useCallback(() => {
+    setFilteredCategory(initFilteredCategory);
+    history.push('/patent');
+  }, [history]);
+  useEffect(() => {
+    const { type, category, status } = queryString.parse(location.search);
+    console.log(type, category, status);
+    // @ts-ignore
+    // setFilteredCategory({
+    //   type: type ? {code: type, label: '1212'} : {},
+    //   category: category ? {code: category, label: '1212'} : {},
+    //   status: status ? {code: status, label: '1212'} : {},
+    // })
+  }, [location]);
   return (
     <Wrapper className={'pageWidthWithCenter'}>
       <UserFilter>
         <div className={'filterText'}>
-          <span className={'allCategory'} onClick={() => setFilteredCategory(initFilteredCategory)}>
-            所有分类<AliIcon icon={'right'}></AliIcon>
+          <span className={'allCategory'} onClick={handleAllCategoryClick}>
+            所有分类
+            <AliIcon icon={'right'} />
           </span>
           {(Object.keys(filteredCategory) as [keyof FilteredCategory])
             .map((key) => {
@@ -74,13 +106,15 @@ const FilterBar: React.FC = () => {
         </div>
         <div className={'filterControl'} onClick={handleFilterControl}>
           {filterControl.text}
-          <AliIcon icon={filterControl.icon}></AliIcon>
+          <AliIcon icon={filterControl.icon} />
         </div>
       </UserFilter>
       <FilterSection className={filterControl.visible ? '' : 'hide'}>
         <div className={'filterItem'}>
           <label className={'filterItem-label'}>专利类型：</label>
-          <span className={`filterItem-category ${filteredCategory.type.code ? '' : 'active'}`}>全部</span>
+          <span className={`filterItem-category ${filteredCategory.type.code ? '' : 'active'}`} onClick={() => handleFilterClick('type', {})}>
+            全部
+          </span>
           {Object.typedKeys(PATENT_TYPE.label).map((key) => {
             const label = PATENT_TYPE.label[key];
             const code = key;
@@ -97,7 +131,9 @@ const FilterBar: React.FC = () => {
         </div>
         <div className={'filterItem'}>
           <label className={'filterItem-label'}>专利分类：</label>
-          <span className={`filterItem-category ${filteredCategory.category.code ? '' : 'active'}`}>全部</span>
+          <span className={`filterItem-category ${filteredCategory.category.code ? '' : 'active'}`} onClick={() => handleFilterClick('category', {})}>
+            全部
+          </span>
           {categories.map((category) => {
             const { code, name } = category;
             const currentCode = filteredCategory.category.code;
@@ -115,7 +151,9 @@ const FilterBar: React.FC = () => {
         </div>
         <div className={'filterItem'}>
           <label className={'filterItem-label'}>法律状态：</label>
-          <span className={`filterItem-category ${filteredCategory.status.code ? '' : 'active'}`}>全部</span>
+          <span className={`filterItem-category ${filteredCategory.status.code ? '' : 'active'}`} onClick={() => handleFilterClick('status', {})}>
+            全部
+          </span>
           {Object.typedKeys(PATENT_STATUS.label).map((key) => {
             const label = PATENT_STATUS.label[key];
             const code = key;
