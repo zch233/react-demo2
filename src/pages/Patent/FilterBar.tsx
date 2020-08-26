@@ -2,20 +2,27 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { CategoryDetailWrapper, FilterSection, UserFilter, Wrapper } from './FilterStyles';
 import AliIcon from '../../components/AliIcon';
 import { Popover, Tag } from 'antd';
-import categories from '../../utils/categories';
+import categories, { flatCategories } from '../../utils/categories';
 import { PATENT_STATUS, PATENT_TYPE } from '../../utils/dict';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
-console.log(categories);
-type Filtered = {
+type typeFiltered = {
+  code?: '1' | '2' | '3';
+  label?: string;
+};
+type categoryFiltered = {
   code?: string;
   label?: string;
 };
+type statusFiltered = {
+  code?: '0' | '1' | '2';
+  label?: string;
+};
 type FilteredCategory = {
-  type: Filtered;
-  category: Filtered;
-  status: Filtered;
+  type: typeFiltered;
+  category: categoryFiltered;
+  status: statusFiltered;
 };
 const initFilteredCategory = { type: {}, category: {}, status: {} };
 const FilterBar: React.FC = () => {
@@ -42,7 +49,7 @@ const FilterBar: React.FC = () => {
     setFilterControl(control);
   }, [filterControl]);
   const handleFilterClick = useCallback(
-    (key: keyof FilteredCategory, data: Filtered) => {
+    (key: keyof FilteredCategory, data: typeFiltered | categoryFiltered | statusFiltered) => {
       const newFilteredCategory = { ...filteredCategory, [key]: data };
       setFilteredCategory(newFilteredCategory);
       history.push(
@@ -74,15 +81,17 @@ const FilterBar: React.FC = () => {
     history.push('/patent');
   }, [history]);
   useEffect(() => {
-    const { type, category, status } = queryString.parse(location.search);
-    console.log(type, category, status);
-    // @ts-ignore
-    // setFilteredCategory({
-    //   type: type ? {code: type, label: '1212'} : {},
-    //   category: category ? {code: category, label: '1212'} : {},
-    //   status: status ? {code: status, label: '1212'} : {},
-    // })
-  }, [location]);
+    const { type, category, status } = queryString.parse(location.search) as {
+      type?: '1' | '2' | '3';
+      status?: '0' | '1' | '2';
+      category?: string;
+    };
+    setFilteredCategory({
+      type: type ? { code: type, label: PATENT_TYPE.label[type] } : {},
+      category: category ? { code: category, label: flatCategories[category] } : {},
+      status: status ? { code: status, label: PATENT_STATUS.label[status] } : {},
+    });
+  }, []);
   return (
     <Wrapper className={'pageWidthWithCenter'}>
       <UserFilter>

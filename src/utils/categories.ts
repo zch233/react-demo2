@@ -1825,3 +1825,12 @@ const data = {
 };
 
 export default data.data;
+
+const temp: { [key: string]: string } = {};
+const getCodeMap = (data: Category[]) =>
+  data.map((v) => {
+    temp[v.code] = v.name;
+    if (v.children.length) getCodeMap(v.children);
+  });
+getCodeMap(data.data);
+export const flatCategories = temp;

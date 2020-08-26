@@ -122,8 +122,7 @@ const useTable = ({ title }: Options) => {
     {
       title: '专利类型',
       dataIndex: 'type',
-      // @ts-ignore
-      render: (type: number) => <span>{PATENT_TYPE.label[type.toString()]}</span>,
+      render: (type: number) => <span>{PATENT_TYPE.label[type.toString() as '1' | '2' | '3']}</span>,
     },
     {
       title: '发明人',
@@ -222,13 +221,12 @@ const useTable = ({ title }: Options) => {
   }, []);
   const getPatents = useCallback(async (fetchData?: FetchData) => {
     setLoading(true);
-    const { data } = await api.getPatents({ ...fetchData }).finally(() => setLoading(false));
+    const { data } = await api.getPatents({ size: 30, ...fetchData }).finally(() => setLoading(false));
     setTotal(data.totalCount);
     setPageSize(data.size);
     setTableData(data.list);
   }, []);
   useEffect(() => {
-    // @ts-ignore
     getPatents(queryString.parse(location.search));
   }, [location, getPatents]);
   const table = (
