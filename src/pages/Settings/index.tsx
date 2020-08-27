@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button, Card } from 'antd';
+import { Button, Card, Input, Modal } from 'antd';
 import AliIcon from '../../components/AliIcon';
+import UpdateUserInfoModal from './UpdateUserInfoModal';
 
 const Wrapper = styled.section`
   p {
@@ -31,10 +32,18 @@ const Article = styled.article`
   }
 `;
 const Settings: React.FC = () => {
+  const [updateUserInfoModalVisible, setUpdateUserInfoModalVisible] = useState(false);
   return (
     <Wrapper>
       <Article className={'info'}>
-        <Card title="基本信息">
+        <Card
+          title="基本信息"
+          extra={
+            <Button onClick={() => setUpdateUserInfoModalVisible(true)} type={'link'}>
+              编辑
+            </Button>
+          }
+        >
           <p>
             <label className={'label'}>会员账号</label>
             <span>15967137871</span>
@@ -42,7 +51,6 @@ const Settings: React.FC = () => {
           <p>
             <label className={'label'}>会员名称</label>
             <span>会员_15967137871</span>
-            <AliIcon className={'editName'} icon={'edit'} />
           </p>
           <p>
             <label className={'label'}>会员身份</label>
@@ -69,6 +77,11 @@ const Settings: React.FC = () => {
       <Article className={'address'}>
         <Card title="收件地址" extra={<Button type={'link'}>添加</Button>}></Card>
       </Article>
+      <UpdateUserInfoModal
+        visible={updateUserInfoModalVisible}
+        onCancel={() => setUpdateUserInfoModalVisible(false)}
+        onSuccess={() => setUpdateUserInfoModalVisible(false)}
+      />
     </Wrapper>
   );
 };
