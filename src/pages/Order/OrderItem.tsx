@@ -12,20 +12,23 @@ type Props = {
   refreshOrders: () => void;
 };
 const OrderItem: React.FC<Props> = ({ order, changeOrderStatus, refreshOrders }) => {
-  const deleteOrder = (order: Order) => {
-    Modal.confirm({
-      centered: true,
-      title: order.name,
-      okType: 'danger',
-      content: '确定要删除该订单吗？',
-      onOk: async () => {
-        const hide = message.loading('正在删除订单，请稍候...', 0);
-        await api.deleteOrder(order).finally(() => hide());
-        refreshOrders();
-        message.success('删除成功！');
-      },
-    });
-  };
+  const deleteOrder = useCallback(
+    (order: Order) => {
+      Modal.confirm({
+        centered: true,
+        title: order.name,
+        okType: 'danger',
+        content: '确定要删除该订单吗？',
+        onOk: async () => {
+          const hide = message.loading('正在删除订单，请稍候...', 0);
+          await api.deleteOrder(order).finally(() => hide());
+          refreshOrders();
+          message.success('删除成功！');
+        },
+      });
+    },
+    [refreshOrders]
+  );
   const productOptions = useCallback(
     (order: Order) =>
       order.status === ORDER_STATUS.CREATED ? (

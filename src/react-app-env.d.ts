@@ -68,12 +68,12 @@ type Pay = {
   discounts: Discount[];
 };
 type Order = {
-  accountManagerMobile: null;
-  accountManagerName: null;
+  accountManagerMobile: string;
+  accountManagerName: string;
   commodityCategory: string;
   commodityId: string;
   commodityType: 'PATENT';
-  cover: null;
+  cover: string;
   createTime: string;
   deliverySn: null;
   discounts: Discount[];
@@ -84,9 +84,37 @@ type Order = {
   payStatus: string;
   price: number;
   remainSecond: number;
-  remark: null;
+  remark: string;
   sellerShopAvatar: string;
   sellerShopName: string;
   status: 0 | 1 | 2 | 3 | 4 | 6;
   totalAmount: number;
+};
+
+type Preorder = {
+  accountManagerId: number;
+  accountManagerMobile: string;
+  accountManagerName: string;
+  cancelTime: string;
+  cancelType: 0 | 1 | 2;
+  commodityType: string;
+  createTime: string;
+  expireTime: string;
+  id: number;
+  memberAccount: string;
+  memberId: string;
+  memberNickname: string;
+  operator: string;
+  orderNo: string;
+  preStockStatus: 0 | 1 | 2 | 3 | 4;
+  productCategory: string;
+  productCover: string;
+  productId: string;
+  productName: string;
+  productNumber: string;
+  productPrice: number;
+  reserveIdentifier: 'MEMBER' | 'ACCOUNT_MANAGER';
+  sellerShopName: string;
+  status: 0 | 1 | 2 | 3;
+  updateTime: string;
 };

@@ -82,3 +82,67 @@ export const ORDER_STATUS: ORDER_STATUS = {
     '6': '订单已退款',
   },
 };
+
+type PREORDER_STATUS = {
+  CANCEL: 0;
+  CREATED: 1;
+  ORDER: 2;
+  PAYED: 3;
+  label: {
+    '0': '已取消';
+    '1': '预留中';
+    '2': '已下单';
+    '3': '已支付';
+  };
+};
+export const PREORDER_STATUS: PREORDER_STATUS = {
+  CANCEL: 0,
+  CREATED: 1,
+  ORDER: 2,
+  PAYED: 3,
+  label: {
+    '0': '已取消',
+    '1': '预留中',
+    '2': '已下单',
+    '3': '已支付',
+  },
+};
+
+type PREORDER_REFERER = {
+  MEMBER: 'MEMBER';
+  ACCOUNT_MANAGER: 'ACCOUNT_MANAGER';
+  label: {
+    MEMBER: '商城会员';
+    ACCOUNT_MANAGER: '客户经理';
+  };
+};
+
+export const PREORDER_REFERER: PREORDER_REFERER = {
+  MEMBER: 'MEMBER',
+  ACCOUNT_MANAGER: 'ACCOUNT_MANAGER',
+  label: {
+    MEMBER: '商城会员',
+    ACCOUNT_MANAGER: '客户经理',
+  },
+};
+
+type PREORDER_CANCEL_TYPE = {
+  EXPIRED: 0;
+  MEMBER: 1;
+  ACCOUNT_MANAGER: 2;
+  label: {
+    '0': '超时';
+    '1': '用户';
+    '2': '客户经理';
+  };
+};
+export const PREORDER_CANCEL_TYPE: PREORDER_CANCEL_TYPE = {
+  EXPIRED: 0,
+  MEMBER: 1,
+  ACCOUNT_MANAGER: 2,
+  label: {
+    '0': '超时',
+    '1': '用户',
+    '2': '客户经理',
+  },
+};
