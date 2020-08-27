@@ -5,7 +5,13 @@ import styled from 'styled-components';
 import { useLocation, useHistory } from 'react-router-dom';
 import * as api from './api';
 import queryString from 'query-string';
-
+const Wrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
 const PaginationWrapper = styled.section`
   text-align: center;
   margin: 15px 0;
@@ -38,26 +44,36 @@ const Order: React.FC = () => {
   useEffect(() => {
     getOrders(queryString.parse(location.search));
   }, [getOrders, pageKey, location]);
-  if (loading) return <Spin tip="Loading..." />;
   return (
-    <>
-      {orders.map((order) => (
-        <OrderItem key={order.orderNo} order={order} changeOrderStatus={(order) => changeOrderStatus(order)} refreshOrders={() => setPageKey(pageKey + 1)} />
-      ))}
-      <PaginationWrapper>
-        <Pagination
-          size="small"
-          showSizeChanger
-          showQuickJumper
-          pageSize={pageSize}
-          current={current}
-          showTotal={(total) => `共 ${total} 件`}
-          onChange={(page, pageSize) => history.push(`/user/order?no=${page}&size=${pageSize}`)}
-          onShowSizeChange={(page, pageSize) => history.push(`/user/order?no=${page}&size=${pageSize}`)}
-          total={total}
-        />
-      </PaginationWrapper>
-    </>
+    <Wrapper>
+      {loading ? (
+        <Spin tip="Loading..." />
+      ) : (
+        <>
+          {orders.map((order) => (
+            <OrderItem
+              key={order.orderNo}
+              order={order}
+              changeOrderStatus={(order) => changeOrderStatus(order)}
+              refreshOrders={() => setPageKey(pageKey + 1)}
+            />
+          ))}
+          <PaginationWrapper>
+            <Pagination
+              size="small"
+              showSizeChanger
+              showQuickJumper
+              pageSize={pageSize}
+              current={current}
+              showTotal={(total) => `共 ${total} 件`}
+              onChange={(page, pageSize) => history.push(`/user/order?no=${page}&size=${pageSize}`)}
+              onShowSizeChange={(page, pageSize) => history.push(`/user/order?no=${page}&size=${pageSize}`)}
+              total={total}
+            />
+          </PaginationWrapper>
+        </>
+      )}
+    </Wrapper>
   );
 };
 

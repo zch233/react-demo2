@@ -50,10 +50,6 @@ const Section = styled.section`
   background-color: #fff;
   padding: 0 15px;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 `;
 const links = [
   { title: '我的订单', path: '/user/order' },
