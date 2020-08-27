@@ -5,16 +5,11 @@ import 'reset-css';
 import 'antd/dist/antd.css';
 import './index.css';
 import routes, { RouteWithSubRoutes } from './router/index';
-import Index from './components/Loading/index';
+import Loading from './components/Loading/index';
 import { RecoilRoot } from 'recoil';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
-declare global {
-  interface ObjectConstructor {
-    typedKeys<T>(o: T): Array<keyof T>;
-  }
-}
-Object.typedKeys = Object.keys;
+import './utils/extends';
 const App = () => (
   <Router>
     <div>
@@ -27,7 +22,7 @@ const App = () => (
   </Router>
 );
 ReactDOM.render(
-  <React.Suspense fallback={<Index />}>
+  <React.Suspense fallback={<Loading />}>
     <RecoilRoot>
       <ConfigProvider locale={zhCN}>
         <App />

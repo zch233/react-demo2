@@ -12,7 +12,11 @@ const CategoryDialog: React.FC = () => {
   const history = useHistory();
   const handleCategoryClick = useCallback(
     (params: Params) => {
-      history.push(`/patent?${(Object.keys(params) as [keyof Params]).map((key) => `${key}=${params[key]}`).join('&')}`);
+      history.push(
+        `/patent?${Object.typedKeys(params)
+          .map((key) => `${key}=${params[key]}`)
+          .join('&')}`
+      );
     },
     [history]
   );

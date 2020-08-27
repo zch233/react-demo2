@@ -99,7 +99,7 @@ const FilterBar: React.FC = () => {
             所有分类
             <AliIcon icon={'right'} />
           </span>
-          {(Object.keys(filteredCategory) as [keyof FilteredCategory])
+          {Object.typedKeys(filteredCategory)
             .map((key) => {
               const label = filteredCategory[key].label;
               return (
