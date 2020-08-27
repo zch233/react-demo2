@@ -23,7 +23,7 @@ const errorHandle = (response: AxiosResponse) => {
       window.location.href = `/auth/sign_in?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
     }
     message.error(res.msg || '未知错误，请刷新页面重试');
-    throw res.msg;
+    throw res;
   }
 };
 instance.interceptors.response.use(
