@@ -287,7 +287,6 @@ const useTable = ({ title }: Options) => {
         size={'small'}
         pagination={{
           position: ['bottomCenter'],
-          hideOnSinglePage: true,
           showQuickJumper: true,
           pageSize: pageSize,
           showTotal: (total) => `共 ${total} 件`,

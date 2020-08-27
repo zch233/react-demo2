@@ -46,9 +46,8 @@ const PayCard: React.FC = () => {
       payRoute: currentPay.payRoute,
       tradeType: currentPay.tradeType,
     });
-    const downloadUrl = window.URL.createObjectURL(new Blob([data], { type: 'text/html' }));
     const anchor = document.createElement('a');
-    anchor.href = downloadUrl;
+    anchor.href = window.URL.createObjectURL(new Blob([data], { type: 'text/html' }));
     anchor.target = '_blank';
     anchor.click();
   }, [orderConfirm, currentPay]);

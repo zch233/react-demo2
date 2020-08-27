@@ -24,7 +24,7 @@ const Main = styled.section`
     width: 30%;
   }
 `;
-type OrderConfirm = Partial<Patent & Shop & Order>;
+type OrderConfirm = Partial<Patent & Shop & Pay>;
 type Context = {
   loading?: boolean;
   orderConfirm?: OrderConfirm;

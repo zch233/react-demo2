@@ -1831,6 +1831,8 @@ const getCodeMap = (data: Category[]) =>
   data.map((v) => {
     temp[v.code] = v.name;
     if (v.children.length) getCodeMap(v.children);
+    return temp;
   });
+
 getCodeMap(data.data);
 export const flatCategories = temp;

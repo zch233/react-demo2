@@ -56,14 +56,37 @@ type Shop = {
   shopName: string;
   shopDesc: string;
 };
-
-type Order = {
+type Discount = {
+  id: null;
+  isCumulate: null;
+  price: number;
+  type: number;
+};
+type Pay = {
   totalAmount: number;
   address: string;
-  discounts: {
-    id: null;
-    isCumulate: null;
-    price: number;
-    type: number;
-  }[];
+  discounts: Discount[];
+};
+type Order = {
+  accountManagerMobile: null;
+  accountManagerName: null;
+  commodityCategory: string;
+  commodityId: string;
+  commodityType: 'PATENT';
+  cover: null;
+  createTime: string;
+  deliverySn: null;
+  discounts: Discount[];
+  invoiceStatus: null;
+  name: string;
+  number: string;
+  orderNo: string;
+  payStatus: string;
+  price: number;
+  remainSecond: number;
+  remark: null;
+  sellerShopAvatar: string;
+  sellerShopName: string;
+  status: 0 | 1 | 2 | 3 | 4 | 6;
+  totalAmount: number;
 };

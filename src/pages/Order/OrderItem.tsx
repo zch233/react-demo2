@@ -1,148 +1,91 @@
-import React from 'react';
-import { Button } from 'antd';
-import styled from 'styled-components';
+import React, { useCallback } from 'react';
+import { Button, message, Modal, Statistic } from 'antd';
+import { Wrapper } from './OrderItemStyles';
+import { Link } from 'react-router-dom';
+import * as api from './api';
+import { ORDER_STATUS } from '../../utils/dict';
+import AliIcon from '../../components/AliIcon';
 
-const Wrapper = styled.div`
-  border: 1px #ddd solid;
-  margin-top: 15px;
-  .topBar {
-    display: flex;
-    font-size: 12px;
-    color: #000;
-    background-color: #eee;
-    p {
-      margin: 0;
-      padding: 10px;
-    }
-    .orderInfo {
-      flex: 2.8;
-      time {
-        font-weight: bold;
-        margin-right: 1em;
-      }
-    }
-    .orderShop {
-      flex: 1.5;
-    }
-    .orderManager {
-      flex: 2;
-      padding: 10px 30px 10px 10px;
-      label {
-        margin-right: 1em;
-      }
-    }
-  }
-  .bottomBar {
-    display: flex;
-    > div {
-      padding: 10px;
-    }
-    .productInfo {
-      display: flex;
-      align-items: center;
-      border-right: 1px solid #ddd;
-      flex: 2.8;
-      .imageWrapper {
-        width: 80px;
-      }
-      .info {
-        margin-left: 10px;
-        flex: 1;
-        .title {
-          color: #31708f;
-          font-size: 16px;
-          line-height: 1.1;
-        }
-        em {
-          color: #777;
-        }
-      }
-    }
-    .productPrice {
-      color: #000;
-      border-right: 1px solid #ddd;
-      flex: 1.5;
-      font-size: 12px;
-      display: inline-flex;
-      flex-direction: column;
-      justify-content: center;
-      p {
-        margin: 0;
-      }
-      .result {
-        color: #e4393c;
-        em {
-          font-size: 16px;
-          font-weight: bold;
-        }
-      }
-    }
-    .productStatus {
-      flex: 1;
-      border-right: 1px solid #ddd;
-      display: inline-flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #000;
-    }
-    .productOptions {
-      flex: 1;
-      display: inline-flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-size: 12px;
-      p {
-        margin: 0;
-      }
-      .delete {
-        color: #000;
-        font-size: 12px;
-        &:hover {
-          span {
-            text-decoration: underline;
-            color: #23527c;
-          }
-        }
-      }
-    }
-  }
-`;
-const OrderItem: React.FC = () => {
+type Props = {
+  order: Order;
+  changeOrderStatus: (order: Order) => void;
+  refreshOrders: () => void;
+};
+const OrderItem: React.FC<Props> = ({ order, changeOrderStatus, refreshOrders }) => {
+  const deleteOrder = (order: Order) => {
+    Modal.confirm({
+      centered: true,
+      title: order.name,
+      okType: 'danger',
+      content: '确定要删除该订单吗？',
+      onOk: async () => {
+        const hide = message.loading('正在删除订单，请稍候...', 0);
+        await api.deleteOrder(order).finally(() => hide());
+        refreshOrders();
+        message.success('删除成功！');
+      },
+    });
+  };
+  const productOptions = useCallback(
+    (order: Order) =>
+      order.status === ORDER_STATUS.CREATED ? (
+        <>
+          <div className={'countDown'}>
+            <AliIcon icon={'clock'} />
+            <Statistic.Countdown
+              onFinish={() => changeOrderStatus({ ...order, status: ORDER_STATUS.CLOSED })}
+              value={Date.now() + 1000 * order.remainSecond}
+              valueStyle={{ lineHeight: 1 }}
+              format={'m分s秒'}
+            />
+          </div>
+          <Button type={'primary'} size={'small'} className={'dangerButton'} block>
+            去支付
+          </Button>
+        </>
+      ) : (
+        <p>{ORDER_STATUS.label[order.status]}</p>
+      ),
+    [changeOrderStatus]
+  );
   return (
     <Wrapper>
       <div className={'topBar'}>
         <p className={'orderInfo'}>
-          <time>2020-07-29 18:17:16</time>
-          <span>订单号：70941770464100352</span>
+          <time>{order.createTime}</time>
+          <span>订单号：{order.orderNo}</span>
         </p>
-        <p className={'orderShop'}>买家：自营</p>
+        <p className={'orderShop'}>买家：{order.sellerShopName}</p>
         <p className={'orderManager'}>
-          <label>客户经理：陈佳佳</label>电话：13884446701
+          <label>{order.accountManagerName && <span>客户经理：{order.accountManagerName}</span>}</label>
+          {order.accountManagerMobile && <span>电话：{order.accountManagerMobile}</span>}
         </p>
       </div>
       <div className={'bottomBar'}>
         <div className={'productInfo'}>
           <div className={'imageWrapper'}>
-            <img width={'100%'} src={require('../../assert/patent/A.png')} alt="" />
+            <img width={'100%'} src={require('../../assert/patent/' + order.commodityCategory.slice(0, 1) + '.png')} alt="" />
           </div>
           <div className={'info'}>
-            <p className={'title'}>一种方便开启以及闭合的建筑内消防栓箱</p>
-            <em>2019112761773</em>
+            <p className={'title'}>
+              <Link to={`/patent/${order.number}`}>{order.name}</Link>
+            </p>
+            <em>{order.number}</em>
           </div>
         </div>
         <div className={'productPrice'}>
-          <p>原价：￥20000.00</p>
-          <p>VIP会员折扣：-￥5000</p>
+          <p>原价：￥{order.price}</p>
+          {order.discounts.map((discount) => (
+            <p key={discount.price}>VIP会员折扣：-￥{discount.price}</p>
+          ))}
           <p className={'result'}>
-            实付：<em>￥15000.00</em>
+            实付：<em>￥{order.totalAmount}</em>
           </p>
         </div>
-        <div className={'productStatus'}></div>
+        <div className={'productStatus'} />
         <div className={'productOptions'}>
-          <p>订单已关闭</p>
-          <Button size={'small'} className={'delete'} type="text">
+          {productOptions(order)}
+          <Button size={'small'} className={'delete'} type="text" onClick={() => deleteOrder(order)}>
             删除订单
           </Button>
         </div>
