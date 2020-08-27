@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button, Card, Input, Modal } from 'antd';
-import AliIcon from '../../components/AliIcon';
 import UpdateUserInfoModal from './UpdateUserInfoModal';
+import UpdateAddressModal from './UpdateAddressModal';
+import UpdatePasswordModal from './UpdatePasswordModal';
 
 const Wrapper = styled.section`
   p {
@@ -33,6 +34,8 @@ const Article = styled.article`
 `;
 const Settings: React.FC = () => {
   const [updateUserInfoModalVisible, setUpdateUserInfoModalVisible] = useState(false);
+  const [updateAddressModalVisible, setUpdateAddressModalVisible] = useState(false);
+  const [updatePasswordModalVisible, setUpdatePasswordModalVisible] = useState(false);
   return (
     <Wrapper>
       <Article className={'info'}>
@@ -62,7 +65,7 @@ const Settings: React.FC = () => {
         <Card title="安全中心">
           <p>
             <label className={'label'}>登录密码</label>
-            <Button className={'updatePassword'} type={'text'}>
+            <Button className={'updatePassword'} type={'text'} onClick={() => setUpdatePasswordModalVisible(true)}>
               修改密码
             </Button>
           </p>
@@ -75,12 +78,29 @@ const Settings: React.FC = () => {
         </Card>
       </Article>
       <Article className={'address'}>
-        <Card title="收件地址" extra={<Button type={'link'}>添加</Button>}></Card>
+        <Card
+          title="收件地址"
+          extra={
+            <Button type={'link'} onClick={() => setUpdateAddressModalVisible(true)}>
+              添加
+            </Button>
+          }
+        ></Card>
       </Article>
       <UpdateUserInfoModal
         visible={updateUserInfoModalVisible}
         onCancel={() => setUpdateUserInfoModalVisible(false)}
         onSuccess={() => setUpdateUserInfoModalVisible(false)}
+      />
+      <UpdateAddressModal
+        visible={updateAddressModalVisible}
+        onCancel={() => setUpdateAddressModalVisible(false)}
+        onSuccess={() => setUpdateAddressModalVisible(false)}
+      />
+      <UpdatePasswordModal
+        visible={updatePasswordModalVisible}
+        onCancel={() => setUpdatePasswordModalVisible(false)}
+        onSuccess={() => setUpdatePasswordModalVisible(false)}
       />
     </Wrapper>
   );
