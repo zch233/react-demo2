@@ -112,6 +112,7 @@ export const Wrapper = styled.div`
         align-items: center;
         .ant-statistic {
           .ant-statistic-content {
+            font-weight: bold;
             font-size: 12px;
           }
         }
@@ -120,9 +121,10 @@ export const Wrapper = styled.div`
           font-size: 14px;
         }
       }
-      .delete {
+      .orderButton {
         color: #000;
         font-size: 12px;
+        font-weight: normal;
         &:hover {
           span {
             text-decoration: underline;
@@ -131,5 +133,28 @@ export const Wrapper = styled.div`
         }
       }
     }
+  }
+`;
+export const PayRouteItem = styled.article`
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  white-space: nowrap;
+  padding: 7px 0;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  &:hover {
+    background-color: #f5f5f5;
+  }
+  > svg {
+    margin-right: 5px;
+    font-size: 40px;
+  }
+  .label {
+    font-weight: bold;
+    font-size: 13px;
+  }
+  .description {
+    margin: 0;
   }
 `;

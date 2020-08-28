@@ -26,3 +26,23 @@ export const deleteOrder = ({ orderNo }: Order) => {
     method: 'delete',
   });
 };
+
+export const cancelOrder = ({ orderNo }: Order) => {
+  return request({
+    url: `/api/v1/order/cancel?orderNo=${orderNo}`,
+    method: 'put',
+  });
+};
+
+type PayOrder = {
+  orderNo: string;
+  payRoute: string;
+  tradeType: string;
+};
+export const payOrder = (data: PayOrder) => {
+  return request({
+    url: '/api/v1/order/pay',
+    method: 'post',
+    data,
+  });
+};

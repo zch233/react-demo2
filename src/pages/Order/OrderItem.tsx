@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
-import { Button, message, Modal, Statistic } from 'antd';
-import { Wrapper } from './OrderItemStyles';
+import { Button, message, Modal, Popover, Statistic } from 'antd';
+import { PayRouteItem, Wrapper } from './OrderItemStyles';
 import { Link } from 'react-router-dom';
 import * as api from './api';
-import { ORDER_STATUS } from '../../utils/dict';
+import { ORDER_STATUS, PAY_ROUTES } from '../../utils/dict';
 import AliIcon from '../../components/AliIcon';
+import { openNewWidowWithHTML } from '../../utils';
 
 type Props = {
   order: Order;
@@ -29,6 +30,27 @@ const OrderItem: React.FC<Props> = ({ order, changeOrderStatus, refreshOrders })
     },
     [refreshOrders]
   );
+  const cancelOrder = useCallback(
+    (order: Order) => {
+      Modal.confirm({
+        centered: true,
+        title: order.name,
+        okType: 'danger',
+        content: '确定要取消该订单吗？',
+        onOk: async () => {
+          const hide = message.loading('正在取消订单，请稍候...', 0);
+          await api.cancelOrder(order).finally(() => hide());
+          refreshOrders();
+          message.success('删除成功！');
+        },
+      });
+    },
+    [refreshOrders]
+  );
+  const payOrder = useCallback(async (order: Order, payRoute) => {
+    const { data } = await api.payOrder({ payRoute: payRoute.payRoute, orderNo: order.orderNo, tradeType: payRoute.tradeType });
+    openNewWidowWithHTML(data);
+  }, []);
   const productOptions = useCallback(
     (order: Order) =>
       order.status === ORDER_STATUS.CREATED ? (
@@ -42,14 +64,36 @@ const OrderItem: React.FC<Props> = ({ order, changeOrderStatus, refreshOrders })
               format={'m分s秒'}
             />
           </div>
-          <Button type={'primary'} size={'small'} className={'dangerButton'} block>
-            去支付
+          <Popover
+            placement={'bottom'}
+            content={PAY_ROUTES.map((payRoute) => (
+              <PayRouteItem onClick={() => payOrder(order, payRoute)} key={payRoute.label} className={'payRouteItem'}>
+                <AliIcon icon={payRoute.icon} />
+                <div>
+                  <em className={'label'}>{payRoute.label}</em>
+                  <p className={'description'}>{payRoute.description}</p>
+                </div>
+              </PayRouteItem>
+            ))}
+            title="请选择支付方式"
+          >
+            <Button type={'primary'} size={'small'} className={'dangerButton'} block>
+              去支付
+            </Button>
+          </Popover>
+          <Button size={'small'} className={'orderButton cancel'} type="text" onClick={() => cancelOrder(order)}>
+            取消订单
           </Button>
         </>
       ) : (
-        <p>{ORDER_STATUS.label[order.status]}</p>
+        <>
+          <p>{ORDER_STATUS.label[order.status]}</p>
+          <Button size={'small'} className={'orderButton delete'} type="text" onClick={() => deleteOrder(order)}>
+            删除订单
+          </Button>
+        </>
       ),
-    [changeOrderStatus]
+    [changeOrderStatus, deleteOrder, cancelOrder, payOrder]
   );
   return (
     <Wrapper>
@@ -86,12 +130,7 @@ const OrderItem: React.FC<Props> = ({ order, changeOrderStatus, refreshOrders })
           </p>
         </div>
         <div className={'productStatus'} />
-        <div className={'productOptions'}>
-          {productOptions(order)}
-          <Button size={'small'} className={'delete'} type="text" onClick={() => deleteOrder(order)}>
-            删除订单
-          </Button>
-        </div>
+        <div className={'productOptions'}>{productOptions(order)}</div>
       </div>
     </Wrapper>
   );
