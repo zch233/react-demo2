@@ -24,9 +24,17 @@ type FilteredCategory = {
   category: categoryFiltered;
   certStatus: certStatusFiltered;
 };
+
 const initFilteredCategory = { type: {}, category: {}, certStatus: {} };
 const FilterBar: React.FC = () => {
   const history = useHistory();
+  const [popoverVisible, setPopoverVisible] = useState(
+    (() => {
+      const temp: { [key: string]: boolean } = {};
+      categories.map((category) => (temp[category.code] = false));
+      return temp;
+    })()
+  );
   const [filteredCategory, setFilteredCategory] = useState<FilteredCategory>(initFilteredCategory);
   const [filterControl, setFilterControl] = useState({
     visible: true,
@@ -57,8 +65,9 @@ const FilterBar: React.FC = () => {
           .filter(Boolean)
           .join('&')}`
       );
+      key === 'category' && setPopoverVisible({ ...popoverVisible, [data.code!.slice(0, 1)]: false });
     },
-    [filteredCategory, history]
+    [filteredCategory, history, popoverVisible]
   );
   const categoryDetail = useCallback(
     (subCategories: SubCategory[]) => (
@@ -146,8 +155,15 @@ const FilterBar: React.FC = () => {
             const { code, name } = category;
             const currentCode = filteredCategory.category.code;
             return (
-              <Popover key={code} placement="bottom" content={() => categoryDetail(category.children)}>
+              <Popover
+                key={code}
+                placement="bottom"
+                visible={popoverVisible[code]}
+                onVisibleChange={(visible) => setPopoverVisible({ ...popoverVisible, [category.code]: visible })}
+                content={() => categoryDetail(category.children)}
+              >
                 <span
+                  key={code}
                   className={`filterItem-category ${(currentCode && currentCode.slice(0, 1)) === code ? 'active' : ''}`}
                   onClick={() => handleFilterClick('category', { code, label: name })}
                 >
