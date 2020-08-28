@@ -41,7 +41,7 @@ const OrderItem: React.FC<Props> = ({ order, changeOrderStatus, refreshOrders })
           const hide = message.loading('正在取消订单，请稍候...', 0);
           await api.cancelOrder(order).finally(() => hide());
           refreshOrders();
-          message.success('删除成功！');
+          message.success('取消成功！');
         },
       });
     },
