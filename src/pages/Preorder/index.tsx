@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import OrderItem from './OrderItem';
-import { Pagination, Spin } from 'antd';
+import { Empty, Pagination, Spin } from 'antd';
 import styled from 'styled-components';
 import { useLocation, useHistory } from 'react-router-dom';
 import * as api from './api';
@@ -47,6 +47,8 @@ const Order: React.FC = () => {
     <Wrapper>
       {loading ? (
         <Spin tip="Loading..." />
+      ) : preorders.length === 0 ? (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       ) : (
         <>
           {preorders.map((preorder) => (
