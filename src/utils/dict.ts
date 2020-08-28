@@ -20,7 +20,7 @@ export const PATENT_CERT_STATUS = {
   },
 };
 
-type PATENT_STOCK_STATUS = {
+type TYPE_PATENT_STOCK_STATUS = {
   DIS_SELL: 0;
   CAN_SELL: 1;
   PRE_SELL: 2;
@@ -34,7 +34,7 @@ type PATENT_STOCK_STATUS = {
     '4': '预留中';
   };
 };
-export const PATENT_STOCK_STATUS: PATENT_STOCK_STATUS = {
+export const PATENT_STOCK_STATUS: TYPE_PATENT_STOCK_STATUS = {
   DIS_SELL: 0,
   CAN_SELL: 1,
   PRE_SELL: 2,
@@ -49,7 +49,7 @@ export const PATENT_STOCK_STATUS: PATENT_STOCK_STATUS = {
   },
 };
 
-type ORDER_STATUS = {
+type TYPE_ORDER_STATUS = {
   CREATED: 0;
   PAYED: 1;
   DELIVERED: 2;
@@ -66,7 +66,7 @@ type ORDER_STATUS = {
   };
 };
 
-export const ORDER_STATUS: ORDER_STATUS = {
+export const ORDER_STATUS: TYPE_ORDER_STATUS = {
   CREATED: 0,
   PAYED: 1,
   DELIVERED: 2,
@@ -83,7 +83,7 @@ export const ORDER_STATUS: ORDER_STATUS = {
   },
 };
 
-type PREORDER_STATUS = {
+type TYPE_PREORDER_STATUS = {
   CANCEL: 0;
   CREATED: 1;
   ORDER: 2;
@@ -95,7 +95,7 @@ type PREORDER_STATUS = {
     '3': '已支付';
   };
 };
-export const PREORDER_STATUS: PREORDER_STATUS = {
+export const PREORDER_STATUS: TYPE_PREORDER_STATUS = {
   CANCEL: 0,
   CREATED: 1,
   ORDER: 2,
@@ -108,7 +108,7 @@ export const PREORDER_STATUS: PREORDER_STATUS = {
   },
 };
 
-type PREORDER_REFERER = {
+type TYPE_PREORDER_REFERER = {
   MEMBER: 'MEMBER';
   ACCOUNT_MANAGER: 'ACCOUNT_MANAGER';
   label: {
@@ -117,7 +117,7 @@ type PREORDER_REFERER = {
   };
 };
 
-export const PREORDER_REFERER: PREORDER_REFERER = {
+export const PREORDER_REFERER: TYPE_PREORDER_REFERER = {
   MEMBER: 'MEMBER',
   ACCOUNT_MANAGER: 'ACCOUNT_MANAGER',
   label: {
@@ -126,7 +126,7 @@ export const PREORDER_REFERER: PREORDER_REFERER = {
   },
 };
 
-type PREORDER_CANCEL_TYPE = {
+type TYPE_PREORDER_CANCEL_TYPE = {
   EXPIRED: 0;
   MEMBER: 1;
   ACCOUNT_MANAGER: 2;
@@ -136,7 +136,7 @@ type PREORDER_CANCEL_TYPE = {
     '2': '客户经理';
   };
 };
-export const PREORDER_CANCEL_TYPE: PREORDER_CANCEL_TYPE = {
+export const PREORDER_CANCEL_TYPE: TYPE_PREORDER_CANCEL_TYPE = {
   EXPIRED: 0,
   MEMBER: 1,
   ACCOUNT_MANAGER: 2,
@@ -146,3 +146,49 @@ export const PREORDER_CANCEL_TYPE: PREORDER_CANCEL_TYPE = {
     '2': '客户经理',
   },
 };
+export type TYPE_PAY_ROUTES = [
+  {
+    icon: 'aliPay';
+    label: '支付宝';
+    description: '数亿用户都用，安全可托付';
+    payRoute: 'ALIPAY';
+    tradeType: 'WEB';
+  },
+  {
+    icon: 'unionPay';
+    label: '在线支付';
+    description: '欢迎使用银联支付';
+    payRoute: 'UNION_PAY';
+    tradeType: 'WEB';
+  },
+  {
+    icon: 'wechatPay';
+    label: '微信';
+    description: '微信，是一种生活方式';
+    payRoute: 'WXPAY';
+    tradeType: 'NATIVE';
+  }
+];
+export const PAY_ROUTES: TYPE_PAY_ROUTES = [
+  {
+    icon: 'aliPay',
+    label: '支付宝',
+    description: '数亿用户都用，安全可托付',
+    payRoute: 'ALIPAY',
+    tradeType: 'WEB',
+  },
+  {
+    icon: 'unionPay',
+    label: '在线支付',
+    description: '欢迎使用银联支付',
+    payRoute: 'UNION_PAY',
+    tradeType: 'WEB',
+  },
+  {
+    icon: 'wechatPay',
+    label: '微信',
+    description: '微信，是一种生活方式',
+    payRoute: 'WXPAY',
+    tradeType: 'NATIVE',
+  },
+];

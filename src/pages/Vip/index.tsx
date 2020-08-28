@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import AliIcon from '../../components/AliIcon';
 import { Button } from 'antd';
+import { StoreContext } from '../../index';
+import BuyVipModal from './BuyVipModal';
 
 const Activity = styled.section`
   background-color: #f5f5f5;
@@ -60,6 +62,8 @@ const activities = [
   { icon: 'coupon', label: '参与专利特价活动' },
 ];
 const Vip: React.FC = () => {
+  const { state } = useContext(StoreContext);
+  const [visible, setVisible] = useState(false);
   return (
     <>
       <Activity>
@@ -73,12 +77,23 @@ const Vip: React.FC = () => {
         ))}
       </Activity>
       <Section>
-        <h3>
-          会员_41554654564 <span className={'brand'}>年卡会员</span>
-        </h3>
-        <p>2021年06月19日到期</p>
-        <Button type="primary">开通/续费</Button>
+        {state.user.hasVip ? (
+          <>
+            <h3>
+              {state.user.nickname} <span className={'brand'}>年卡会员</span>
+            </h3>
+            <p>{state.user.vipExpireDate}到期</p>
+          </>
+        ) : state.user.hasExpiredVip ? (
+          <p>{`您的会员已于 ${state.user.vipExpireDate} 到期，继续开通享受诸多特权！`}</p>
+        ) : (
+          <p>尊敬的会员，开通VIP年费会员将获得诸多特权！</p>
+        )}
+        <Button type="primary" onClick={() => setVisible(true)}>
+          开通/续费
+        </Button>
       </Section>
+      <BuyVipModal visible={visible} onSuccess={() => setVisible(false)} onCancel={() => setVisible(false)} />
     </>
   );
 };

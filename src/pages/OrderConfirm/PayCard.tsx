@@ -4,39 +4,11 @@ import { Wrapper } from './PayCardStyles';
 import AliIcon from '../../components/AliIcon';
 import { OrderConfirmContext } from './index';
 import * as api from './api';
+import { PAY_ROUTES, TYPE_PAY_ROUTES } from '../../utils/dict';
+import { openNewWidowWithHTML } from '../../utils';
 
-const payRoutes = [
-  {
-    icon: 'unionPay',
-    label: '在线支付',
-    description: '欢迎使用银联支付',
-    payRoute: 'UNION_PAY',
-    tradeType: 'WEB',
-  },
-  {
-    icon: 'aliPay',
-    label: '支付宝',
-    description: '数亿用户都用，安全可托付',
-    payRoute: 'ALIPAY',
-    tradeType: 'WEB',
-  },
-  {
-    icon: 'wechatPay',
-    label: '微信',
-    description: '微信，是一种生活方式',
-    payRoute: 'WXPAY',
-    tradeType: 'NATIVE',
-  },
-];
-type PayRoute = {
-  icon: string;
-  label: string;
-  description: string;
-  payRoute: string;
-  tradeType: string;
-};
 const PayCard: React.FC = () => {
-  const [currentPay, setCurrentPay] = useState<PayRoute>(payRoutes[0]);
+  const [currentPay, setCurrentPay] = useState<TYPE_PAY_ROUTES[number]>(PAY_ROUTES[0]);
   const { loading, orderConfirm } = useContext(OrderConfirmContext);
   const handleBuyClick = useCallback(async () => {
     const { data } = await api.payOrder({
@@ -46,10 +18,7 @@ const PayCard: React.FC = () => {
       payRoute: currentPay.payRoute,
       tradeType: currentPay.tradeType,
     });
-    const anchor = document.createElement('a');
-    anchor.href = window.URL.createObjectURL(new Blob([data], { type: 'text/html' }));
-    anchor.target = '_blank';
-    anchor.click();
+    openNewWidowWithHTML(data);
   }, [orderConfirm, currentPay]);
   return (
     <Wrapper>
@@ -70,7 +39,7 @@ const PayCard: React.FC = () => {
             <em>￥{orderConfirm?.totalAmount}</em>
           </p>
           <div className={'payRoute'}>
-            {payRoutes.map((payRoute) => (
+            {PAY_ROUTES.map((payRoute) => (
               <label key={payRoute.label} className={'payRoute-item'} onClick={() => setCurrentPay(payRoute)}>
                 <AliIcon className={'payRoute-item-icon'} icon={payRoute.icon} />
                 <div className="payRoute-item-info">
