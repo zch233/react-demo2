@@ -2,6 +2,14 @@ import React from 'react';
 import { ChooseUs, CopyRight, QrCode, Questions, Solution, WebSiteHelp, Wrapper } from './FooterStyles';
 import { Modal } from 'antd';
 
+const questions = [
+  {
+    title: '为何需要专利？',
+    content: '①提升企业竞争力；②实施专利战略的基础；③创新能力和核心竞争能力的体现；④申报科技项目的必要前提；⑤通过交易、许可变现；⑥可进行增资、贷款。',
+  },
+  { title: '专利的有效期是多少年？', content: '发明专利20年；实用新型专利10年；外观设计专利10年。' },
+  { title: '发明专利授权的必要条件是什么？', content: '授予专利权的发明，应当具备新颖性、创造性和实用性。' },
+];
 const Footer: React.FC = () => {
   return (
     <Wrapper>
@@ -29,26 +37,11 @@ const Footer: React.FC = () => {
         </Solution>
         <Questions>
           <p className={'title'}>常见问题</p>
-          <p
-            className={'reason'}
-            onClick={() =>
-              Modal.info({ title: '为何需要专利？', content: '①提升企业竞争力；②实施专利战略的基础；③创新能力和核心竞争能力的体现；④申报科技项目的必要前' })
-            }
-          >
-            为何需要专利？
-          </p>
-          <p
-            className={'reason'}
-            onClick={() => Modal.info({ title: '专利的有效期是多少年？', content: '发明专利20年；实用新型专利10年；外观设计专利10年。' })}
-          >
-            专利的有效期是多少年？
-          </p>
-          <p
-            className={'reason'}
-            onClick={() => Modal.info({ title: '发明专利授权的必要条件是什么？', content: '授予专利权的发明，应当具备新颖性、创造性和实用性。' })}
-          >
-            发明专利授权的必要条件是什么？
-          </p>
+          {questions.map((question) => (
+            <p key={question.title} className={'reason'} title={question.content} onClick={() => Modal.info(question)}>
+              {question.title}
+            </p>
+          ))}
         </Questions>
         <QrCode>
           <p className={'title'}>微信公众号</p>
