@@ -134,9 +134,17 @@ export const NavBar = styled.nav`
     padding: 0 15px;
     line-height: 34px;
     position: relative;
+    display: flex;
+    align-items: center;
     .loginSwitch {
       color: #b8dafc;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      .vipBrand {
+        font-size: 30px;
+        margin-right: 0.1em;
+      }
       &:hover {
         color: #fff;
       }

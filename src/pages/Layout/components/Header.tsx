@@ -95,7 +95,7 @@ const Header: React.FC = () => {
                 trigger="click"
               >
                 <span className={'loginSwitch'}>
-                  {state.user.hasVip && <AliIcon icon={'vipBrand'} />}
+                  {state.user.hasVip && <AliIcon className={'vipBrand'} icon={'vipBrand'} />}
                   {state.user.nickname}
                 </span>
               </Popover>
