@@ -38,7 +38,7 @@ const LoginDialog: React.FC<Props> = ({ className, signInSuccess, setPopoverVisi
     message.success(`欢迎回来，${data.nickname}！`);
     setPopoverVisible && setPopoverVisible(false);
     signInSuccess && signInSuccess();
-  }, [activeTabKey, formData, signInSuccess, setPopoverVisible]);
+  }, [activeTabKey, formData, signInSuccess, setPopoverVisible, dispatch]);
   const addonAfter = useCaptcha(formData);
   return (
     <LoginDialogWrapper className={className}>

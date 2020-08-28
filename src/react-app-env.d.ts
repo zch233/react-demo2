@@ -119,10 +119,21 @@ type Preorder = {
   updateTime: string;
 };
 
-type address = {};
+type Address = {
+  city: string;
+  defaultAddress: boolean;
+  detail: string;
+  id: number;
+  name: string;
+  phone: string;
+  postCode: string;
+  province: string;
+  region: string;
+  street: string;
+};
 type User = {
   account: string;
-  addresses: address[];
+  addresses: Address[];
   avatar: string;
   birthday: string;
   corporation: string;

@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Button, Card } from 'antd';
 import UpdateUserInfoModal from './UpdateUserInfoModal';
 import UpdateAddressModal from './UpdateAddressModal';
 import UpdatePasswordModal from './UpdatePasswordModal';
 import { StoreContext } from '../../index';
+import * as api from './api';
 
 const Wrapper = styled.section`
   p {
@@ -35,9 +36,17 @@ const Article = styled.article`
 `;
 const Settings: React.FC = () => {
   const { state, dispatch } = useContext(StoreContext);
+  const [addresses, setAddresses] = useState<Address[]>([]);
   const [updateUserInfoModalVisible, setUpdateUserInfoModalVisible] = useState(false);
   const [updateAddressModalVisible, setUpdateAddressModalVisible] = useState(false);
   const [updatePasswordModalVisible, setUpdatePasswordModalVisible] = useState(false);
+  const getAddresses = useCallback(async () => {
+    const { data } = await api.getAddresses();
+    setAddresses(data);
+  }, []);
+  useEffect(() => {
+    getAddresses();
+  }, [getAddresses]);
   return (
     <Wrapper>
       <Article className={'info'}>
@@ -87,7 +96,13 @@ const Settings: React.FC = () => {
               添加
             </Button>
           }
-        />
+        >
+          {addresses.map((address) => (
+            <p key={address.id}>
+              {address.name}-{address.phone}-{address.detail}
+            </p>
+          ))}
+        </Card>
       </Article>
       <UpdateUserInfoModal
         visible={updateUserInfoModalVisible}
