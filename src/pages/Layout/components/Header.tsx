@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { NavLink, useLocation, useHistory } from 'react-router-dom';
 import AliIcon from '../../../components/AliIcon';
 import { message, Popover } from 'antd';
@@ -6,10 +6,15 @@ import LoginDialog from './LoginDialog';
 import { NavBar, SearchBar, TopBar } from './HeaderStyles';
 import CategoryDialog from './CategoryDialog';
 import queryString from 'query-string';
+import * as api from '../../../api/base';
+import { StoreContext } from '../../../index';
+import UserDialog from './UserDialog';
 
 const Header: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
+  const [popoverVisible, setPopoverVisible] = useState(false);
+  const { state, dispatch } = useContext(StoreContext);
   const [keyword, setKeyword] = useState('');
   const searchPatentWithKeyword = useCallback(
     (event) => {
@@ -19,10 +24,17 @@ const Header: React.FC = () => {
     },
     [keyword, history]
   );
+  const getUser = useCallback(() => {
+    api
+      .getUserDefault()
+      .then(({ data }) => dispatch({ type: 'setUser', payload: data.data }))
+      .catch(() => {});
+  }, [dispatch]);
   useEffect(() => {
     const { word } = queryString.parse(window.location.search) as { word?: string };
     word && setKeyword(word);
-  }, []);
+    getUser();
+  }, [getUser]);
   return (
     <>
       <header>
@@ -74,9 +86,27 @@ const Header: React.FC = () => {
           </ul>
           <div className={'userOrLogin'}>
             您好，
-            <Popover placement="bottomRight" content={<LoginDialog signInSuccess={() => {}} />} trigger="click">
-              <span className={'loginSwitch'}>请登录</span>
-            </Popover>
+            {state.user.account ? (
+              <Popover
+                visible={popoverVisible}
+                onVisibleChange={(visible) => setPopoverVisible(visible)}
+                placement="bottomRight"
+                content={<UserDialog setPopoverVisible={(value) => setPopoverVisible(value)} />}
+                trigger="click"
+              >
+                <span className={'loginSwitch'}>{state.user.nickname}</span>
+              </Popover>
+            ) : (
+              <Popover
+                visible={popoverVisible}
+                onVisibleChange={(visible) => setPopoverVisible(visible)}
+                placement="bottomRight"
+                content={<LoginDialog setPopoverVisible={(value) => setPopoverVisible(value)} />}
+                trigger="click"
+              >
+                <span className={'loginSwitch'}>请登录</span>
+              </Popover>
+            )}
           </div>
         </section>
       </NavBar>

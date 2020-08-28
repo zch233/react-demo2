@@ -1,16 +1,20 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { Button, Input, message, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
 import { LoginDialogWrapper } from './HeaderStyles';
 import * as api from '../../SignIn/api';
+import { getUser } from '../../../api/base';
 import useCaptcha from '../../../hooks/useCaptcha';
+import { StoreContext } from '../../../index';
 
 type Props = {
   className?: string;
-  signInSuccess: () => void;
+  signInSuccess?: () => void;
+  setPopoverVisible?: (value: boolean) => void;
 };
 type ActiveTabKey = 'signInWithPassword' | 'signInWithCaptcha';
-const LoginDialog: React.FC<Props> = ({ className, signInSuccess }) => {
+const LoginDialog: React.FC<Props> = ({ className, signInSuccess, setPopoverVisible }) => {
+  const { dispatch } = useContext(StoreContext);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState<ActiveTabKey>('signInWithPassword');
   const [formData, setFormData] = useState({
@@ -28,10 +32,13 @@ const LoginDialog: React.FC<Props> = ({ className, signInSuccess }) => {
   );
   const signIn = useCallback(async () => {
     setSubmitLoading(true);
-    await api[activeTabKey](formData).finally(() => setSubmitLoading(false));
+    await api[activeTabKey](formData);
+    const { data } = await getUser().finally(() => setSubmitLoading(false));
+    dispatch({ type: 'setUser', payload: data });
     message.success('登陆成功！');
-    signInSuccess();
-  }, [activeTabKey, formData, signInSuccess]);
+    setPopoverVisible && setPopoverVisible(false);
+    signInSuccess && signInSuccess();
+  }, [activeTabKey, formData, signInSuccess, setPopoverVisible]);
   const addonAfter = useCaptcha(formData);
   return (
     <LoginDialogWrapper className={className}>

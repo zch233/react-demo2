@@ -118,3 +118,34 @@ type Preorder = {
   status: 0 | 1 | 2 | 3;
   updateTime: string;
 };
+
+type address = {};
+type User = {
+  account: string;
+  addresses: address[];
+  avatar: string;
+  birthday: string;
+  corporation: string;
+  createTime: string;
+  email: string;
+  hasExpiredVip: boolean;
+  hasSeller: boolean;
+  hasVip: boolean;
+  integration: string;
+  memberId: string;
+  mobile: string;
+  name: string;
+  nickname: string;
+  referrer: string;
+  seller: boolean;
+  sex: 0 | 1 | 3;
+  status: 'NORMAL' | 'DEAD';
+  type: 'MEMBER' | 'SYS_USER' | 'EMPLOYEE';
+  updateTime: string;
+  vipBeginDate: string;
+  vipExpireDate: string;
+  vipIcon: string;
+  vipId: string;
+  vipLevel: string;
+  vipName: string;
+};

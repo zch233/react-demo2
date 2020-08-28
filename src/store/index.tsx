@@ -1,15 +1,15 @@
 import { atom, selector } from 'recoil';
-import axios from 'axios';
+import request from '../utils/request';
 
 export const todoListState = atom<number[]>({
   key: 'todoListState',
   default: [],
 });
 
-export const currentUserNameQuery = selector({
-  key: 'inputValue',
+export const contactConfig = selector({
+  key: 'ContactConfig',
   get: async () => {
-    const response = await axios.get('/pub/api/v1/contactConfig/list');
-    return response.data;
+    const { data } = await request.get('/pub/api/v1/contactConfig/list');
+    return data;
   },
 });

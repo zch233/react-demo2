@@ -26,10 +26,10 @@ const Main = styled.section`
 `;
 type OrderConfirm = Partial<Patent & Shop & Pay>;
 type Context = {
-  loading?: boolean;
-  orderConfirm?: OrderConfirm;
+  loading: boolean;
+  orderConfirm: OrderConfirm;
 };
-export const OrderConfirmContext = createContext<Context>({});
+export const OrderConfirmContext = createContext<Context>({ loading: false, orderConfirm: {} });
 const OrderConfirm: React.FC = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);

@@ -25,10 +25,9 @@ const Wrapper = styled.section`
 const SignIn: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
-  console.log(queryString.parse(location.search));
   const signInSuccess = () => {
-    const redirectURL = queryString.parse(location.search).redirect;
-    history.push((redirectURL as string | undefined) || '/');
+    const { redirect } = queryString.parse(location.search) as { redirect?: string };
+    history.push(redirect || '/');
   };
   return (
     <Wrapper>

@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { message } from 'antd';
+axios.defaults.baseURL = process.env.REACT_APP_BASE_API;
+axios.defaults.timeout = 30000;
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_API,
-  timeout: 30000,
   withCredentials: true,
 });
 
@@ -16,7 +16,7 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-const errorHandle = (response: AxiosResponse) => {
+export const errorHandle = (response: AxiosResponse) => {
   const res = response.data;
   if (res.code !== 200) {
     if (res.code === 401) {
