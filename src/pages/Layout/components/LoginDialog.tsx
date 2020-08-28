@@ -35,7 +35,7 @@ const LoginDialog: React.FC<Props> = ({ className, signInSuccess, setPopoverVisi
     await api[activeTabKey](formData);
     const { data } = await getUser().finally(() => setSubmitLoading(false));
     dispatch({ type: 'setUser', payload: data });
-    message.success('登陆成功！');
+    message.success(`欢迎回来，${data.nickname}！`);
     setPopoverVisible && setPopoverVisible(false);
     signInSuccess && signInSuccess();
   }, [activeTabKey, formData, signInSuccess, setPopoverVisible]);
