@@ -1,5 +1,5 @@
-import { Tooltip, Button, Table, Divider, Popover, Checkbox } from 'antd';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Tooltip, Button, Table, Divider, Popover, Checkbox, message } from 'antd';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import AliIcon from '../components/AliIcon';
 import * as api from '../pages/Patent/api';
@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { PATENT_TYPE } from '../utils/dict';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
+import { StoreContext } from '../index';
 
 const Wrapper = styled.div`
   background-color: #fff;
@@ -157,6 +158,7 @@ const useTable = ({ title }: Options) => {
       ),
     },
   ];
+  const { state } = useContext(StoreContext);
   const [pageKey, setPageKey] = useState(0);
   const [tableData, setTableData] = useState<Patent[]>([]);
   const [fullScreen, setFullScreen] = useState(false);
@@ -236,6 +238,17 @@ const useTable = ({ title }: Options) => {
     setPageSize(data.size);
     setTableData(data.list);
   }, []);
+  const exportPatent = useCallback((type: 'all' | 'result') => {
+    const eleLink = document.createElement('a');
+    eleLink.target = '_blank';
+    eleLink.style.display = 'none';
+    eleLink.href = '/patent/patent-export' + (type === 'all' ? '' : window.location.search);
+    // 受浏览器安全策略的因素，动态创建的元素必须添加到浏览器后才能实施点击
+    document.body.appendChild(eleLink);
+    eleLink.click();
+    document.body.removeChild(eleLink);
+    message.success('导出成功！');
+  }, []);
   useEffect(() => {
     getPatents(queryString.parse(location.search));
   }, [location, getPatents, pageKey]);
@@ -244,13 +257,17 @@ const useTable = ({ title }: Options) => {
       <TableOptions>
         <label>{title}</label>
         <div className={'options'}>
-          <Button className={'exportAll'} type="primary" size={'small'}>
-            导出全部
-          </Button>
-          <Button className={'exportResult'} type="primary" size={'small'}>
-            导出结果
-          </Button>
-          <Divider type="vertical" />
+          {state.user.account && (
+            <>
+              <Button className={'exportAll'} type="primary" size={'small'} onClick={() => exportPatent('all')}>
+                导出全部
+              </Button>
+              <Button className={'exportResult'} type="primary" size={'small'} onClick={() => exportPatent('result')}>
+                导出结果
+              </Button>
+              <Divider type="vertical" />
+            </>
+          )}
           <Tooltip placement="top" title={'刷新列表'}>
             <span onClick={handleRefresh}>
               <AliIcon icon={'refresh'} />
