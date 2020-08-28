@@ -94,7 +94,10 @@ const Header: React.FC = () => {
                 content={<UserDialog setPopoverVisible={(value) => setPopoverVisible(value)} />}
                 trigger="click"
               >
-                <span className={'loginSwitch'}>{state.user.nickname}</span>
+                <span className={'loginSwitch'}>
+                  {state.user.hasVip && <AliIcon icon={'vipBrand'} />}
+                  {state.user.nickname}
+                </span>
               </Popover>
             ) : (
               <Popover

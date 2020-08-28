@@ -31,6 +31,11 @@ export const PatentInfo = styled.div`
       .leftItem {
         flex: 1;
       }
+      .rightItem {
+        p {
+          padding-right: 2em;
+        }
+      }
       p {
         border-bottom: 1px dashed #bbb;
         padding-bottom: 0.9em;

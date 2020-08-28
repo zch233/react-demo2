@@ -5,6 +5,7 @@ import { Button, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import * as api from './api';
+import { PATENT_STOCK_STATUS, PATENT_TYPE } from '../../utils/dict';
 
 type PatentDetail = Partial<Patent & Shop>;
 const Patent: React.FC = () => {
@@ -56,7 +57,7 @@ const Patent: React.FC = () => {
               <div className={'rightItem'}>
                 <p>
                   <label>专利类型</label>
-                  {patentDetail.type}
+                  {PATENT_TYPE.label[patentDetail.type as 1 | 2 | 3]}
                 </p>
                 <p>
                   <label>缴费截止</label>
@@ -64,7 +65,7 @@ const Patent: React.FC = () => {
                 </p>
                 <p>
                   <label>销售状态</label>
-                  {patentDetail.stockStatus}
+                  {PATENT_STOCK_STATUS.label[patentDetail.stockStatus as 0 | 1 | 2 | 3 | 4]}
                 </p>
                 <p>
                   <label>零售价</label>
@@ -78,9 +79,15 @@ const Patent: React.FC = () => {
           ) : (
             <div className={'bottom'}>
               <Link to={`/order/confirm?commodityId=${patentDetail.id}`}>
-                <Button size={'large'} className={'buyButton'} type={'primary'} danger>
-                  立即购买
-                </Button>
+                {patentDetail.stockStatus === PATENT_STOCK_STATUS.CAN_SELL || patentDetail.stockStatus === PATENT_STOCK_STATUS.PRE_SELL ? (
+                  <Button size={'large'} className={'buyButton'} type={'primary'} danger>
+                    立即购买
+                  </Button>
+                ) : (
+                  <Button size={'large'} disabled>
+                    不可售
+                  </Button>
+                )}
               </Link>
               <em className={'buyTips'}>此商品已全权委托平台寄卖，平台免费提供担保交易服务。</em>
             </div>
