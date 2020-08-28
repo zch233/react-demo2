@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { Button, Card, Input, Modal } from 'antd';
+import { Button, Card } from 'antd';
 import UpdateUserInfoModal from './UpdateUserInfoModal';
 import UpdateAddressModal from './UpdateAddressModal';
 import UpdatePasswordModal from './UpdatePasswordModal';
+import { StoreContext } from '../../index';
 
 const Wrapper = styled.section`
   p {
@@ -33,6 +34,7 @@ const Article = styled.article`
   }
 `;
 const Settings: React.FC = () => {
+  const { state, dispatch } = useContext(StoreContext);
   const [updateUserInfoModalVisible, setUpdateUserInfoModalVisible] = useState(false);
   const [updateAddressModalVisible, setUpdateAddressModalVisible] = useState(false);
   const [updatePasswordModalVisible, setUpdatePasswordModalVisible] = useState(false);
@@ -49,15 +51,15 @@ const Settings: React.FC = () => {
         >
           <p>
             <label className={'label'}>会员账号</label>
-            <span>15967137871</span>
+            <span>{state.user.account}</span>
           </p>
           <p>
             <label className={'label'}>会员名称</label>
-            <span>会员_15967137871</span>
+            <span>{state.user.nickname}</span>
           </p>
           <p>
             <label className={'label'}>会员身份</label>
-            <span>VIP年费会员</span>
+            <span>{state.user.hasVip ? 'VIP年费会员' : '普通会员'}</span>
           </p>
         </Card>
       </Article>
@@ -85,23 +87,15 @@ const Settings: React.FC = () => {
               添加
             </Button>
           }
-        ></Card>
+        />
       </Article>
       <UpdateUserInfoModal
         visible={updateUserInfoModalVisible}
-        onCancel={() => setUpdateUserInfoModalVisible(false)}
-        onSuccess={() => setUpdateUserInfoModalVisible(false)}
+        setVisible={(visible) => setUpdateUserInfoModalVisible(visible)}
+        onSuccess={(response) => dispatch({ type: 'setUser', payload: response.data })}
       />
-      <UpdateAddressModal
-        visible={updateAddressModalVisible}
-        onCancel={() => setUpdateAddressModalVisible(false)}
-        onSuccess={() => setUpdateAddressModalVisible(false)}
-      />
-      <UpdatePasswordModal
-        visible={updatePasswordModalVisible}
-        onCancel={() => setUpdatePasswordModalVisible(false)}
-        onSuccess={() => setUpdatePasswordModalVisible(false)}
-      />
+      <UpdateAddressModal visible={updateAddressModalVisible} setVisible={(visible) => setUpdateAddressModalVisible(visible)} />
+      <UpdatePasswordModal visible={updatePasswordModalVisible} setVisible={(visible) => setUpdatePasswordModalVisible(visible)} />
     </Wrapper>
   );
 };

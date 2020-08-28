@@ -70,7 +70,7 @@ const Vip: React.FC = () => {
         {activities.map((activity) => (
           <div key={activity.icon} className={'activityItem'}>
             <p>
-              <AliIcon icon={activity.icon}></AliIcon>
+              <AliIcon icon={activity.icon} />
             </p>
             <em>{activity.label}</em>
           </div>
@@ -93,7 +93,7 @@ const Vip: React.FC = () => {
           开通/续费
         </Button>
       </Section>
-      <BuyVipModal visible={visible} onSuccess={() => setVisible(false)} onCancel={() => setVisible(false)} />
+      <BuyVipModal visible={visible} setVisible={(visible) => setVisible(visible)} />
     </>
   );
 };

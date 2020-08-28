@@ -1,27 +1,37 @@
 import React, { useCallback, useState } from 'react';
 import { DatePicker, Form, Input, message, Modal } from 'antd';
 import * as api from './api';
+import { AxiosResponse } from 'axios';
 
 type Props = {
   visible: boolean;
-  onSuccess: () => void;
-  onCancel: () => void;
+  setVisible: (setVisible: boolean) => void;
+  onCancel?: () => void;
+  onSuccess?: (data: AxiosResponse) => void;
 };
-const UpdateUserInfoModal: React.FC<Props> = ({ visible, onSuccess, onCancel }) => {
+const UpdateUserInfoModal: React.FC<Props> = ({ visible, setVisible, onSuccess, onCancel }) => {
   const [form] = Form.useForm();
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const onFinish = useCallback(async (data) => {
-    setConfirmLoading(true);
-    const hide = message.loading('正在修改基本信息...');
-    await api.updateUsername(data).finally(() => {
-      setConfirmLoading(false);
-      hide();
-    });
-    message.success('修改成功！');
-    onSuccess();
-  }, []);
+  const onFinish = useCallback(
+    async (formData) => {
+      setConfirmLoading(true);
+      const hide = message.loading('正在修改基本信息...');
+      const response = await api.updateUserInfo(formData).finally(() => {
+        setConfirmLoading(false);
+        hide();
+      });
+      message.success('修改成功！');
+      setVisible(false);
+      onSuccess && onSuccess(response);
+    },
+    [setVisible, onSuccess]
+  );
+  const handleCancel = useCallback(() => {
+    setVisible(false);
+    onCancel && onCancel();
+  }, [setVisible, onCancel]);
   return (
-    <Modal title="更新会员信息" visible={visible} onOk={() => form.submit()} confirmLoading={confirmLoading} onCancel={onCancel}>
+    <Modal title="更新会员信息" visible={visible} onOk={() => form.submit()} confirmLoading={confirmLoading} onCancel={handleCancel}>
       <Form form={form} onFinish={onFinish}>
         <Form.Item label="会员昵称" name="nickname" rules={[{ required: true, message: '请输入会员昵称!' }]}>
           <Input placeholder={'请输入会员昵称'} />

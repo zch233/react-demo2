@@ -1,6 +1,6 @@
 import request from '../../utils/request';
 
-type UpdateUsername = {
+type UpdateUserInfo = {
   birthday?: string;
   captcha?: string;
   name?: string;
@@ -9,7 +9,7 @@ type UpdateUsername = {
   phone?: string;
   sex?: number;
 };
-export const updateUsername = (data: UpdateUsername) => {
+export const updateUserInfo = (data: UpdateUserInfo) => {
   return request({
     url: '/api/v1/member',
     method: 'put',
