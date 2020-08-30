@@ -14,6 +14,7 @@ import Order from '../pages/Order';
 import Vip from '../pages/Vip';
 import Settings from '../pages/Settings';
 import Preorder from '../pages/Preorder';
+import WechatPay from '../pages/Pay/WechatPay';
 
 const routes = [
   {
@@ -58,6 +59,11 @@ const routes = [
       {
         path: '/order/confirm',
         component: OrderConfirm,
+        exact: true,
+      },
+      {
+        path: '/order/pay/wechat',
+        component: WechatPay,
         exact: true,
       },
       {
