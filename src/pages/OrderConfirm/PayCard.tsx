@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { Button, Card, Skeleton } from 'antd';
+import { Button, Card, Modal, Skeleton } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Wrapper } from './PayCardStyles';
 import AliIcon from '../../components/AliIcon';
 import { OrderConfirmContext } from './index';
@@ -23,6 +24,17 @@ const PayCard: React.FC = () => {
       history.push(`/order/pay/wechat?orderNo=${data.orderNo}`);
     } else {
       openNewWidowWithHTML(data);
+      Modal.confirm({
+        title: '请在新打开的页面上完成付款',
+        icon: <ExclamationCircleOutlined />,
+        content: '付款完成前请不要关闭此窗口',
+        cancelText: '选择其他',
+        okText: '已完成支付',
+        okButtonProps: { danger: true },
+        onOk() {
+          history.push('/user/order');
+        },
+      });
     }
   }, [orderConfirm, currentPay, history]);
   return (
