@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Button, message, Modal, Popover, Statistic } from 'antd';
 import { PayRouteItem, Wrapper } from './OrderItemStyles';
 import { Link } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { ORDER_STATUS, PAY_ROUTES, TYPE_PAY_ROUTES } from '../../utils/dict';
 import AliIcon from '../../components/AliIcon';
 import { openNewWidowWithHTML } from '../../utils';
 import { useHistory } from 'react-router-dom';
+import PollGetPayResultModal from '../../components/PollGetPayResultModal';
 
 type Props = {
   order: Order;
@@ -15,6 +16,8 @@ type Props = {
 };
 const OrderItem: React.FC<Props> = ({ order, changeOrderStatus, refreshOrders }) => {
   const history = useHistory();
+  const payResultParams = useRef({ tradeNo: '', orderNo: '' });
+  const [payResultVisible, setPayResultVisible] = useState(false);
   const deleteOrder = useCallback(
     (order: Order) => {
       Modal.confirm({
@@ -52,10 +55,12 @@ const OrderItem: React.FC<Props> = ({ order, changeOrderStatus, refreshOrders })
   const payOrder = useCallback(
     async (order: Order, payRoute: TYPE_PAY_ROUTES[number]) => {
       if (payRoute.payRoute === 'WXPAY') {
-        history.push(`/order/pay/wechat?orderNo=${order.orderNo}`);
+        history.push(`/order/pay/wechat?orderNo=${order.orderNo}&type=PATENT`);
       } else {
         const { data } = await api.payOrder({ payRoute: payRoute.payRoute, orderNo: order.orderNo, tradeType: payRoute.tradeType });
-        openNewWidowWithHTML(data);
+        openNewWidowWithHTML(data.form);
+        payResultParams.current = { tradeNo: data.tradeNo, orderNo: data.orderNo };
+        setPayResultVisible(true);
       }
     },
     [history]
@@ -141,6 +146,7 @@ const OrderItem: React.FC<Props> = ({ order, changeOrderStatus, refreshOrders })
         <div className={'productStatus'} />
         <div className={'productOptions'}>{productOptions(order)}</div>
       </div>
+      <PollGetPayResultModal params={payResultParams.current} visible={payResultVisible} setVisible={(visible) => setPayResultVisible(visible)} />
     </Wrapper>
   );
 };

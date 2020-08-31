@@ -23,7 +23,7 @@ const PayCard: React.FC = () => {
       tradeType: currentPay.tradeType,
     });
     if (currentPay.payRoute === 'WXPAY') {
-      history.push(`/order/pay/wechat?orderNo=${data.orderNo}`);
+      history.push(`/order/pay/wechat?orderNo=${data.orderNo}&type=PATENT`);
     } else {
       openNewWidowWithHTML(data.form);
       payResultParams.current = { tradeNo: data.tradeNo, orderNo: data.orderNo };
