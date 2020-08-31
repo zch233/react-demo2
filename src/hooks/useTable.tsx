@@ -93,7 +93,9 @@ const useTable = ({ title }: Options) => {
   const location = useLocation();
   const highlightKeyword = useCallback((text: string) => {
     const { word } = queryString.parse(window.location.search) as { word?: string };
-    const __html = word ? text.replace(new RegExp(word, 'g'), `<em class="searchKeyword">${word}</em>`) : text;
+    const wordArr = word ? word.split(/[,，+\s\\/|-]/).filter(Boolean) : [];
+    let __html = text;
+    wordArr.map((item) => (__html = __html.replace(new RegExp(item, 'g'), `<em class="searchKeyword">${item}</em>`)));
     return <span dangerouslySetInnerHTML={{ __html }} />;
   }, []);
   const getFullDate = useCallback((date: Date) => `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`, []);
@@ -122,7 +124,12 @@ const useTable = ({ title }: Options) => {
     {
       title: '领域',
       dataIndex: 'tags',
-      render: (tags) => <span>{highlightKeyword(tags)}</span>,
+      render: (tags) =>
+        tags.split(',').map((tag: string) => (
+          <Link style={{ color: 'inherit' }} key={tag} to={`/patent?word=${tag}`}>
+            {highlightKeyword(tag)},
+          </Link>
+        )),
     },
     {
       title: '法律状态',

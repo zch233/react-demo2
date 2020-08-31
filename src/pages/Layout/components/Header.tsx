@@ -31,8 +31,10 @@ const Header: React.FC = () => {
       .catch(() => {});
   }, [dispatch]);
   useEffect(() => {
-    const { word } = queryString.parse(window.location.search) as { word?: string };
+    const { word } = queryString.parse(location.search) as { word?: string };
     word && setKeyword(word);
+  }, [location]);
+  useEffect(() => {
     getUser();
   }, [getUser]);
   return (
