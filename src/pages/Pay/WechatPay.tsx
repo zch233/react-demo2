@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Button, Card } from 'antd';
+import { Button, Card, message } from 'antd';
 import AliIcon from '../../components/AliIcon';
 import { Link } from 'react-router-dom';
+import QRCode from 'qrcode';
+import Countdown from 'antd/es/statistic/Countdown';
 
 const Wrapper = styled.section`
   padding: 20px 0;
@@ -18,7 +20,6 @@ const Wrapper = styled.section`
   }
   .mainCard {
     display: flex;
-    align-items: center;
     justify-content: center;
   }
   .title {
@@ -28,10 +29,18 @@ const Wrapper = styled.section`
     }
   }
   .scanTips {
-    font-size: 16px;
-    margin: 1em 0;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    .ant-statistic-content {
+      font-size: 15px;
+      color: #ac2925;
+      line-height: 1;
+      font-weight: bold;
+    }
   }
   .rightBar {
+    padding-top: 1.5em;
     margin-left: 3em;
   }
   .bottomTips {
@@ -63,9 +72,30 @@ const Wrapper = styled.section`
 `;
 const Qrcode = styled.div`
   border: 1px solid #ddd;
-  width: 300px;
+  width: 340px;
+  margin: 20px auto;
+  &.codeExpired {
+    filter: blur(10px);
+  }
 `;
 const WechatPay: React.FC = () => {
+  const [qrcode, setWechatPayQrcode] = useState('');
+  const [codeExpired, setCodeExpired] = useState(false);
+  const generatorQrcode = useCallback((text: string) => {
+    QRCode.toDataURL(text, { errorCorrectionLevel: 'H', margin: 1 }, (err, url) => {
+      if (err) {
+        message.error('生成二维码失败！');
+        return;
+      }
+      setWechatPayQrcode(url);
+    });
+  }, []);
+  const getWechatPayQrCode = useCallback(async () => {
+    generatorQrcode('http://www.baidu.com');
+  }, [generatorQrcode]);
+  useEffect(() => {
+    getWechatPayQrCode();
+  }, [getWechatPayQrCode]);
   return (
     <Wrapper>
       <div className={'pageWidthWithCenter'}>
@@ -84,8 +114,19 @@ const WechatPay: React.FC = () => {
           </h1>
           <div className={'mainCard'}>
             <div className={'leftBar'}>
-              <div className={'scanTips'}>距离距离二维码过期还剩 25:52 秒，过期后请刷新页面重新获取二维码</div>
-              <Qrcode></Qrcode>
+              {codeExpired ? (
+                <Button type={'primary'} size={'small'}>
+                  重新获取二维码
+                </Button>
+              ) : (
+                <div className={'scanTips'}>
+                  距离距离二维码过期还剩 <Countdown value={Date.now() + 1000 * 60 * 30} onFinish={() => setCodeExpired(true)} format={'m分s秒'} />
+                  ，过期后请重新获取二维码
+                </div>
+              )}
+              <Qrcode className={codeExpired ? 'codeExpired' : ''}>
+                <img src={qrcode} width={'100%'} alt="" />
+              </Qrcode>
               <div className={'bottomTips'}>
                 <AliIcon icon={'scan'} />
                 <div>
@@ -95,7 +136,7 @@ const WechatPay: React.FC = () => {
               </div>
             </div>
             <div className={'rightBar'}>
-              <img width={'100%'} src={require('../../assert/order/wechatPhone.png')} alt="" />
+              <img height={'100%'} src={require('../../assert/order/wechatPhone.png')} alt="" />
             </div>
           </div>
           <Link to={'/user/order'} className={'return'}>
