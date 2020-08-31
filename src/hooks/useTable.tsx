@@ -11,6 +11,7 @@ import { PATENT_TYPE } from '../utils/dict';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { StoreContext } from '../index';
+import { downloadFile } from '../utils';
 
 const Wrapper = styled.div`
   background-color: #fff;
@@ -239,14 +240,7 @@ const useTable = ({ title }: Options) => {
     setTableData(data.list);
   }, []);
   const exportPatent = useCallback((type: 'all' | 'result') => {
-    const eleLink = document.createElement('a');
-    eleLink.target = '_blank';
-    eleLink.style.display = 'none';
-    eleLink.href = '/patent/patent-export' + (type === 'all' ? '' : window.location.search);
-    // 受浏览器安全策略的因素，动态创建的元素必须添加到浏览器后才能实施点击
-    document.body.appendChild(eleLink);
-    eleLink.click();
-    document.body.removeChild(eleLink);
+    downloadFile('/patent/patent-export' + (type === 'all' ? '' : window.location.search));
     message.success('导出成功！');
   }, []);
   useEffect(() => {
