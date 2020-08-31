@@ -30,7 +30,6 @@ const reducer = (state: State, { type, payload }: Action) => {
 };
 export const StoreContext = React.createContext<Context>({ state: initialState, dispatch: () => {} });
 const App = () => {
-  // @ts-ignore
   const [state, dispatch] = useReducer(reducer, initialState);
   const { SlideContactConfig } = useSlideContact();
   return (
