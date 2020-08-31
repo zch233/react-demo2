@@ -32,7 +32,7 @@ const LoginDialog: React.FC<Props> = ({ className, signInSuccess, setPopoverVisi
   );
   const signIn = useCallback(async () => {
     setSubmitLoading(true);
-    await api[activeTabKey](formData);
+    await api[activeTabKey](formData).finally(() => setSubmitLoading(false));
     const { data } = await getUser().finally(() => setSubmitLoading(false));
     dispatch({ type: 'setUser', payload: data });
     message.success(`欢迎回来，${data.nickname}！`);
