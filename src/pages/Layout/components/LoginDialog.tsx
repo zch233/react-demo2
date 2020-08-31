@@ -45,7 +45,14 @@ const LoginDialog: React.FC<Props> = ({ className, signInSuccess, setPopoverVisi
       <Tabs type="card" size="small" activeKey={activeTabKey} onChange={(activeKey) => setActiveTabKey(activeKey as ActiveTabKey)}>
         <Tabs.TabPane tab="密码登录" key="signInWithPassword">
           <Input className={'input'} addonBefore="手机号" value={formData.phone} onChange={(e) => handleInputChange('phone', e)} />
-          <Input className={'input'} type={'password'} addonBefore="密　码" value={formData.password} onChange={(e) => handleInputChange('password', e)} />
+          <Input
+            onKeyUp={(e) => e.keyCode === 13 && signIn()}
+            className={'input'}
+            type={'password'}
+            addonBefore="密　码"
+            value={formData.password}
+            onChange={(e) => handleInputChange('password', e)}
+          />
         </Tabs.TabPane>
         <Tabs.TabPane tab="手机验证码登录" key="signInWithCaptcha">
           <Input className={'input'} addonBefore="手机号" value={formData.phone} onChange={(e) => handleInputChange('phone', e)} />
@@ -55,13 +62,14 @@ const LoginDialog: React.FC<Props> = ({ className, signInSuccess, setPopoverVisi
             addonAfter={addonAfter}
             value={formData.captcha}
             onChange={(e) => handleInputChange('captcha', e)}
+            onKeyUp={(e) => e.keyCode === 13 && signIn()}
           />
         </Tabs.TabPane>
       </Tabs>
       <Button loading={submitLoading} className={'loginButton'} block onClick={signIn}>
         登录
       </Button>
-      <Link className={'toSignIn'} to="/auth/sign_up">
+      <Link className={'toSignIn'} to={`/auth/sign_up?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`}>
         新用户注册
       </Link>
     </LoginDialogWrapper>
