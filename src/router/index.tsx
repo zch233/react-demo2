@@ -6,7 +6,7 @@ import Patent from '../pages/Patent';
 import SignLayout from '../pages/Layout/SignLayout';
 import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
-import NoMatch from '../pages/NoMatch';
+import NoMatch from '../pages/ErrorPage/NoMatch';
 import PatentDetail from '../pages/PatentDetail';
 import OrderConfirm from '../pages/OrderConfirm';
 import UserLayout from '../pages/Layout/UserLayout';
@@ -15,6 +15,7 @@ import Vip from '../pages/Vip';
 import Settings from '../pages/Settings';
 import Preorder from '../pages/Preorder';
 import WechatPay from '../pages/Pay/WechatPay';
+import Result from '../pages/Pay/Result';
 
 const routes = [
   {
@@ -64,6 +65,11 @@ const routes = [
       {
         path: '/order/pay/wechat',
         component: WechatPay,
+        exact: true,
+      },
+      {
+        path: '/order/pay/result',
+        component: Result,
         exact: true,
       },
       {

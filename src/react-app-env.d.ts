@@ -160,3 +160,15 @@ type User = {
   vipLevel: string;
   vipName: string;
 };
+
+type OrderResult = {
+  codeUrl: string;
+  commodityType: string;
+  expire: string;
+  orderNo: string;
+  returnUrl: string;
+  subject: string;
+  timeRemainingSec: number;
+  totalAmount: string;
+  tradeNo: string;
+};

@@ -6,20 +6,25 @@ import { OrderConfirmContext } from './index';
 import * as api from './api';
 import { PAY_ROUTES, TYPE_PAY_ROUTES } from '../../utils/dict';
 import { openNewWidowWithHTML } from '../../utils';
+import { useHistory } from 'react-router-dom';
 
 const PayCard: React.FC = () => {
+  const history = useHistory();
   const [currentPay, setCurrentPay] = useState<TYPE_PAY_ROUTES[number]>(PAY_ROUTES[0]);
   const { loading, orderConfirm } = useContext(OrderConfirmContext);
   const handleBuyClick = useCallback(async () => {
     const { data } = await api.payOrder({
-      // @ts-ignore
-      commodityId: orderConfirm.id,
+      commodityId: orderConfirm.id as string,
       commodityType: 'PATENT',
       payRoute: currentPay.payRoute,
       tradeType: currentPay.tradeType,
     });
-    openNewWidowWithHTML(data);
-  }, [orderConfirm, currentPay]);
+    if (currentPay.payRoute === 'WXPAY') {
+      history.push(`/order/pay/wechat?orderNo=${data.orderNo}`);
+    } else {
+      openNewWidowWithHTML(data);
+    }
+  }, [orderConfirm, currentPay, history]);
   return (
     <Wrapper>
       <Card title="订单金额" className={'myCard'}>
