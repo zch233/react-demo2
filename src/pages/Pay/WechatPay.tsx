@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Button, Card, message, Modal, Result as AntdResult, Spin } from 'antd';
 import AliIcon from '../../components/AliIcon';
@@ -88,6 +88,7 @@ const Result = styled.div`
 `;
 const WechatPay: React.FC = () => {
   const history = useHistory();
+  const timer = useRef(0);
   const [loading, setLoading] = useState(false);
   const [qrcode, setWechatPayQrcode] = useState('');
   const [confirmButtonVisible, setConfirmButtonVisible] = useState(false);
@@ -107,7 +108,7 @@ const WechatPay: React.FC = () => {
   }, []);
   const getPayResult = useCallback(async (tradeNo) => {
     const { data } = await api.getPayResult(tradeNo);
-    return data;
+    return data.tradeStatus;
   }, []);
   const pollGetPayResult = useCallback(
     async (tradeNo, askPayResultTimes) => {
@@ -117,7 +118,7 @@ const WechatPay: React.FC = () => {
           setConfirmButtonVisible(true);
           return;
         }
-        setTimeout(() => pollGetPayResult(tradeNo, askPayResultTimes + 1), 3000);
+        timer.current = setTimeout(() => pollGetPayResult(tradeNo, askPayResultTimes + 1), 3000);
       } else if (result === ORDER_PAY_STATUS.TRADE_SUCCESS || result === ORDER_PAY_STATUS.TRADE_FINISHED) {
         history.push(`/order/pay/result?orderNo=${params.orderNo}&out_trade_no=${tradeNo}`);
       } else if (result === ORDER_PAY_STATUS.TRADE_CLOSED) {
@@ -153,6 +154,7 @@ const WechatPay: React.FC = () => {
   }, [orderInfo, getPayResult, history]);
   useEffect(() => {
     getWechatPayQrCode();
+    return clearTimeout(timer.current);
   }, [getWechatPayQrCode]);
   return (
     <Wrapper>

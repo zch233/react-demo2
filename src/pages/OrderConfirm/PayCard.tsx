@@ -1,6 +1,5 @@
-import React, { useCallback, useContext, useState } from 'react';
-import { Button, Card, Modal, Skeleton } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import React, { useCallback, useContext, useRef, useState } from 'react';
+import { Button, Card, Skeleton } from 'antd';
 import { Wrapper } from './PayCardStyles';
 import AliIcon from '../../components/AliIcon';
 import { OrderConfirmContext } from './index';
@@ -8,9 +7,12 @@ import * as api from './api';
 import { PAY_ROUTES, TYPE_PAY_ROUTES } from '../../utils/dict';
 import { openNewWidowWithHTML } from '../../utils';
 import { useHistory } from 'react-router-dom';
+import PollGetPayResultModal from '../../components/PollGetPayResultModal';
 
 const PayCard: React.FC = () => {
   const history = useHistory();
+  const payResultParams = useRef({ tradeNo: '', orderNo: '' });
+  const [payResultVisible, setPayResultVisible] = useState(false);
   const [currentPay, setCurrentPay] = useState<TYPE_PAY_ROUTES[number]>(PAY_ROUTES[0]);
   const { loading, orderConfirm } = useContext(OrderConfirmContext);
   const handleBuyClick = useCallback(async () => {
@@ -23,18 +25,9 @@ const PayCard: React.FC = () => {
     if (currentPay.payRoute === 'WXPAY') {
       history.push(`/order/pay/wechat?orderNo=${data.orderNo}`);
     } else {
-      openNewWidowWithHTML(data);
-      Modal.confirm({
-        title: '请在新打开的页面上完成付款',
-        icon: <ExclamationCircleOutlined />,
-        content: '付款完成前请不要关闭此窗口',
-        cancelText: '选择其他',
-        okText: '已完成支付',
-        okButtonProps: { danger: true },
-        onOk() {
-          history.push('/user/order');
-        },
-      });
+      openNewWidowWithHTML(data.form);
+      payResultParams.current = { tradeNo: data.tradeNo, orderNo: data.orderNo };
+      setPayResultVisible(true);
     }
   }, [orderConfirm, currentPay, history]);
   return (
@@ -76,6 +69,7 @@ const PayCard: React.FC = () => {
           </div>
         </Skeleton>
       </Card>
+      <PollGetPayResultModal params={payResultParams.current} visible={payResultVisible} setVisible={(visible) => setPayResultVisible(visible)} />
     </Wrapper>
   );
 };

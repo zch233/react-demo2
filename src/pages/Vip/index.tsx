@@ -35,7 +35,7 @@ const Section = styled.section`
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 30px;
-  margin-top: 15px;
+  margin: 15px 0;
   h3 {
     vertical-align: middle;
     font-size: 20px;

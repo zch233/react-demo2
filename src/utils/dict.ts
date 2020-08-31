@@ -156,7 +156,7 @@ export type TYPE_PAY_ROUTES = [
   },
   {
     icon: 'unionPay';
-    label: '在线支付';
+    label: '银联支付';
     description: '欢迎使用银联支付';
     payRoute: 'UNION_PAY';
     tradeType: 'WEB';
@@ -179,7 +179,7 @@ export const PAY_ROUTES: TYPE_PAY_ROUTES = [
   },
   {
     icon: 'unionPay',
-    label: '在线支付',
+    label: '银联支付',
     description: '欢迎使用银联支付',
     payRoute: 'UNION_PAY',
     tradeType: 'WEB',
