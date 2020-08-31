@@ -31,7 +31,7 @@ const UpdateUserInfoModal: React.FC<Props> = ({ visible, setVisible, onSuccess, 
     onCancel && onCancel();
   }, [setVisible, onCancel]);
   return (
-    <Modal title="更新会员信息" visible={visible} onOk={() => form.submit()} confirmLoading={confirmLoading} onCancel={handleCancel}>
+    <Modal maskClosable={false} title="更新会员信息" visible={visible} onOk={() => form.submit()} confirmLoading={confirmLoading} onCancel={handleCancel}>
       <Form form={form} onFinish={onFinish} labelCol={{ span: 4 }}>
         <Form.Item label="会员昵称" name="nickname" rules={[{ required: true, message: '请输入会员昵称!' }]}>
           <Input placeholder={'请输入会员昵称'} />

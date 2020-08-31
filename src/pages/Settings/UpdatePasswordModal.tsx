@@ -35,7 +35,7 @@ const UpdatePasswordModal: React.FC<Props> = ({ visible, setVisible, onSuccess, 
     onCancel && onCancel();
   }, [setVisible, onCancel]);
   return (
-    <Modal title="更新密码" visible={visible} onOk={() => form.submit()} confirmLoading={confirmLoading} onCancel={handleCancel}>
+    <Modal maskClosable={false} title="更新密码" visible={visible} onOk={() => form.submit()} confirmLoading={confirmLoading} onCancel={handleCancel}>
       <Form form={form} onFinish={onFinish} labelCol={{ span: 4 }}>
         <Form.Item label="会员账号">{state.user.account}</Form.Item>
         <Form.Item label="新密码" name="newPassword" rules={[{ required: true, message: '请输入新密码!' }]}>

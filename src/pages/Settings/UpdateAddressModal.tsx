@@ -31,7 +31,7 @@ const UpdateAddressModal: React.FC<Props> = ({ visible, setVisible, onSuccess, o
     onCancel && onCancel();
   }, [setVisible, onCancel]);
   return (
-    <Modal title="添加收件地址" visible={visible} onOk={() => form.submit()} confirmLoading={confirmLoading} onCancel={handleCancel}>
+    <Modal maskClosable={false} title="添加收件地址" visible={visible} onOk={() => form.submit()} confirmLoading={confirmLoading} onCancel={handleCancel}>
       <Form form={form} onFinish={onFinish} labelCol={{ span: 4 }}>
         <Form.Item label="收件人" name="name" rules={[{ required: true, message: '请输入收件人名称!' }]}>
           <Input placeholder={'请输入收件人名称'} />
