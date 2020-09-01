@@ -15,6 +15,7 @@ type Patent = {
   number: string;
   paymentDeadline: string;
   price: number;
+  vipPrice: number;
   reserveExpireTime: string;
   reserveMemberId: string;
   stockStatus: 0 | 1 | 2 | 3 | 4;

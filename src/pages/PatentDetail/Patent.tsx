@@ -51,7 +51,7 @@ const Patent: React.FC = () => {
                 </p>
                 <p>
                   <label>VIP会员价</label>
-                  {patentDetail.price && patentDetail.price * 0.75}
+                  {patentDetail.vipPrice}
                 </p>
               </div>
               <div className={'rightItem'}>

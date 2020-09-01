@@ -12,7 +12,8 @@ const PatentCard: React.FC = () => {
       <Card title="商品信息">
         {orderConfirm?.stockStatus === PATENT_STOCK_STATUS.PRE_SELL && (
           <p className={'preTips'}>
-            <AliIcon icon={'warning'}></AliIcon>温馨提醒：您正在购买预售产品（法律状态为质检），如该专利最终未授权，请及时联系客户经理售后处理。祝您购物愉快！
+            <AliIcon icon={'warning'} />
+            温馨提醒：您正在购买预售产品（法律状态为质检），如该专利最终未授权，请及时联系客户经理售后处理。祝您购物愉快！
           </p>
         )}
         <div className={'patent'}>
