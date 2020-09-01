@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import * as api from '../api/base';
 import AliIcon from '../components/AliIcon';
@@ -81,49 +81,52 @@ const initContactConfigVisible = !!window.localStorage.getItem('contactConfigVis
 const useSlideContact = () => {
   const [contactConfig, setContactConfig] = useState<ContactConfig[]>(initContactConfig);
   const [contactConfigVisible, setContactConfigVisible] = useState(initContactConfigVisible);
-  const getContactConfig = async () => {
+  const getContactConfig = useCallback(async () => {
     const { data } = await api.getContactConfig();
     window.sessionStorage.setItem('contactConfig', JSON.stringify(data));
     setContactConfig(data);
-  };
+  }, []);
   const handleClick = useCallback(() => {
     setContactConfigVisible(!contactConfigVisible);
   }, [contactConfigVisible]);
   useEffect(() => {
     if (initContactConfig.length === 0) getContactConfig();
-  }, []);
-  const SlideContactConfig = (
-    <Wrapper className={contactConfigVisible ? 'active' : ''}>
-      <p className={'button'} onClick={handleClick}>
-        联系我们
-      </p>
-      <section className={'main'}>
-        <h3 className={'title'}>在线客服</h3>
-        <article className={'contactWrapper'}>
-          {contactConfig.map((contact) => (
-            <div key={contact.id} className={'contactItem'}>
-              <p className={'contactItem-name'}>{contact.nickname}</p>
-              <div className={'contactItem-contact'}>
-                <p className={'contactItem-contact-qq'}>
-                  <a rel={'noopener noreferrer'} target="_blank" href={`tencent://message/?uin=${contact.qq}&Site=sc.chinaz.com&Menu=yes`}>
-                    <AliIcon icon={'qqFill'} />
-                    {contact.qq}
-                  </a>
-                </p>
-                <p className={'mobile'}>
-                  <AliIcon icon={'phoneFill'} />
-                  {contact.mobile}
-                </p>
+  }, [getContactConfig]);
+  const SlideContactConfig = useMemo(
+    () => (
+      <Wrapper className={contactConfigVisible ? 'active' : ''}>
+        <p className={'button'} onClick={handleClick}>
+          联系我们
+        </p>
+        <section className={'main'}>
+          <h3 className={'title'}>在线客服</h3>
+          <article className={'contactWrapper'}>
+            {contactConfig.map((contact) => (
+              <div key={contact.id} className={'contactItem'}>
+                <p className={'contactItem-name'}>{contact.nickname}</p>
+                <div className={'contactItem-contact'}>
+                  <p className={'contactItem-contact-qq'}>
+                    <a rel={'noopener noreferrer'} target="_blank" href={`tencent://message/?uin=${contact.qq}&Site=sc.chinaz.com&Menu=yes`}>
+                      <AliIcon icon={'qqFill'} />
+                      {contact.qq}
+                    </a>
+                  </p>
+                  <p className={'mobile'}>
+                    <AliIcon icon={'phoneFill'} />
+                    {contact.mobile}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </article>
-        <div className={'imageWrapper'}>
-          <img width={'100%'} src={require('../assert/home/qrcode.jpg')} alt="" />
-          <p>微信公众号</p>
-        </div>
-      </section>
-    </Wrapper>
+            ))}
+          </article>
+          <div className={'imageWrapper'}>
+            <img width={'100%'} src={require('../assert/home/qrcode.jpg')} alt="" />
+            <p>微信公众号</p>
+          </div>
+        </section>
+      </Wrapper>
+    ),
+    [contactConfigVisible, contactConfig, handleClick]
   );
   return { SlideContactConfig };
 };

@@ -21,7 +21,7 @@ const Patent: React.FC = () => {
 
   useEffect(() => {
     getPatentDetail();
-  }, [getPatentDetail]);
+  }, []);
   return (
     <Wrapper className={'pageWidthWithCenter'}>
       <PatentInfo>
