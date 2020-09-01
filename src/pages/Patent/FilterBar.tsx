@@ -4,7 +4,7 @@ import AliIcon from '../../components/AliIcon';
 import { Popover, Tag } from 'antd';
 import categories, { flatCategories } from '../../utils/categories';
 import { PATENT_CERT_STATUS, PATENT_TYPE } from '../../utils/dict';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
 type typeFiltered = {
@@ -28,6 +28,7 @@ type FilteredCategory = {
 const initFilteredCategory = { type: {}, category: {}, certStatus: {} };
 const FilterBar: React.FC = () => {
   const history = useHistory();
+  const location = useLocation();
   const [popoverVisible, setPopoverVisible] = useState(
     (() => {
       const temp: { [key: string]: boolean } = {};
@@ -89,7 +90,7 @@ const FilterBar: React.FC = () => {
     history.push('/patent');
   }, [history]);
   useEffect(() => {
-    const { type, category, certStatus } = queryString.parse(window.location.search) as {
+    const { type, category, certStatus } = queryString.parse(location.search) as {
       type?: '1' | '2' | '3';
       certStatus?: '0' | '1' | '2';
       category?: string;
@@ -99,7 +100,7 @@ const FilterBar: React.FC = () => {
       category: category ? { code: category, label: flatCategories[category] } : {},
       certStatus: certStatus ? { code: certStatus, label: PATENT_CERT_STATUS.label[certStatus] } : {},
     });
-  }, []);
+  }, [location]);
   return (
     <Wrapper className={'pageWidthWithCenter'}>
       <UserFilter>
