@@ -90,8 +90,8 @@ const useSlideContact = () => {
     setContactConfigVisible(!contactConfigVisible);
   }, [contactConfigVisible]);
   useEffect(() => {
-    if (contactConfig.length === 0) getContactConfig();
-  }, [contactConfig]);
+    if (initContactConfig.length === 0) getContactConfig();
+  }, []);
   const SlideContactConfig = (
     <Wrapper className={contactConfigVisible ? 'active' : ''}>
       <p className={'button'} onClick={handleClick}>
