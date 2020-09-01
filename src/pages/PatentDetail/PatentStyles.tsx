@@ -28,28 +28,33 @@ export const PatentInfo = styled.div`
     }
     .itemWrapper {
       display: flex;
-      .leftItem {
-        flex: 1;
+      border-bottom: 1px dashed #bbb;
+      padding-bottom: 0.9em;
+      font-size: 15px;
+      color: #000;
+      margin-bottom: 1em;
+      align-items: flex-end;
+      .item-left {
+        flex: 3;
       }
-      .rightItem {
-        p {
-          padding-right: 2em;
-        }
+      .item-right {
+        flex: 2;
       }
-      p {
-        border-bottom: 1px dashed #bbb;
-        padding-bottom: 0.9em;
+      label {
+        font-weight: 600;
+        color: #666;
+        width: 4.6em;
+        display: inline-block;
+        margin-right: 1.4em;
+        text-align: justify;
+        text-align-last: justify;
+      }
+      .mark {
         font-size: 15px;
-        color: #000;
-        label {
-          font-weight: 600;
-          color: #666;
-          width: 4.6em;
-          display: inline-block;
-          margin-right: 1.4em;
-          text-align: justify;
-          text-align-last: justify;
-        }
+      }
+      .vipPrice {
+        color: #a94442;
+        font-size: 26px;
       }
     }
     .bottom {

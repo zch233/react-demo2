@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { PatentInfo, ShopInfo, Wrapper } from './PatentStyles';
 import AliIcon from '../../components/AliIcon';
-import { Button, Skeleton } from 'antd';
+import { Button, Skeleton, Tag } from 'antd';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import * as api from './api';
-import { PATENT_STOCK_STATUS, PATENT_TYPE } from '../../utils/dict';
+import { PATENT_CERT_STATUS, PATENT_STOCK_STATUS, PATENT_TYPE } from '../../utils/dict';
 
 type PatentDetail = Partial<Patent & Shop>;
 const Patent: React.FC = () => {
@@ -36,41 +36,49 @@ const Patent: React.FC = () => {
           <Skeleton active loading={loading} paragraph={{ rows: 6 }}>
             <h1>{patentDetail.name}</h1>
             <div className={'itemWrapper'}>
-              <div className={'leftItem'}>
-                <p>
-                  <label>专利号</label>
-                  {patentDetail.number}
-                </p>
-                <p>
-                  <label>法律状态</label>
-                  {patentDetail.legalStatus}
-                </p>
-                <p>
-                  <label>发明人</label>
-                  {patentDetail.inventorExplain}
-                </p>
-                <p>
-                  <label>VIP会员价</label>
-                  {patentDetail.vipPrice}
-                </p>
+              <div className={'item-left'}>
+                <label>专利号</label>
+                {patentDetail.number}
               </div>
-              <div className={'rightItem'}>
-                <p>
-                  <label>专利类型</label>
-                  {PATENT_TYPE.label[patentDetail.type as 1 | 2 | 3]}
-                </p>
-                <p>
-                  <label>缴费截止</label>
-                  {patentDetail.paymentDeadline || '无'}
-                </p>
-                <p>
-                  <label>销售状态</label>
-                  {PATENT_STOCK_STATUS.label[patentDetail.stockStatus as 0 | 1 | 2 | 3 | 4]}
-                </p>
-                <p>
-                  <label>零售价</label>
-                  {patentDetail.price}
-                </p>
+              <div className={'item-right'}>
+                <label>专利类型</label>
+                {PATENT_TYPE.label[patentDetail.type as 1 | 2 | 3]}
+              </div>
+            </div>
+            <div className={'itemWrapper'}>
+              <div className={'item-left'}>
+                <label>法律状态</label>
+                {patentDetail.legalStatus}（{PATENT_CERT_STATUS.label[patentDetail.certStatus as 0 | 1 | 2]}）
+              </div>
+              <div className={'item-right'}>
+                <label>缴费截止</label>
+                {patentDetail.paymentDeadline || '无'}
+              </div>
+            </div>
+            <div className={'itemWrapper'}>
+              <div className={'item-left'}>
+                <label>发明人</label>
+                {patentDetail.inventorExplain}
+              </div>
+              <div className={'item-right'}>
+                <label>销售状态</label>
+                {patentDetail.stockStatus === 1 ? (
+                  <Tag color="#87d068">可售</Tag>
+                ) : (
+                  <span>{PATENT_STOCK_STATUS.label[patentDetail.stockStatus as 0 | 1 | 2 | 3 | 4]}</span>
+                )}
+              </div>
+            </div>
+            <div className={'itemWrapper'}>
+              <div className={'item-left'}>
+                <label>VIP会员价</label>
+                <em className={'vipPrice'}>
+                  <span className={'mark'}>￥</span>
+                  {patentDetail.vipPrice}
+                </em>
+              </div>
+              <div className={'item-right'}>
+                <label>零售价</label>￥{patentDetail.price}
               </div>
             </div>
           </Skeleton>
