@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AliIcon from '../../components/AliIcon';
 import { Button } from 'antd';
 import BuyVipModal from './BuyVipModal';
 import { StoreContext } from '../../store';
+import * as api from '../../api/base';
 
 const Activity = styled.section`
   background-color: #f5f5f5;
@@ -62,8 +63,15 @@ const activities = [
   { icon: 'coupon', label: '参与专利特价活动' },
 ];
 const Vip: React.FC = () => {
-  const { state } = useContext(StoreContext);
+  const { state, dispatch } = useContext(StoreContext);
   const [visible, setVisible] = useState(false);
+  const getUser = useCallback(async () => {
+    const { data } = await api.getUser();
+    dispatch({ type: 'setUser', payload: data });
+  }, [dispatch]);
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
   return (
     <>
       <Activity>
