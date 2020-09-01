@@ -3,11 +3,12 @@ import { message } from 'antd';
 axios.defaults.baseURL = process.env.REACT_APP_BASE_API;
 axios.defaults.timeout = 30000;
 const instance = axios.create({
-  withCredentials: true,
+  withCredentials: false,
 });
 
 instance.interceptors.request.use(
   (config) => {
+    config.headers.authorization = window.localStorage.getItem('authorization');
     return config;
   },
   (error) => {
@@ -28,6 +29,7 @@ export const errorHandle = (response: AxiosResponse) => {
 };
 instance.interceptors.response.use(
   (response) => {
+    response.headers.authorization && window.localStorage.setItem('authorization', response.headers.authorization);
     errorHandle(response);
     return Promise.resolve(response.data);
   },
