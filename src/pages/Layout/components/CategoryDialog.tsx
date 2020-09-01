@@ -8,7 +8,11 @@ type Params = {
   category: string;
   subCategory?: string;
 };
-const CategoryDialog: React.FC = () => {
+type Props = {
+  className?: string;
+  setPopoverVisible: (value: boolean) => void;
+};
+const CategoryDialog: React.FC<Props> = ({ setPopoverVisible }) => {
   const history = useHistory();
   const handleCategoryClick = useCallback(
     (params: Params) => {
@@ -17,8 +21,9 @@ const CategoryDialog: React.FC = () => {
           .map((key) => `${key}=${params[key]}`)
           .join('&')}`
       );
+      setPopoverVisible(false);
     },
-    [history]
+    [history, setPopoverVisible]
   );
   return (
     <CategoryDialogWrapper>

@@ -13,7 +13,8 @@ import UserDialog from './UserDialog';
 const Header: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
-  const [popoverVisible, setPopoverVisible] = useState(false);
+  const [loginPopoverVisible, setLoginPopoverVisible] = useState(false);
+  const [categoryPopoverVisible, setCategoryPopoverVisible] = useState(false);
   const { state, dispatch } = useContext(StoreContext);
   const [keyword, setKeyword] = useState('');
   const searchPatentWithKeyword = useCallback(
@@ -61,13 +62,18 @@ const Header: React.FC = () => {
       </header>
       <NavBar>
         <section className={'pageWidthWithCenter'}>
-          <label className={'allCategory'}>
-            全部专利分类
-            <AliIcon icon="downFill" />
-            <div className={'categoryDialog'}>
-              <CategoryDialog />
-            </div>
-          </label>
+          <Popover
+            visible={categoryPopoverVisible}
+            onVisibleChange={(visible) => setCategoryPopoverVisible(visible)}
+            placement="bottom"
+            content={<CategoryDialog setPopoverVisible={(visible) => setCategoryPopoverVisible(visible)} />}
+            trigger="click"
+          >
+            <label className={'allCategory'}>
+              全部专利分类
+              <AliIcon icon="downFill" />
+            </label>
+          </Popover>
           <ul className={'navList'}>
             <li className={`navList-item ${location.pathname === '/' ? 'active' : ''}`}>
               <NavLink className={'link'} to="/">
@@ -90,10 +96,10 @@ const Header: React.FC = () => {
             您好，
             {state.user.account ? (
               <Popover
-                visible={popoverVisible}
-                onVisibleChange={(visible) => setPopoverVisible(visible)}
+                visible={loginPopoverVisible}
+                onVisibleChange={(visible) => setLoginPopoverVisible(visible)}
                 placement="bottomRight"
-                content={<UserDialog setPopoverVisible={(value) => setPopoverVisible(value)} />}
+                content={<UserDialog setPopoverVisible={(visible) => setLoginPopoverVisible(visible)} />}
                 trigger="click"
               >
                 <span className={'loginSwitch'}>
@@ -103,10 +109,10 @@ const Header: React.FC = () => {
               </Popover>
             ) : (
               <Popover
-                visible={popoverVisible}
-                onVisibleChange={(visible) => setPopoverVisible(visible)}
+                visible={loginPopoverVisible}
+                onVisibleChange={(visible) => setLoginPopoverVisible(visible)}
                 placement="bottomRight"
-                content={<LoginDialog setPopoverVisible={(value) => setPopoverVisible(value)} />}
+                content={<LoginDialog setPopoverVisible={(visible) => setLoginPopoverVisible(visible)} />}
                 trigger="click"
               >
                 <span className={'loginSwitch'}>请登录</span>

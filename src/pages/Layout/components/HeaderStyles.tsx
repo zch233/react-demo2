@@ -180,6 +180,8 @@ export const CategoryDialogWrapper = styled.div`
   background-color: #d03322;
   font-size: 16px;
   display: flex;
+  position: relative;
+  margin: -26px;
   .mainCategory {
     margin: 0;
     width: 15em;
@@ -195,6 +197,9 @@ export const CategoryDialogWrapper = styled.div`
       padding: 0 15px;
       cursor: pointer;
       transition: all 0.3s;
+      &:last-child {
+        border-bottom: 4px solid #d03322;
+      }
       &:hover {
         background-color: #fff;
         color: #d03322;
