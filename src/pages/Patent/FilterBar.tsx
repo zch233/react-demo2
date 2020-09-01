@@ -65,7 +65,7 @@ const FilterBar: React.FC = () => {
           .filter(Boolean)
           .join('&')}`
       );
-      key === 'category' && setPopoverVisible({ ...popoverVisible, [data.code!.slice(0, 1)]: false });
+      key === 'category' && data.code && setPopoverVisible({ ...popoverVisible, [data.code.slice(0, 1)]: false });
     },
     [filteredCategory, history, popoverVisible]
   );
