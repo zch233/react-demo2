@@ -46,3 +46,10 @@ export const payOrder = (data: PayOrder) => {
     data,
   });
 };
+export const payVipOrder = (data: PayOrder) => {
+  return request({
+    url: '/api/v1/pay/vip/order',
+    method: 'post',
+    data,
+  });
+};

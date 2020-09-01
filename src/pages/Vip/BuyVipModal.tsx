@@ -41,7 +41,7 @@ const BuyVipModal: React.FC<Props> = ({ visible, setVisible, onSuccess, onCancel
       });
       onSuccess && onSuccess(response);
       if (currentPay!.payRoute === 'WXPAY') {
-        history.push(`/order/pay/wechat?orderNo=${response.data.orderNo}`);
+        history.push(`/order/pay/wechat?orderNo=${response.data.orderNo}&type=VIP`);
       } else {
         openNewWidowWithHTML(response.data.form);
         payResultParams.current = { tradeNo: response.data.tradeNo, orderNo: response.data.orderNo };

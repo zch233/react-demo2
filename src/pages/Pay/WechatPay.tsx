@@ -5,7 +5,7 @@ import AliIcon from '../../components/AliIcon';
 import { Link } from 'react-router-dom';
 import QRCode from 'qrcode';
 import Countdown from 'antd/es/statistic/Countdown';
-import { payOrder } from '../Order/api';
+import { payOrder, payVipOrder } from '../Order/api';
 import * as api from './api';
 import * as queryString from 'query-string';
 import { ORDER_PAY_STATUS } from '../../utils/dict';
@@ -95,7 +95,7 @@ const WechatPay: React.FC = () => {
   const [codeExpired, setCodeExpired] = useState(false);
   const [pageStatus, setPageStatus] = useState<{ visible: boolean; msg: string }>({ visible: false, msg: '' });
   const [orderInfo, setOrderInfo] = useState<Partial<OrderResult>>({});
-  const params = useMemo(() => queryString.parse(window.location.search) as { orderNo: string }, []);
+  const params = useMemo(() => queryString.parse(window.location.search) as { orderNo: string; type: string }, []);
   const generatorQrcode = useCallback((text: string) => {
     QRCode.toDataURL(text, { errorCorrectionLevel: 'H', margin: 1 }, (err, url) => {
       if (err) {
@@ -129,7 +129,7 @@ const WechatPay: React.FC = () => {
   );
   const getWechatPayQrCode = useCallback(() => {
     setLoading(true);
-    payOrder({
+    (params.type === 'PATENT' ? payOrder : payVipOrder)({
       orderNo: params.orderNo,
       payRoute: 'WXPAY',
       tradeType: 'NATIVE',
