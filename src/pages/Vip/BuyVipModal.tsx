@@ -48,7 +48,7 @@ const BuyVipModal: React.FC<Props> = ({ visible, setVisible, onSuccess, onCancel
         setPayResultVisible(true);
       }
     },
-    [vipPurchase, setVisible, onSuccess]
+    [vipPurchase, onSuccess, history]
   );
   const getVipPurchase = useCallback(async () => {
     const { data } = await api.getVipPurchase();
@@ -109,7 +109,12 @@ const BuyVipModal: React.FC<Props> = ({ visible, setVisible, onSuccess, onCancel
           </Form.Item>
         </Form>
       </Modal>
-      <PollGetPayResultModal visible={payResultVisible} setVisible={(visible) => setPayResultVisible(visible)} params={payResultParams.current} />
+      <PollGetPayResultModal
+        visible={payResultVisible}
+        setVisible={(visible) => setPayResultVisible(visible)}
+        onSuccess={() => setVisible(false)}
+        params={payResultParams.current}
+      />
     </>
   );
 };
