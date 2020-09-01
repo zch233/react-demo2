@@ -154,7 +154,9 @@ const WechatPay: React.FC = () => {
   }, [orderInfo, getPayResult, history]);
   useEffect(() => {
     getWechatPayQrCode();
-    return clearTimeout(timer.current);
+    return () => {
+      clearTimeout(timer.current);
+    };
   }, [getWechatPayQrCode]);
   return (
     <Wrapper>

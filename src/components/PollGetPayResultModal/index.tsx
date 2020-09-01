@@ -67,7 +67,9 @@ const PollGetPayResultModal: React.FC<Props> = ({ visible, onCancel, onSuccess, 
   }, [history, onSuccess, params, getPayResult]);
   useEffect(() => {
     if (visible) timer.current = setTimeout(pollGetPayResult, 5000);
-    return clearTimeout(timer.current);
+    return () => {
+      clearTimeout(timer.current);
+    };
   }, [pollGetPayResult, visible]);
   return (
     <Modal
