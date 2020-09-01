@@ -1,11 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Button, Card } from 'antd';
+import { Button, Card, message, Modal } from 'antd';
 import UpdateUserInfoModal from './UpdateUserInfoModal';
 import UpdateAddressModal from './UpdateAddressModal';
 import UpdatePasswordModal from './UpdatePasswordModal';
 import { StoreContext } from '../../index';
 import * as api from './api';
+import AliIcon from '../../components/AliIcon';
 
 const Wrapper = styled.section`
   p {
@@ -33,6 +34,17 @@ const Article = styled.article`
       color: #23527c;
     }
   }
+  &.address {
+    .addressItem {
+      display: flex;
+      align-items: center;
+    }
+    .addressOptionIcon {
+      color: #23527c;
+      margin: 0 0.3em;
+      cursor: pointer;
+    }
+  }
 `;
 const Settings: React.FC = () => {
   const { state, dispatch } = useContext(StoreContext);
@@ -40,10 +52,27 @@ const Settings: React.FC = () => {
   const [updateUserInfoModalVisible, setUpdateUserInfoModalVisible] = useState(false);
   const [updateAddressModalVisible, setUpdateAddressModalVisible] = useState(false);
   const [updatePasswordModalVisible, setUpdatePasswordModalVisible] = useState(false);
+  const [currentAddress, setCurrentAddress] = useState<Partial<Address>>({});
   const getAddresses = useCallback(async () => {
     const { data } = await api.getAddresses();
     setAddresses(data);
   }, []);
+  const deleteAddress = useCallback(
+    async (address: Address) => {
+      Modal.confirm({
+        centered: true,
+        title: '确定要删除该地址吗？',
+        okType: 'danger',
+        onOk: async () => {
+          const hide = message.loading('正在删除，请稍候...', 0);
+          await api.deleteAddress(address).finally(() => hide());
+          setAddresses(addresses.filter((item) => item.id !== address.id));
+          message.success('删除成功！');
+        },
+      });
+    },
+    [addresses]
+  );
   useEffect(() => {
     getAddresses();
   }, [getAddresses]);
@@ -92,14 +121,31 @@ const Settings: React.FC = () => {
         <Card
           title="收件地址"
           extra={
-            <Button type={'link'} onClick={() => setUpdateAddressModalVisible(true)}>
+            <Button
+              type={'link'}
+              onClick={() => {
+                setCurrentAddress({});
+                setUpdateAddressModalVisible(true);
+              }}
+            >
               添加
             </Button>
           }
         >
           {addresses.map((address) => (
-            <p key={address.id}>
-              {address.name}-{address.phone}-{address.detail}
+            <p key={address.id} className={'addressItem'}>
+              {address.name}--{address.phone}--{address.detail}
+              <span
+                onClick={() => {
+                  setCurrentAddress(address);
+                  setUpdateAddressModalVisible(true);
+                }}
+              >
+                <AliIcon className={'addressOptionIcon'} icon={'edit'} />
+              </span>
+              <span onClick={() => deleteAddress(address)}>
+                <AliIcon className={'addressOptionIcon'} icon={'delete'} />
+              </span>
             </p>
           ))}
         </Card>
@@ -109,7 +155,12 @@ const Settings: React.FC = () => {
         setVisible={(visible) => setUpdateUserInfoModalVisible(visible)}
         onSuccess={(response) => dispatch({ type: 'setUser', payload: response.data })}
       />
-      <UpdateAddressModal visible={updateAddressModalVisible} setVisible={(visible) => setUpdateAddressModalVisible(visible)} />
+      <UpdateAddressModal
+        params={{ address: currentAddress }}
+        visible={updateAddressModalVisible}
+        onSuccess={getAddresses}
+        setVisible={(visible) => setUpdateAddressModalVisible(visible)}
+      />
       <UpdatePasswordModal visible={updatePasswordModalVisible} setVisible={(visible) => setUpdatePasswordModalVisible(visible)} />
     </Wrapper>
   );

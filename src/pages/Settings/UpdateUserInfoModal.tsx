@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { DatePicker, Form, Input, message, Modal } from 'antd';
 import * as api from './api';
 import { AxiosResponse } from 'axios';
+import { StoreContext } from '../../index';
 
 type Props = {
   visible: boolean;
@@ -11,6 +12,7 @@ type Props = {
 };
 const UpdateUserInfoModal: React.FC<Props> = ({ visible, setVisible, onSuccess, onCancel }) => {
   const [form] = Form.useForm();
+  const { state } = useContext(StoreContext);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const onFinish = useCallback(
     async (formData) => {
@@ -33,13 +35,13 @@ const UpdateUserInfoModal: React.FC<Props> = ({ visible, setVisible, onSuccess, 
   return (
     <Modal maskClosable={false} title="更新会员信息" visible={visible} onOk={() => form.submit()} confirmLoading={confirmLoading} onCancel={handleCancel}>
       <Form form={form} onFinish={onFinish} labelCol={{ span: 4 }}>
-        <Form.Item label="会员昵称" name="nickname" rules={[{ required: true, message: '请输入会员昵称!' }]}>
+        <Form.Item label="会员昵称" name="nickname" rules={[{ required: true, message: '请输入会员昵称!' }]} initialValue={state.user.nickname}>
           <Input placeholder={'请输入会员昵称'} />
         </Form.Item>
-        <Form.Item label="联系方式" name="phone" rules={[{ required: true, message: '请输入联系方式!' }]}>
+        <Form.Item label="联系方式" name="phone" initialValue={state.user.mobile}>
           <Input placeholder={'请输入联系方式'} />
         </Form.Item>
-        <Form.Item label="出生日期" name="birthday" rules={[{ required: true, message: '请输入出生日期!' }]}>
+        <Form.Item label="出生日期" name="birthday">
           <DatePicker format={'YYYY-MM-DD'} disabledDate={(currentDate) => currentDate.get('second') > Date.now()} />
         </Form.Item>
       </Form>
