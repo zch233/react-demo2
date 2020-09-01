@@ -44,10 +44,12 @@ const Header: React.FC = () => {
         <TopBar>
           <div className={'pageWidthWithCenter'}>
             <cite>第九区知识产权在线交易商城提供最真实的一手资源</cite>
-            <span>
-              <AliIcon icon="qrcode" />
-              微信公众号
-            </span>
+            <Popover placement={'bottomRight'} content={<img src={require('../../../assert/home/qrcode.jpg')} />}>
+              <span>
+                <AliIcon icon="qrcode" />
+                微信公众号
+              </span>
+            </Popover>
           </div>
         </TopBar>
         <SearchBar className={'pageWidthWithCenter'}>
