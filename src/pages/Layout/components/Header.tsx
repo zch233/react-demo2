@@ -44,7 +44,7 @@ const Header: React.FC = () => {
         <TopBar>
           <div className={'pageWidthWithCenter'}>
             <cite>第九区知识产权在线交易商城提供最真实的一手资源</cite>
-            <Popover placement={'bottomRight'} content={<img src={require('../../../assert/home/qrcode.jpg')} alt={''} />}>
+            <Popover placement={'bottomRight'} content={<img style={{ margin: -20 }} src={require('../../../assert/home/qrcode.jpg')} alt={''} />}>
               <span>
                 <AliIcon icon="qrcode" />
                 微信公众号
