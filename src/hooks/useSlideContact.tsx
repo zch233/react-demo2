@@ -87,7 +87,6 @@ const useSlideContact = () => {
     setContactConfig(data);
   };
   const handleClick = useCallback(() => {
-    console.log(contactConfigVisible);
     setContactConfigVisible(!contactConfigVisible);
   }, [contactConfigVisible]);
   useEffect(() => {
