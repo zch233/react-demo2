@@ -137,7 +137,7 @@ const WechatPay: React.FC = () => {
       .then(({ data }) => {
         setOrderInfo(data);
         generatorQrcode(data.codeUrl);
-        setTimeout(() => pollGetPayResult(data.tradeNo, 0), 5000);
+        timer.current = setTimeout(() => pollGetPayResult(data.tradeNo, 0), 5000);
       })
       .catch((error) => setPageStatus({ visible: true, msg: error.msg }))
       .finally(() => setLoading(false));
