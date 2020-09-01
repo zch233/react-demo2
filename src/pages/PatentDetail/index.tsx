@@ -9,8 +9,10 @@ const Wrapper = styled.section`
 const PatentDetail: React.FC = () => {
   return (
     <Wrapper>
-      <Patent />
-      <Detail />
+      <div className={'pageWidthWithCenter'}>
+        <Patent />
+        <Detail />
+      </div>
     </Wrapper>
   );
 };

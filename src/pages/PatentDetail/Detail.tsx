@@ -9,7 +9,7 @@ const Wrapper = styled.article`
 `;
 const Detail: React.FC = () => {
   return (
-    <Wrapper className={'pageWidthWithCenter'}>
+    <Wrapper>
       <Tabs type="card">
         <Tabs.TabPane tab="交易流程" key="1">
           <img src={require('../../assert/patent/transactionProcess.jpg')} alt="" />

@@ -19,6 +19,8 @@ type Patent = {
   reserveExpireTime: string;
   reserveMemberId: string;
   stockStatus: 0 | 1 | 2 | 3 | 4;
+  subCategory: string;
+  subCategoryName: string;
   tags: string;
   type: 1 | 2 | 3;
 };

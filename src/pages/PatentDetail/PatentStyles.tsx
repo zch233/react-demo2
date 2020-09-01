@@ -1,5 +1,19 @@
 import styled from 'styled-components';
 
+export const PatentNavigation = styled.div`
+  display: flex;
+  font-size: 12px;
+  .navigation {
+    a {
+      color: inherit;
+    }
+    color: #132e41;
+    padding-left: 1em;
+    &:hover {
+      color: #23527c;
+    }
+  }
+`;
 export const Wrapper = styled.article`
   background-color: #fff;
   margin: 15px auto;
