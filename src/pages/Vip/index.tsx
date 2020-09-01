@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import AliIcon from '../../components/AliIcon';
 import { Button } from 'antd';
-import { StoreContext } from '../../index';
 import BuyVipModal from './BuyVipModal';
+import { StoreContext } from '../../store';
 
 const Activity = styled.section`
   background-color: #f5f5f5;

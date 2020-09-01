@@ -1792,13 +1792,6 @@
     "@types/prop-types" "*"
     csstype "^3.0.2"
 
-"@types/recoil@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.npm.taobao.org/@types/recoil/download/@types/recoil-0.0.1.tgz#c69efee4871e0e3fc4fe19ba15a6bfc35f9b6bf1"
-  integrity sha1-xp7+5IceDj/E/hm6Faa/w1+ba/E=
-  dependencies:
-    "@types/react" "*"
-
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/@types/stack-utils/download/@types/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
@@ -9980,11 +9973,6 @@ realpath-native@^1.1.0:
   integrity sha1-IAMpT+oj+wZy8kduviL89Jii1lw=
   dependencies:
     util.promisify "^1.0.0"
-
-recoil@^0.0.10:
-  version "0.0.10"
-  resolved "https://registry.npm.taobao.org/recoil/download/recoil-0.0.10.tgz#679ab22306f559f8a63c46fd5ff5241539f9248f"
-  integrity sha1-Z5qyIwb1WfimPEb9X/UkFTn5JI8=
 
 recursive-readdir@2.2.2:
   version "2.2.2"

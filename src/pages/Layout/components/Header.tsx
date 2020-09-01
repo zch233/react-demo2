@@ -7,8 +7,8 @@ import { NavBar, SearchBar, TopBar } from './HeaderStyles';
 import CategoryDialog from './CategoryDialog';
 import queryString from 'query-string';
 import * as api from '../../../api/base';
-import { StoreContext } from '../../../index';
 import UserDialog from './UserDialog';
+import { StoreContext } from '../../../store';
 
 const Header: React.FC = () => {
   const location = useLocation();

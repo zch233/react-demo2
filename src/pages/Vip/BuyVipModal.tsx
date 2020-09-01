@@ -1,12 +1,12 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Form, Radio, message, Modal, Select } from 'antd';
 import * as api from './api';
-import { StoreContext } from '../../index';
 import { PAY_ROUTES } from '../../utils/dict';
 import { openNewWidowWithHTML } from '../../utils';
 import { AxiosResponse } from 'axios';
 import { useHistory } from 'react-router-dom';
 import PollGetPayResultModal from '../../components/PollGetPayResultModal';
+import { StoreContext } from '../../store';
 
 type Props = {
   visible: boolean;

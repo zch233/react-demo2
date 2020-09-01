@@ -4,9 +4,9 @@ import { Button, Card, message, Modal } from 'antd';
 import UpdateUserInfoModal from './UpdateUserInfoModal';
 import UpdateAddressModal from './UpdateAddressModal';
 import UpdatePasswordModal from './UpdatePasswordModal';
-import { StoreContext } from '../../index';
 import * as api from './api';
 import AliIcon from '../../components/AliIcon';
+import { StoreContext } from '../../store';
 
 const Wrapper = styled.section`
   p {

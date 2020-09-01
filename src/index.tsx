@@ -10,25 +10,8 @@ import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import './utils/extends';
 import useSlideContact from './hooks/useSlideContact';
-type Context = {
-  state: State;
-  dispatch: Dispatch<Action>;
-};
-type State = {
-  user: Partial<User>;
-};
-type Action = { type: 'setUser'; payload: Partial<User> };
+import { initialState, reducer, StoreContext } from './store';
 
-const initialState = {
-  user: {},
-};
-const reducer = (state: State, { type, payload }: Action) => {
-  const map = {
-    setUser: () => ({ ...state, user: payload }),
-  };
-  return map[type]();
-};
-export const StoreContext = React.createContext<Context>({ state: initialState, dispatch: () => {} });
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { SlideContactConfig } = useSlideContact();

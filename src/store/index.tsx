@@ -1,15 +1,21 @@
-import { atom, selector } from 'recoil';
-import request from '../utils/request';
+import React, { Dispatch } from 'react';
 
-export const todoListState = atom<number[]>({
-  key: 'todoListState',
-  default: [],
-});
+type Context = {
+  state: State;
+  dispatch: Dispatch<Action>;
+};
+type State = {
+  user: Partial<User>;
+};
+type Action = { type: 'setUser'; payload: Partial<User> };
 
-export const contactConfig = selector({
-  key: 'ContactConfig',
-  get: async () => {
-    const { data } = await request.get('/pub/api/v1/contactConfig/list');
-    return data;
-  },
-});
+export const initialState = {
+  user: {},
+};
+export const reducer = (state: State, { type, payload }: Action) => {
+  const map = {
+    setUser: () => ({ ...state, user: payload }),
+  };
+  return map[type]();
+};
+export const StoreContext = React.createContext<Context>({ state: initialState, dispatch: () => {} });

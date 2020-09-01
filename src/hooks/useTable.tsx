@@ -10,8 +10,8 @@ import { Link } from 'react-router-dom';
 import { PATENT_TYPE } from '../utils/dict';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { StoreContext } from '../index';
 import { downloadFile } from '../utils';
+import { StoreContext } from '../store';
 
 const Wrapper = styled.div`
   background-color: #fff;

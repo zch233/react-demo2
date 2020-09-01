@@ -5,7 +5,7 @@ import { LoginDialogWrapper } from './HeaderStyles';
 import * as api from '../../SignIn/api';
 import { getUser } from '../../../api/base';
 import useCaptcha from '../../../hooks/useCaptcha';
-import { StoreContext } from '../../../index';
+import { StoreContext } from '../../../store';
 
 type Props = {
   className?: string;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Button, message } from 'antd';
 import { useHistory } from 'react-router-dom';
 import * as api from '../../../api/base';
-import { StoreContext } from '../../../index';
+import { StoreContext } from '../../../store';
 
 const Wrapper = styled.section`
   width: 200px;

@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { DatePicker, Form, Input, message, Modal } from 'antd';
 import * as api from './api';
 import { AxiosResponse } from 'axios';
-import { StoreContext } from '../../index';
+import { StoreContext } from '../../store';
 
 type Props = {
   visible: boolean;
