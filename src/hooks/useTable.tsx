@@ -174,6 +174,7 @@ const useTable = ({ title }: Options) => {
   const [columns, setColumns] = useState(initColumn);
   const [total, setTotal] = useState(0);
   const [pageSize, setPageSize] = useState(30);
+  const [currentPage, setCurrentPage] = useState(1);
   const defaultCheckedList: ColumnTitle<Patent>[] = useMemo(() => initColumn.map((column: any) => column.checked !== false && column.title).filter(Boolean), [
     initColumn,
   ]);
@@ -243,6 +244,7 @@ const useTable = ({ title }: Options) => {
     setLoading(true);
     const { data } = await api.getPatents({ size: 30, ...fetchData }).finally(() => setLoading(false));
     setTotal(data.totalCount);
+    setCurrentPage(data.no);
     setPageSize(data.size);
     setTableData(data.list);
   }, []);
@@ -306,6 +308,7 @@ const useTable = ({ title }: Options) => {
         pagination={{
           position: ['bottomCenter'],
           showQuickJumper: true,
+          current: currentPage,
           pageSize: pageSize,
           showTotal: (total) => `共 ${total} 件`,
           onChange: (page, pageSize) => history.push(`/patent?no=${page}&size=${pageSize}`),
