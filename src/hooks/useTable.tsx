@@ -152,7 +152,7 @@ const useTable = ({ title }: Options) => {
     {
       title: 'VIP价格',
       dataIndex: 'vipPrice',
-      render: (_, patent) => <span>￥{patent.price * 0.75}</span>,
+      render: (vipPrice) => <span>￥{vipPrice}</span>,
     },
     {
       title: '操作',
