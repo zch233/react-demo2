@@ -1,4 +1,4 @@
-import React, { Dispatch, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import 'reset-css';
