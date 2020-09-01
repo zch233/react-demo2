@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteProps, Switch } from 'react-router-dom';
+import { Link, RouteProps, Switch } from 'react-router-dom';
 import { RouteWithSubRoutes } from '../../router';
 import styled from 'styled-components';
 
@@ -51,7 +51,9 @@ const SignLayout: React.FC<Props> = ({ routes }) => {
       <Section>
         <Content className={'pageWidthWithCenter'}>
           <div className={'webSiteProfile'}>
-            <img width={160} src={require('../../assert/home/logo_transparent.png')} alt="" />
+            <Link to={'/'}>
+              <img width={160} src={require('../../assert/home/logo_transparent.png')} alt="" />
+            </Link>
             <h1>第九区知识产权</h1>
             <p>全方位的购买咨询 | 海量一手资源 | 专业支持</p>
             <p>的售后咨询 | 高效的交易体验</p>
