@@ -158,6 +158,19 @@ head::after {
   animation-delay: -28s;
 }
 
+::-webkit-scrollbar-track-piece {
+  background: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 20px;
+}
+
 .pageWidthWithCenter {
   width: 1200px;
   margin: 0 auto;
@@ -172,6 +185,7 @@ head::after {
   width: 62px;
   text-align: center;
 }
+
 .input.captcha .ant-statistic .ant-statistic-content {
   font-size: 20px;
 }
@@ -180,14 +194,17 @@ head::after {
   border: none;
   height: auto;
 }
+
 .myTable .ant-table-thead th {
   font-weight: bold;
 }
+
 .myTable .ant-table-tbody,
 .myTable .ant-table-thead {
   font-size: 12px;
   color: #333;
 }
+
 .ant-btn-primary.dangerButton {
   background-color: #d9534f;
   border-color: #d43f3a;
@@ -197,6 +214,7 @@ head::after {
   background-color: #c9302c;
   border-color: #ac2925;
 }
+
 .searchKeyword {
   color: #dd4b39;
 }
