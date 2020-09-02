@@ -10,19 +10,18 @@ import { PATENT_CERT_STATUS, PATENT_STOCK_STATUS, PATENT_TYPE } from '../../util
 type PatentDetail = Partial<Patent & Shop>;
 const Patent: React.FC = () => {
   const history = useHistory();
-  const params = useParams();
+  const { number } = useParams() as { number: string };
   const [loading, setLoading] = useState(false);
   const [patentDetail, setPatentDetail] = useState<PatentDetail>({});
   const getPatentDetail = useCallback(async () => {
     setLoading(true);
-    const { number } = params as { number: string };
     const { data } = await api.getPatentDetail(number).finally(() => setLoading(false));
     setPatentDetail(data);
-  }, [params]);
+  }, [number]);
 
   useEffect(() => {
     getPatentDetail();
-  }, []);
+  }, [getPatentDetail]);
   return (
     <>
       <PatentNavigation>
@@ -75,7 +74,7 @@ const Patent: React.FC = () => {
                   <label>销售状态</label>
                   {patentDetail.stockStatus === PATENT_STOCK_STATUS.CAN_SELL ? (
                     <Tag color="#87d068">可售</Tag>
-                  ) : patentDetail.stockStatus === PATENT_STOCK_STATUS.WAIT_SELL ? (
+                  ) : patentDetail.stockStatus === PATENT_STOCK_STATUS.PRE_SELL ? (
                     <Tag color={'#fa8c16'}>预售</Tag>
                   ) : (
                     <span>{PATENT_STOCK_STATUS.label[patentDetail.stockStatus as 0 | 1 | 2 | 3 | 4]}</span>
