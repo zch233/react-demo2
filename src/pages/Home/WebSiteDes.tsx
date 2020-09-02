@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button } from 'antd';
+import React, { useCallback } from 'react';
+import { Button, Modal } from 'antd';
 import AliIcon from '../../components/AliIcon';
 import { AdvanceList, AdvanceListItem, Wrapper } from './WebSiteDesStyles';
 
@@ -26,12 +26,18 @@ const advanceList = [
   },
 ];
 const WebSiteDes: React.FC = () => {
+  const leanMore = useCallback(() => {
+    Modal.info({
+      title: '欢迎了解第九区',
+      content: '买专利就上第九区产权,专业的专利交易平台，提供众多专利买卖，专利转让和专利交易信息，专业顾问一对一助力企业复工复产，让您轻松低价买专利。',
+    });
+  }, []);
   return (
     <Wrapper className={'pageWidthWithCenter'}>
       <div className={'des'}>
         <p>为什么选择</p>
         <h2>第九区知产？</h2>
-        <Button>了解更多</Button>
+        <Button onClick={leanMore}>了解更多</Button>
       </div>
       <AdvanceList>
         {advanceList.map((advance) => (
