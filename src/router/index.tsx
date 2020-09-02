@@ -21,6 +21,7 @@ const routes = [
   {
     path: '/404',
     component: NoMatch,
+    title: '404',
   },
   {
     path: '/auth',
@@ -30,11 +31,13 @@ const routes = [
         path: '/auth/sign_in',
         component: SignIn,
         exact: true,
+        title: '第九区专利交易平台-登录',
       },
       {
         path: '/auth/sign_up',
         component: SignUp,
         exact: true,
+        title: '第九区专利交易平台-注册',
       },
     ],
   },
@@ -46,31 +49,37 @@ const routes = [
         path: '/',
         component: Home,
         exact: true,
+        title: '第九区专利交易平台-首页',
       },
       {
         path: '/patent',
         component: Patent,
         exact: true,
+        title: '第九区专利交易平台-专利列表',
       },
       {
         path: '/patent/:number',
         component: PatentDetail,
         exact: true,
+        title: '第九区专利交易平台-专利详情',
       },
       {
         path: '/order/confirm',
         component: OrderConfirm,
         exact: true,
+        title: '第九区专利交易平台-确认订单',
       },
       {
         path: '/order/pay/wechat',
         component: WechatPay,
         exact: true,
+        title: '第九区专利交易平台-微信支付',
       },
       {
         path: '/order/pay/result',
         component: Result,
         exact: true,
+        title: '第九区专利交易平台-支付结果',
       },
       {
         path: '/user',
@@ -80,21 +89,25 @@ const routes = [
             path: '/user/order',
             component: Order,
             exact: true,
+            title: '第九区专利交易平台-我的订单',
           },
           {
             path: '/user/preorder',
             component: Preorder,
             exact: true,
+            title: '第九区专利交易平台-我的预定',
           },
           {
             path: '/user/vip',
             component: Vip,
             exact: true,
+            title: '第九区专利交易平台-VIP会员',
           },
           {
             path: '/user/settings',
             component: Settings,
             exact: true,
+            title: '第九区专利交易平台-个人设置',
           },
         ],
       },
@@ -106,10 +119,11 @@ export function RouteWithSubRoutes(route: any) {
   return (
     <Route
       path={route.path}
-      render={(props) => (
+      render={(props) => {
+        document.title = route.title || '第九区专利交易平台';
         // pass the sub-routes down to keep nesting
-        <route.component {...props} routes={route.routes} />
-      )}
+        return <route.component {...props} routes={route.routes} />;
+      }}
     />
   );
 }

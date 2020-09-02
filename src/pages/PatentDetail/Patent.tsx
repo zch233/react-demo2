@@ -17,6 +17,7 @@ const Patent: React.FC = () => {
     setLoading(true);
     const { data } = await api.getPatentDetail(number).finally(() => setLoading(false));
     setPatentDetail(data);
+    setTimeout(() => (document.title = `第九区专利交易平台-${data.name}`));
   }, [number]);
 
   useEffect(() => {
