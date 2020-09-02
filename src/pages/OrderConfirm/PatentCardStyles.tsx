@@ -25,7 +25,7 @@ export const Wrapper = styled.article`
       border: 1px solid #ddd;
       padding: 4px;
       border-radius: 4px;
-      margin-right: 4%;
+      margin-right: 3%;
     }
     .info {
       flex: 1;
@@ -38,7 +38,7 @@ export const Wrapper = styled.article`
       &-detail {
         display: flex;
         justify-content: space-between;
-        padding-right: 8%;
+        padding-right: 4%;
         font-size: 15px;
         &-item {
           display: flex;
