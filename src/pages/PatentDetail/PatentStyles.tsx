@@ -8,7 +8,9 @@ export const PatentNavigation = styled.div`
       color: inherit;
     }
     color: #132e41;
-    padding-left: 1em;
+    padding-left: 0.8em;
+    margin-left: 0.8em;
+    border-left: 1px solid #ddd;
     &:hover {
       color: #23527c;
     }
