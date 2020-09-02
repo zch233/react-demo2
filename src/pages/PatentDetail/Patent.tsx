@@ -26,9 +26,9 @@ const Patent: React.FC = () => {
   return (
     <>
       <PatentNavigation>
-        <a onClick={() => history.goBack()}>
+        <Button size={'small'} type={'link'} onClick={() => history.goBack()}>
           <AliIcon icon={'return'} /> 返回
-        </a>
+        </Button>
         <div className={'navigation'}>
           <Link to={'/'}>首页</Link> / <Link to={`/patent?category=${patentDetail.category}`}>{patentDetail.categoryName}</Link> /{' '}
           <Link to={`/patent?category=${patentDetail.subCategory}`}>{patentDetail.subCategoryName}</Link>
@@ -73,8 +73,10 @@ const Patent: React.FC = () => {
                 </div>
                 <div className={'item-right'}>
                   <label>销售状态</label>
-                  {patentDetail.stockStatus === 1 ? (
+                  {patentDetail.stockStatus === PATENT_STOCK_STATUS.CAN_SELL ? (
                     <Tag color="#87d068">可售</Tag>
+                  ) : patentDetail.stockStatus === PATENT_STOCK_STATUS.WAIT_SELL ? (
+                    <Tag color={'#fa8c16'}>预售</Tag>
                   ) : (
                     <span>{PATENT_STOCK_STATUS.label[patentDetail.stockStatus as 0 | 1 | 2 | 3 | 4]}</span>
                   )}
