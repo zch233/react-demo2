@@ -3,13 +3,14 @@ import styled from 'styled-components';
 export const PatentNavigation = styled.div`
   display: flex;
   font-size: 12px;
+  align-items: center;
   .navigation {
     a {
       color: inherit;
     }
     color: #132e41;
-    padding-left: 0.8em;
-    margin-left: 0.8em;
+    padding-left: 1em;
+    margin-left: 0.5em;
     border-left: 1px solid #ddd;
     &:hover {
       color: #23527c;
