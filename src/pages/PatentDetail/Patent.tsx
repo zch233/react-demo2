@@ -3,12 +3,13 @@ import { PatentInfo, PatentNavigation, ShopInfo, Wrapper } from './PatentStyles'
 import AliIcon from '../../components/AliIcon';
 import { Button, Skeleton, Tag } from 'antd';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import * as api from './api';
 import { PATENT_CERT_STATUS, PATENT_STOCK_STATUS, PATENT_TYPE } from '../../utils/dict';
 
 type PatentDetail = Partial<Patent & Shop>;
 const Patent: React.FC = () => {
+  const history = useHistory();
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [patentDetail, setPatentDetail] = useState<PatentDetail>({});
@@ -25,9 +26,9 @@ const Patent: React.FC = () => {
   return (
     <>
       <PatentNavigation>
-        <Link to={'/patent'}>
+        <a onClick={() => history.goBack()}>
           <AliIcon icon={'return'} /> 返回
-        </Link>
+        </a>
         <div className={'navigation'}>
           <Link to={'/'}>首页</Link> / <Link to={`/patent?category=${patentDetail.category}`}>{patentDetail.categoryName}</Link> /{' '}
           <Link to={`/patent?category=${patentDetail.subCategory}`}>{patentDetail.subCategoryName}</Link>
