@@ -52,7 +52,7 @@ const Order: React.FC = () => {
       ) : (
         <>
           {preorders.map((preorder) => (
-            <OrderItem key={preorder.orderNo} preorder={preorder} changeOrderStatus={(preorder) => changeOrderStatus(preorder)} />
+            <OrderItem key={preorder.createTime} preorder={preorder} changeOrderStatus={(preorder) => changeOrderStatus(preorder)} />
           ))}
           <PaginationWrapper>
             <Pagination

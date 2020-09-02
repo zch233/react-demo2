@@ -43,7 +43,7 @@ const OrderItem: React.FC<Props> = ({ preorder, changeOrderStatus }) => {
       <div className={'bottomBar'}>
         <div className={'productInfo'}>
           <div className={'imageWrapper'}>
-            <img width={'100%'} src={require('../../assert/patent/' + preorder.productCategory.slice(0, 1) + '.png')} alt="" />
+            <img width={'100%'} src={require('../../assert/patent/' + (preorder.productCategory || 'A').slice(0, 1) + '.png')} alt="" />
           </div>
           <div className={'info'}>
             <p className={'title'}>
